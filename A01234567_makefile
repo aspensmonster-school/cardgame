@@ -76,11 +76,3 @@ clean:
 	rm -f A01234567_hello
 	rm -f *dump*
 	rm -f *preproc*
-	
-# Sidenote: I  think Gregory has got the "compiled" and "assembled"
-# target notes reversed. What he's calling "compiled" isn't actually
-# producing object code, it's just spitting out assembly. And what
-# he's calling "assembled" is actually getting compiled object code,
-# not just assembling. Meh.
-
-# Nah. It's right.
