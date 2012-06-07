@@ -21,8 +21,8 @@ EXECUTABLE=A01234567_hello
 
 # ===========================================================
 
-# The typical case. Preprocessing and compiling, then assembling
-# and linking to make an executable.
+# The typical case. Preprocessing and compiling and assembling,
+# then linking to make an executable.
 
 output: $(EXECUTABLE)
 	./$(EXECUTABLE)
