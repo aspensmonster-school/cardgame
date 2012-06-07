@@ -8,6 +8,8 @@
 # do a far superior job of it. And of course you don't want to pull
 # a Bumblebee. Deleting /usr will NOT speed up your computer...
 
+# ===========================================================
+
 #letting make work for us...
 CXX=g++
 CXXFLAGS=-c -g -Wall -O3
@@ -16,7 +18,10 @@ SOURCES=A01234567_hello.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=A01234567_hello
 
-#The typical case. Compiling to objects and then linking.
+# ===========================================================
+
+# The typical case. Preprocessing, compiling, assembling,
+# and linking to make an executable.
 
 output: $(EXECUTABLE)
 	./$(EXECUTABLE)
@@ -34,22 +39,33 @@ $(EXECUTABLE): $(OBJECTS)
 # preprocessed produces source file with include statements expanded
 # and redirects the output to file A01234567_preprocessed
 
-A01234567_preprocessed: A01234567_hello.cpp
-	g++ -E -Wall A01234567_hello.cpp > A01234567_preprocessed
+A01234567_preprocessed: $(SOURCES)
+	$(CXX) -E $(SOURCES) > A01234567_preprocessed
+
+# ===========================================================
 
 # compiled produces assembly language file A01234567_hello.s
 
-A01234567_compiled:
+A01234567_compiled: 
+	$(CXX) 
+
+# ===========================================================
 
 # assembled produces object language file A01234567_hello.o
 # and hexdump's it to a file A01234567_o_dump
 
 A01234567_assembled:
+	$(CXX)
+
+# ===========================================================
 
 # linked produces executable language file A01234567_hello
 # and hexdump's it to a file A01234567_x_dump
 
 A01234567_linked:
+	$(CXX)
+
+# ===========================================================
 
 clean:
 	rm *.o
