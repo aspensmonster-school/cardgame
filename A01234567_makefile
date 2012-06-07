@@ -11,6 +11,7 @@
 # ===========================================================
 
 #letting make work for us...
+
 CXX=g++
 CXXFLAGS=-c -g -Wall -O3
 LDFLAGS=
@@ -32,6 +33,8 @@ $(EXECUTABLE): $(OBJECTS)
 .cpp.o:
 	$(CXX) $(CXXFLAGS) $< -o $@
 
+# ===========================================================
+
 # the following rules produce intermediate files
 
 # ===========================================================
@@ -46,24 +49,24 @@ A01234567_preprocessed: $(SOURCES)
 
 # compiled produces assembly language file A01234567_hello.s
 
-A01234567_compiled: 
-	$(CXX) 
+A01234567_compiled: $(SOURCES)
+	$(CXX) -S $(SOURCES) > A01234567_hello.s
 
 # ===========================================================
 
 # assembled produces object language file A01234567_hello.o
 # and hexdump's it to a file A01234567_o_dump
 
-A01234567_assembled:
-	$(CXX)
+A01234567_assembled: $(SOURCES)
+	$(CXX) $(CXXFLAGS) $(SOURCES) -o $(OBJECTS) && hexdump $(OBJECTS) > A01234567_o_dump 
 
 # ===========================================================
 
 # linked produces executable language file A01234567_hello
 # and hexdump's it to a file A01234567_x_dump
 
-A01234567_linked:
-	$(CXX)
+A01234567_linked: $(OBJECTS)
+	$(CXX) $(LDFLAGS) $(OBJECTS) -o $(EXECUTABLE) && hexdump $(EXECUTABLE) > A01234567_x_dump 
 
 # ===========================================================
 
