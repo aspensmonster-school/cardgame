@@ -1,0 +1,44 @@
+
+# makefile for hello world
+# coded by Carol Hazlewood
+# September 9, 2008
+# modified by Carl Gregory
+# 3 June 2012
+
+output: Hazlewood_hello
+	./Hazlewood_hello
+
+Hazlewood_hello:  Hazlewood_hello.o
+	g++ -Wall Hazlewood_hello.o -o Hazlewood_hello
+
+Hazlewood_hello.o:  Hazlewood_hello.cpp
+	g++ -c -Wall Hazlewood_hello.cpp
+
+# the following rules produce intermediate files
+
+# preprocessed produces source file with include statements expanded
+# and redirects the output to file Hazlewood_preprocessed
+
+Hazlewood_preprocessed: Hazlewood_hello.cpp
+	g++ -E -Wall Hazlewood_hello.cpp > Hazlewood_preprocessed
+
+# compiled produces assembly language file Hazlewood_hello.s
+
+Hazlewood_compiled:
+
+# assembled produces object language file Hazlewood_hello.o
+# and hexdump's it to a file Hazlewood_o_dump
+
+Hazlewood_assembled:
+
+# linked produces executable language file Hazlewood_hello
+# and hexdump's it to a file Hazlewood_x_dump
+
+Hazlewood_linked:
+
+clean:
+	rm *.o
+	rm *.s
+	rm Hazlewood_hello
+	rm *dump*
+	rm *preproc*
