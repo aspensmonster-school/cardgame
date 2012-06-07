@@ -1,9 +1,20 @@
-
 # makefile for hello world
 # coded by Carol Hazlewood
 # September 9, 2008
 # modified by Preston Maness
 # 7 June 2012
+
+# I can't agree with manually editing makefiles when the autotools
+# do a far superior job of it. And of course you don't want to pull
+# a Bumblebee. Deleting /usr will NOT speed up your computer...
+
+#letting make work for us...
+CXX=g++
+CXXFLAGS=-g -Wall
+LDFLAGS=
+SOURCES=A01234567_hello.cpp
+OBJECTS=$(SOURCES:.cpp=.o)
+EXECUTABLE=A01234567_hello
 
 output: A01234567_hello
 	./A01234567_hello
