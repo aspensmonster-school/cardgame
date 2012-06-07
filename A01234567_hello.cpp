@@ -18,7 +18,7 @@ int main()
 {
     ofstream outFile;
     
-    outFile.open("Hazlewood_hello.txt");
+    outFile.open("A01234567_hello.txt");
     
     outFile <<  "hello, world." ; 
 
