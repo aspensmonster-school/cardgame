@@ -50,7 +50,7 @@ A01234567_preprocessed: $(SOURCES)
 # compiled produces assembly language file A01234567_hello.s
 
 A01234567_compiled: $(SOURCES)
-	$(CXX) -S $(SOURCES) > A01234567_hello.s
+	$(CXX) -S $(SOURCES)
 
 # ===========================================================
 
