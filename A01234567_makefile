@@ -10,22 +10,26 @@
 
 #letting make work for us...
 CXX=g++
-CXXFLAGS=-g -Wall
+CXXFLAGS=-c -g -Wall -O3
 LDFLAGS=
 SOURCES=A01234567_hello.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=A01234567_hello
 
-output: A01234567_hello
-	./A01234567_hello
+#The typical case. Compiling to objects and then linking.
 
-A01234567_hello:  A01234567_hello.o
-	g++ -Wall A01234567_hello.o -o A01234567_hello
+output: $(EXECUTABLE)
+	./$(EXECUTABLE)
 
-A01234567_hello.o:  A01234567_hello.cpp
-	g++ -c -Wall A01234567_hello.cpp
+$(EXECUTABLE): $(OBJECTS)
+	$(CXX) $(LDFLAGS) $(OBJECTS) -o $@
+
+.cpp.o:
+	$(CXX) $(CXXFLAGS) $< -o $@
 
 # the following rules produce intermediate files
+
+# ===========================================================
 
 # preprocessed produces source file with include statements expanded
 # and redirects the output to file A01234567_preprocessed
