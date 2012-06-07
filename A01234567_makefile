@@ -2,43 +2,43 @@
 # makefile for hello world
 # coded by Carol Hazlewood
 # September 9, 2008
-# modified by Carl Gregory
-# 3 June 2012
+# modified by Preston Maness
+# 7 June 2012
 
-output: Hazlewood_hello
-	./Hazlewood_hello
+output: A01234567_hello
+	./A01234567_hello
 
-Hazlewood_hello:  Hazlewood_hello.o
-	g++ -Wall Hazlewood_hello.o -o Hazlewood_hello
+A01234567_hello:  A01234567_hello.o
+	g++ -Wall A01234567_hello.o -o A01234567_hello
 
-Hazlewood_hello.o:  Hazlewood_hello.cpp
-	g++ -c -Wall Hazlewood_hello.cpp
+A01234567_hello.o:  A01234567_hello.cpp
+	g++ -c -Wall A01234567_hello.cpp
 
 # the following rules produce intermediate files
 
 # preprocessed produces source file with include statements expanded
-# and redirects the output to file Hazlewood_preprocessed
+# and redirects the output to file A01234567_preprocessed
 
-Hazlewood_preprocessed: Hazlewood_hello.cpp
-	g++ -E -Wall Hazlewood_hello.cpp > Hazlewood_preprocessed
+A01234567_preprocessed: A01234567_hello.cpp
+	g++ -E -Wall A01234567_hello.cpp > A01234567_preprocessed
 
-# compiled produces assembly language file Hazlewood_hello.s
+# compiled produces assembly language file A01234567_hello.s
 
-Hazlewood_compiled:
+A01234567_compiled:
 
-# assembled produces object language file Hazlewood_hello.o
-# and hexdump's it to a file Hazlewood_o_dump
+# assembled produces object language file A01234567_hello.o
+# and hexdump's it to a file A01234567_o_dump
 
-Hazlewood_assembled:
+A01234567_assembled:
 
-# linked produces executable language file Hazlewood_hello
-# and hexdump's it to a file Hazlewood_x_dump
+# linked produces executable language file A01234567_hello
+# and hexdump's it to a file A01234567_x_dump
 
-Hazlewood_linked:
+A01234567_linked:
 
 clean:
 	rm *.o
 	rm *.s
-	rm Hazlewood_hello
+	rm A01234567_hello
 	rm *dump*
 	rm *preproc*
