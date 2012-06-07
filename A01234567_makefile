@@ -43,14 +43,14 @@ $(EXECUTABLE): $(OBJECTS)
 # and redirects the output to file A01234567_preprocessed
 
 A01234567_preprocessed: $(SOURCES)
-	$(CXX) -E $(SOURCES) > A01234567_preprocessed
+	$(CXX) -E $(CXXFLAGS) $(SOURCES) > A01234567_preprocessed
 
 # ===========================================================
 
 # compiled produces assembly language file A01234567_hello.s
 
 A01234567_compiled: $(SOURCES)
-	$(CXX) -S $(SOURCES)
+	$(CXX) -S $(CXXFLAGS) $(SOURCES)
 
 # ===========================================================
 
