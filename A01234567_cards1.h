@@ -5,6 +5,8 @@
   Name: cards1.h
   Author:Carl Gregory
   Date: 21/05/12 15:24
+  Modified by: Preston Maness
+  Date: 08/06/12 17:38
   Description:
         First stage of Card project for CS2308-501 Summer 2012
         - Simulates dealing a deck of cards to four players;

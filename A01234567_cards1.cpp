@@ -2,6 +2,8 @@
   Name: cards1.cpp
   Author: Carl Gregory
   Date: 19/05/12 19:46
+  Modified by: Preston Maness
+  Date: 08/06/12 17:38
   Description:
         simulates dealing a deck of cards to four players;
  */

@@ -2,6 +2,8 @@
   Name: card1Functions.cpp
   Author: Carl Gregory
   Date: 05/06/12 13:24
+  Modified by: Preston Maness
+  Date: 08/06/12 17:38
   Description: 
   			   contains the function code for prototypes in cards1.h
   Functions:
