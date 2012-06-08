@@ -17,7 +17,7 @@
 #include <cstdlib>   // rand and srand
 #include <ctime>     // For the time function
 
-#include "cards1.h"
+#include "A01234567_cards1.h"
 
 using namespace std;
 

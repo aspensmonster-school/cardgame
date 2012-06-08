@@ -7,8 +7,9 @@
  */
 #include <iostream>
 #include <string>
+#include <cstdlib> /* You need this lib in order to use the EXIT_SUCCESS macro */
 
-#include "cards1.h"
+#include "A01234567_cards1.h"
 
 using namespace std;
 
