@@ -13,16 +13,18 @@
 #letting make work for us...
 
 CXX=g++
-CXXFLAGS=-c -g -Wall -O3
+CXXFLAGS=-g -Wall -O3 -std=c++0x
 LDFLAGS=
 SOURCES=A01234567_hello.cpp
+PP=$(SOURCES:.cpp=.ii)
+ASM=$(SOURCES:.cpp=.s)
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=A01234567_hello
 
 # ===========================================================
 
 # The typical case. Preprocessing and compiling and assembling,
-# then linking to make an executable.
+# then linking to make an executable. 
 
 output: $(EXECUTABLE)
 	./$(EXECUTABLE)
@@ -31,39 +33,78 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CXX) $(LDFLAGS) $(OBJECTS) -o $@
 
 .cpp.o:
-	$(CXX) $(CXXFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 # ===========================================================
 
 # the following rules produce intermediate files
+# and demonstrate the build process step by step
+
+# In short, you have:
+# input.cpp -> preprocessed.ii -> compiled.s -> assembled.o -> linked executable
+
+# Preprocessor: Invoked with `g++` and -E flag. Expands all files,
+#	substitutes all macros, finishes all conditional compilation
+#	statements, and gives preprocessed output (.ii files)
+
+# Compiler: Invoked with `g++` and all CXXFLAGS, and takes the 
+# 	preprocessed input (.ii files). However, use -S flag
+# 	to stop at compiling and give the assembler output (.s files).
+#	Otherwise, this command will also assemble and give object
+#	code. In the broken down case give here, this is where you
+#	pass all of your CXXFLAGS like `-Wall` or `-ansi` or `-03` 
+
+# Assembler: Technically invoked by `as`, but g++ can handle for you.
+#	takes the assembler files (.s files) and outputs object code (.o files).
+#	The actual as command (visible if you run g++ with the -v option) would
+#	look something like this: `as -o output-file.o /path/to/input-file.s`
+
+# Linker: Technically invoked by `ld` but g++ handles this for you.
+# 	You can give any LDFLAGS you need, and `ld`/`g++` then takes the 
+# 	object files (.o files) and spits out a linked executable.          
+#	Typically the executable does not have an extension.
 
 # ===========================================================
 
 # preprocessed produces source file with include statements expanded
-# and redirects the output to file A01234567_preprocessed
+
+# it redirects the output to file A01234567_hello.i
 
 A01234567_preprocessed: $(SOURCES)
-	$(CXX) -E $(SOURCES) > A01234567_preprocessed
+	$(CXX) -E $(SOURCES) > $(PP)
 
 # ===========================================================
 
 # compiled produces assembly language file A01234567_hello.s
 
-A01234567_compiled: $(SOURCES)
-	$(CXX) -S $(SOURCES)
+# it takes the preprocessed file and spits out assembler (.s files)
+
+A01234567_compiled: $(PP)
+	$(CXX) -S $(CXXFLAGS) $(PP) -o $(ASM)
 
 # ===========================================================
 
 # assembled produces object language file A01234567_hello.o
 # and hexdump's it to a file A01234567_o_dump
 
-A01234567_assembled: $(SOURCES)
-	$(CXX) $(CXXFLAGS) $(SOURCES) -o $(OBJECTS) && hexdump $(OBJECTS) > A01234567_o_dump 
+# in this case, we call the assembler directly and it takes
+# the .s files and spits out .o files (object files).
+# Since we are using g++ rather than calling as directly,
+# it is still necessary to pass the -c flag to tell g++
+# not to link.
+
+A01234567_assembled: $(ASM)
+	$(CXX) -c $(ASM) -o $(OBJECTS) && hexdump $(OBJECTS) > A01234567_o_dump 
 
 # ===========================================================
 
 # linked produces executable language file A01234567_hello
 # and hexdump's it to a file A01234567_x_dump
+
+# At this point we link together all of the object files and
+# and make the executable. G++ technically calls `ld` to do
+# the linking. We don't use ld ourselves because we don't
+# hate ourselves.
 
 A01234567_linked: $(OBJECTS)
 	$(CXX) $(LDFLAGS) $(OBJECTS) -o $(EXECUTABLE) && hexdump $(EXECUTABLE) > A01234567_x_dump 
@@ -71,16 +112,9 @@ A01234567_linked: $(OBJECTS)
 # ===========================================================
 
 clean:
-	rm *.o
-	rm *.s
-	rm A01234567_hello
-	rm *dump*
-	rm *preproc*
-	
-# Sidenote: I  think Gregory has got the "compiled" and "assembled"
-# target notes reversed. What he's calling "compiled" isn't actually
-# producing object code, it's just spitting out assembly. And what
-# he's calling "assembled" is actually getting compiled object code,
-# not just assembling. Meh.
-
-# Nah. It's right.
+	rm -f *.ii
+	rm -f *.o
+	rm -f *.s
+	rm -f A01234567_hello
+	rm -f *dump*
+	rm -f *preproc*
