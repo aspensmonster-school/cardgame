@@ -13,11 +13,10 @@
 #letting make work for us...
 
 CXX=g++
-AS=as
-CXXFLAGS=-c -g -Wall -O3
+CXXFLAGS=-g -Wall -O3 -std=c++0x
 LDFLAGS=
 SOURCES=A01234567_hello.cpp
-PP=$(SOURCES:.cpp=.i)
+PP=$(SOURCES:.cpp=.ii)
 ASM=$(SOURCES:.cpp=.s)
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=A01234567_hello
@@ -34,7 +33,7 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CXX) $(LDFLAGS) $(OBJECTS) -o $@
 
 .cpp.o:
-	$(CXX) $(CXXFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 # ===========================================================
 
@@ -42,22 +41,29 @@ $(EXECUTABLE): $(OBJECTS)
 # and demonstrate the build process step by step
 
 # In short, you have:
-# input.cpp -> preprocessed.i -> compiled.s -> assembled.o -> linked executable
+# input.cpp -> preprocessed.ii -> compiled.s -> assembled.o -> linked executable
 
-# Preprocessor: Invoked with `g++` and -E flag. Expands all macros
-		and includes and gives preprocessed output (.i files)
+# Preprocessor: Invoked with `g++` and -E flag. Expands all files,
+#	substitutes all macros, finishes all conditional compilation
+#	statements, and gives preprocessed output (.ii files)
 
 # Compiler: Invoked with `g++` and all CXXFLAGS, and takes the 
-# 		preprocessed input (.i files). However, use -S flag
-# 		to stop at compiling and give the assembler output (.s files).
+# 	preprocessed input (.ii files). However, use -S flag
+# 	to stop at compiling and give the assembler output (.s files).
+#	Otherwise, this command will also assemble and give object
+#	code. In the broken down case give here, this is where you
+#	pass all of your CXXFLAGS like `-Wall` or `-ansi` or `-03` 
 
-# Assembler: Invoked with `as`, takes the assembler files (.s files)
-		 and outputs object code (.o files).
+# Assembler: Technically invoked by `as`, but g++ can handle for you.
+#	takes the assembler files (.s files) and outputs object code (.o files).
+#	The actual as command (visible if you run g++ with the -v option) would
+#	look something like this: `as -o output-file.o /path/to/input-file.s`
 
-# Linker: Technically invoked by `ld` but that's complicated
-# 		so use `g++` and any LDFLAGS you need that takes the 
-# 		object files (.o files) and spits out a linked executable.          
-#		Typically the executable does not have an extension.
+# Linker: Technically invoked by `ld` but g++ handles this for you.
+# 	You can give any LDFLAGS you need, and `ld`/`g++` then takes the 
+# 	object files (.o files) and spits out a linked executable.          
+#	Typically the executable does not have an extension.
+
 
 # ===========================================================
 
@@ -75,18 +81,19 @@ A01234567_preprocessed: $(SOURCES)
 # it takes the preprocessed file and spits out assembler (.s files)
 
 A01234567_compiled: $(PP)
-	$(CXX) $(CXXFLAGS) -S $(PP) -o $(ASM)
+	$(CXX) -S $(CXXFLAGS) $(PP) -o $(ASM)
 
 # ===========================================================
 
 # assembled produces object language file A01234567_hello.o
 # and hexdump's it to a file A01234567_o_dump
 
-# in this case, we call the assembler directly and it takes
-# the .s files and spits out .o files (object files).
+# Since we are using g++ rather than calling as directly,
+# it is still necessary to pass the -c flag to tell g++
+# not to link.
 
 A01234567_assembled: $(ASM)
-	$(AS) $(ASM) -o $(OBJECTS) && hexdump $(OBJECTS) > A01234567_o_dump 
+	$(CXX) -c $(ASM) -o $(OBJECTS) && hexdump $(OBJECTS) > A01234567_o_dump 
 
 # ===========================================================
 
@@ -104,6 +111,7 @@ A01234567_linked: $(OBJECTS)
 # ===========================================================
 
 clean:
+	rm -f *.ii
 	rm -f *.o
 	rm -f *.s
 	rm -f A01234567_hello
