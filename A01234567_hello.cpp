@@ -2,6 +2,8 @@
   Name: Hazlewood_hello.cpp
   Author: Carol Hazlewood
   Date: 09/09/08 17:33
+  Modified by: Preston Maness
+  Modified Date: 7 June 2012
   Description:
         single source file for simple 2-step makefile
 */
@@ -16,7 +18,7 @@ int main()
 {
     ofstream outFile;
     
-    outFile.open("Hazlewood_hello.txt");
+    outFile.open("A01234567_hello.txt");
     
     outFile <<  "hello, world." ; 
 
