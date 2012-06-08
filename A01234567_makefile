@@ -87,8 +87,6 @@ A01234567_compiled: $(PP)
 # assembled produces object language file A01234567_hello.o
 # and hexdump's it to a file A01234567_o_dump
 
-# in this case, we call the assembler directly and it takes
-# the .s files and spits out .o files (object files).
 # Since we are using g++ rather than calling as directly,
 # it is still necessary to pass the -c flag to tell g++
 # not to link.
