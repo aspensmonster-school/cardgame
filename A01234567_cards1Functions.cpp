@@ -13,6 +13,8 @@
 			shuffleDeck( );
 */
 
+/* Holy fuck that's a lot of switch statements */
+
 #include <iostream>
 #include <iomanip>
 #include <string>
