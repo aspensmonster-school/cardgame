@@ -16,6 +16,9 @@
           	   (Gaddis ed. 7, pp. 129-130, example program 3-25)
 
 */
+
+/* And parallel arrays */
+
 #include <string>
 
 using namespace std;
