@@ -316,13 +316,21 @@ void displayDeck(int spades[] , int hearts[] , int diamonds[] , int clubs[] , in
   Date: 25/04/12 13:48
 
   Algorithm:
+
 	  for the chosen number of swaps:
+
 		generate two random numbers (from and to) for the card value
+
 		generate two random numbers (from and to) for the suit
+
 		time-tested swap technique:
+
 			set a temp value to (to suit)[ (to card) ]
+
 			set (to   suit)[ (to   card) ] to
+
 				(from suit)[ (from card) ]
+
 			set (from suit)[ (from card) ] to the temp value
 
   \param[in] spades Contains number values of spades cards

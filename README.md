@@ -1,7 +1,13 @@
 cardgame
 ========
 
-For a Computer Science 2 class at Texas State University.
+This is for a Computer Science 2 class at Texas State University.
+I'm incorporating git and doxygen in an attempt to at least start
+to get a grasp on how software development is actually done in 
+practice. Because writing software without a VCS and documentation
+platform seems a bit like building a house with no schedule or 
+blueprints. Sure you can do it, but the product is probably
+going to suck. Here's to hoping this sucks less.
 
 NOTE: I'm conflicted about using Dr. Gregory's naming scheme. 
 In the context of a VCS, it's bad practice. Not to mention I 
