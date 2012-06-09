@@ -113,6 +113,6 @@ clean:
 	rm -f *.ii
 	rm -f *.o
 	rm -f *.s
-	rm -f A01234567_hello
+	rm -f A01234567_cards
 	rm -f *dump*
 	rm -f *preproc*

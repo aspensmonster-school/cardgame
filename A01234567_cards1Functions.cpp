@@ -1,7 +1,5 @@
-/** @file A01234567_cards1Functions.cpp
-  @brief Contains various functions used by the program to do tasks.
-
-  This file should be documented...
+/** \file A01234567_cards1Functions.cpp
+  \brief Contains various functions used by the program to do tasks.
 
   Original Author: Carl Gregory
 
@@ -24,11 +22,12 @@ using namespace std;
 
   Seeds the random number generator.
 
-  Author: Carl Gregory
+  Original Author: Carl Gregory
 
   Date: 21/05/12 14:07
 
 */
+
 void setupRand()
 {
     // Set up pseusorandom numbers
@@ -43,28 +42,13 @@ void setupRand()
 
 /**
 
+  Assigns all suit and number values to the card deck (4 parallel arrays)
+
   Creates a fresh deck made from 4 parallel arrays.
 
-  Name: freshDeck( )
-  Author: Carl Gregory
+  Original Author: Carl Gregory
+
   Date: 25/04/12 13:48
-  Description:
-          assigns all suit and number values to the card deck (4 parallel arrays)
-  Parameters:
-          spades : int []
-          hearts : int []
-          diamonds : int []
-          clubs : int []
-          size : int  dimension of the arrays
-  Calls:
-          none
-  Returns:
-          none
-  Changes:
-          spades : int []
-          hearts : int []
-          diamonds : int []
-          clubs : int []
 
   \param[in] spades Contains number values of spades cards
   \param[in] hearts Contains number values of hearts cards
@@ -89,25 +73,22 @@ void freshDeck(int spades[] , int hearts[] , int diamonds[] , int clubs[] , int 
  	 
 } // void freshDeck( )
 
-/*
-  Name: displayDeck( )
-  Author: Carl Gregory
+/**
+
+  Displays the full card deck (4 parallel arrays) in its current state.
+
+  Original Author: Carl Gregory
+
   Date: 25/04/12 13:48
-  Description:
-          displays the full card deck (4 parallel arrays)
-  Parameters:
-          spades : int []
-          hearts : int []
-          diamonds : int []
-          clubs : int []
-          size : int  dimension of the arrays
-  Calls:
-          none
-  Returns:
-          none
-  Changes:
-          none
+
+  \param[in] spades Contains number values of spades cards
+  \param[in] hearts Contains number values of hearts cards
+  \param[in] diamonds Contains number values of diamonds cards
+  \param[in] clubs Contains number values of clubs cards
+  \param[in] size Size of each card suite, typically 13.
+
 */
+
 void displayDeck(int spades[] , int hearts[] , int diamonds[] , int clubs[] , int size)
 {
  	 int count;
@@ -325,37 +306,31 @@ void displayDeck(int spades[] , int hearts[] , int diamonds[] , int clubs[] , in
 	 cout << endl;
 } // void displayDeck( )
 
-/*
-  Name: shuffleDeck( )
-  Author: Carl Gregory
+/**
+
+  Randomly swaps card values in random suits
+  in the card deck (4 parallel arrays).
+
+  Original Author: Carl Gregory
+
   Date: 25/04/12 13:48
-  Description:
-          randomly swaps card values in random suits
-          in the card deck (4 parallel arrays)
-  Parameters:
-          spades : int []
-          hearts : int []
-          diamonds : int []
-          clubs : int []
-          size : int  dimension of the arrays
-  Calls:
-          none
-  Returns:
-          none
-  Changes:
-          spades : int []
-          hearts : int []
-          diamonds : int []
-          clubs : int []
+
   Algorithm:
-		  for the chosen number of swaps:
-			generate two random numbers (from and to) for the card value
-			generate two random numbers (from and to) for the suit
-			time-tested swap technique:
-				set a temp value to (to suit)[ (to card) ]
-				set (to   suit)[ (to   card) ] to
-					(from suit)[ (from card) ]
-				set (from suit)[ (from card) ] to the temp value
+	  for the chosen number of swaps:
+		generate two random numbers (from and to) for the card value
+		generate two random numbers (from and to) for the suit
+		time-tested swap technique:
+			set a temp value to (to suit)[ (to card) ]
+			set (to   suit)[ (to   card) ] to
+				(from suit)[ (from card) ]
+			set (from suit)[ (from card) ] to the temp value
+
+  \param[in] spades Contains number values of spades cards
+  \param[in] hearts Contains number values of hearts cards
+  \param[in] diamonds Contains number values of diamonds cards
+  \param[in] clubs Contains number values of clubs cards
+  \param[in] size Size of each card suite, typically 13.
+
 */
 
 void shuffleDeck(int spades[] , int hearts[] , int diamonds[] , int clubs[] , int size)
