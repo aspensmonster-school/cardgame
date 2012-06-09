@@ -1,12 +1,16 @@
-/*
-  Name: cards1.cpp
+/**\file A01234567_cards1.cpp
+
+  Simulates dealing a deck of cards to four players;
+
   Author: Carl Gregory
+
   Date: 19/05/12 19:46
+
   Modified by: Preston Maness
+
   Date: 08/06/12 17:38
-  Description:
-        simulates dealing a deck of cards to four players;
- */
+
+*/
 
 /*
     Copyright 2012 Preston Maness.
@@ -34,6 +38,17 @@
 #include "A01234567_cards1.h"
 
 using namespace std;
+
+/**
+ *
+ * Not sure why we've got argc and *argv[] here, seeing as
+ * the program takes no CLI arguments.
+ *
+ * @param argc Number of arguments passed to command on CLI
+ * @param argv Contains the flag/option+value/argument parameter pairs
+ *        like "-c 5 -d 2" or whatever.
+ * @return EXIT_SUCCESS in a perfect world. Some integer other than zero otherwise.
+ */
 
 int main(int argc, char *argv[])
 {

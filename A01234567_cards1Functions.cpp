@@ -330,10 +330,17 @@ void displayDeck(int spades[] , int hearts[] , int diamonds[] , int clubs[] , in
   Randomly swaps card values in random suits
   in the card deck (4 parallel arrays).
 
+\pre The deck is initialized and the cards are in any particular order.
+Typically this function is called from main right after creating a deck,
+as the created deck is in order.
+
+\post The deck is shuffled.
+
   Original Author: Carl Gregory
 
   Date: 25/04/12 13:48
 
+\verbatim
   Algorithm:
 
 	  for the chosen number of swaps:
@@ -351,7 +358,7 @@ void displayDeck(int spades[] , int hearts[] , int diamonds[] , int clubs[] , in
 				(from suit)[ (from card) ]
 
 			set (from suit)[ (from card) ] to the temp value
-
+\endverbatim
   \param[in] spades Contains number values of spades cards
   \param[in] hearts Contains number values of hearts cards
   \param[in] diamonds Contains number values of diamonds cards
