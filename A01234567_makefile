@@ -15,11 +15,11 @@
 CXX=g++
 CXXFLAGS=-g -Wall -O3 -std=c++0x
 LDFLAGS=
-SOURCES=A01234567_hello.cpp
+SOURCES := $(wildcard *.cpp)
 PP=$(SOURCES:.cpp=.ii)
 ASM=$(SOURCES:.cpp=.s)
 OBJECTS=$(SOURCES:.cpp=.o)
-EXECUTABLE=A01234567_hello
+EXECUTABLE=A01234567_cards
 
 # ===========================================================
 
@@ -27,7 +27,6 @@ EXECUTABLE=A01234567_hello
 # then linking to make an executable. 
 
 output: $(EXECUTABLE)
-	./$(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CXX) $(LDFLAGS) $(OBJECTS) -o $@

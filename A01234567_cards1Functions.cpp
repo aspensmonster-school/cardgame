@@ -1,16 +1,11 @@
-/*
-  Name: card1Functions.cpp
-  Author: Carl Gregory
+/** @file A01234567_cards1Functions.cpp
+  @brief Contains various functions used by the program to do tasks.
+
+  This file should be documented...
+
+  Original Author: Carl Gregory
+
   Date: 05/06/12 13:24
-  Modified by: Preston Maness
-  Date: 08/06/12 17:38
-  Description: 
-  			   contains the function code for prototypes in cards1.h
-  Functions:
-  			setupRand();
-			freshDeck( );
-			displayDeck( );
-			shuffleDeck( );
 */
 
 /* Holy fuck that's a lot of switch statements */
@@ -25,21 +20,14 @@
 
 using namespace std;
 
-/*
-  Name: setupRand()
+/**
+
+  Seeds the random number generator.
+
   Author: Carl Gregory
+
   Date: 21/05/12 14:07
-  Description:
-        sets up pseudorandom number generator
-  Parameters:
-          none
-  Calls:
-          time( )
-          srand( )
-  Returns:
-          none
-  Changes:
-          seed : unsigned
+
 */
 void setupRand()
 {
@@ -53,7 +41,10 @@ void setupRand()
 
 } //
 
-/*
+/**
+
+  Creates a fresh deck made from 4 parallel arrays.
+
   Name: freshDeck( )
   Author: Carl Gregory
   Date: 25/04/12 13:48
@@ -74,6 +65,13 @@ void setupRand()
           hearts : int []
           diamonds : int []
           clubs : int []
+
+  \param[in] spades Contains number values of spades cards
+  \param[in] hearts Contains number values of hearts cards
+  \param[in] diamonds Contains number values of diamonds cards
+  \param[in] clubs Contains number values of clubs cards
+  \param[in] size Size of each card suite, typically 13.
+
 */
 
 void freshDeck(int spades[] , int hearts[] , int diamonds[] , int clubs[] , int size)
