@@ -1,6 +1,10 @@
 cardgame
 ========
 
+License: GNU GPL version 3. See COPYING file.
+Documentation: I'll probably put it up on my personal domain at
+some point.
+
 This is for a Computer Science 2 class at Texas State University.
 I'm incorporating git and doxygen in an attempt to at least start
 to get a grasp on how software development is actually done in 

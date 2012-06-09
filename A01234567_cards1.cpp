@@ -1,4 +1,5 @@
 /**\file A01234567_cards1.cpp
+ * \brief Contains main.cpp and performs the program loop.
 
   Simulates dealing a deck of cards to four players;
 

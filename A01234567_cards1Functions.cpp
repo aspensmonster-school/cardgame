@@ -359,6 +359,10 @@ as the created deck is in order.
 
 			set (from suit)[ (from card) ] to the temp value
 \endverbatim
+
+Sidenote: In what universe is that kind of pseudocode "universal?"
+I haven't the foggiest idea what's going on up there.
+
   \param[in] spades Contains number values of spades cards
   \param[in] hearts Contains number values of hearts cards
   \param[in] diamonds Contains number values of diamonds cards

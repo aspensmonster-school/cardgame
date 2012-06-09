@@ -2,6 +2,7 @@
 #define CARDS1
 
 /**\file A01234567_cards1.h
+ * \brief Header that defines the functions found in A01234567_cards1Functions.cpp
 \verbatim
   First stage of Card project for CS2308-501 Summer 2012
 	- Simulates dealing a deck of cards to four players;
