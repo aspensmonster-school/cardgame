@@ -15,11 +15,11 @@
 CXX=g++
 CXXFLAGS=-g -Wall -O3 -std=c++0x
 LDFLAGS=
-SOURCES=A01234567_hello.cpp
+SOURCES := $(wildcard *.cpp)
 PP=$(SOURCES:.cpp=.ii)
 ASM=$(SOURCES:.cpp=.s)
 OBJECTS=$(SOURCES:.cpp=.o)
-EXECUTABLE=A01234567_hello
+EXECUTABLE=A01234567_cards
 
 # ===========================================================
 
@@ -27,7 +27,6 @@ EXECUTABLE=A01234567_hello
 # then linking to make an executable. 
 
 output: $(EXECUTABLE)
-	./$(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CXX) $(LDFLAGS) $(OBJECTS) -o $@
@@ -51,7 +50,7 @@ $(EXECUTABLE): $(OBJECTS)
 # 	preprocessed input (.ii files). However, use -S flag
 # 	to stop at compiling and give the assembler output (.s files).
 #	Otherwise, this command will also assemble and give object
-#	code. In the broken down case give here, this is where you
+#	code. In the broken down case given here, this is where you
 #	pass all of your CXXFLAGS like `-Wall` or `-ansi` or `-03` 
 
 # Assembler: Technically invoked by `as`, but g++ can handle for you.
@@ -69,7 +68,7 @@ $(EXECUTABLE): $(OBJECTS)
 
 # preprocessed produces source file with include statements expanded
 
-# it redirects the output to file A01234567_hello.i
+# it redirects the output to file A01234567_hello.ii
 
 A01234567_preprocessed: $(SOURCES)
 	$(CXX) -E $(SOURCES) > $(PP)
@@ -114,6 +113,6 @@ clean:
 	rm -f *.ii
 	rm -f *.o
 	rm -f *.s
-	rm -f A01234567_hello
+	rm -f A01234567_cards
 	rm -f *dump*
 	rm -f *preproc*
