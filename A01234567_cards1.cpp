@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     displayDeck(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
     
     cout << "\nand a shuffled deck:" << endl;
-//    shuffleDeck(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
+    shuffleDeck(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
     displayDeck(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
 
 	cout << "Press ENTER to Continue." << endl;

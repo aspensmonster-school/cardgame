@@ -132,9 +132,15 @@ void displayDeck(int cardDeck[][NUM_SUIT_CARDS] , int suits, int cards)
   Randomly swaps card values in random suits
   in the card deck (4 parallel arrays).
 
+\warning This doesn't actually "shuffle" the deck from what I can tell. It swaps up card values
+but not suits. You still have all spades, then all hearts, then all diamonds,
+then all clubs being displayed. A better design would just be to define a
+card object and make a vector full of those. Much easier to do and what I'll
+be adding later this weekend.
+
 \pre The deck is initialized and the cards are in any particular order.
 Typically this function is called from main right after creating a deck,
-as the created deck is in order.
+as the created deck is in order and needs to be shuffled.
 
 \post The deck is shuffled.
 
@@ -173,9 +179,10 @@ I haven't the foggiest idea what's going on up there.
 
 */
 
-void shuffleDeck(int spades[] , int hearts[] , int diamonds[] , int clubs[] , int size)
+void shuffleDeck(int cardDeck[][NUM_SUIT_CARDS], int suits , int cards)
 {
- 	 const int NUM_SWAPS = size;
+
+ 	 const int NUM_SWAPS = cards;
  	 
  	 int fromSuit, toSuit;
  	 int fromCard, toCard;
@@ -209,8 +216,8 @@ void shuffleDeck(int spades[] , int hearts[] , int diamonds[] , int clubs[] , in
 			in that case we would HAVE to use something like NUM_SUITS instead
 			of the literal 4
 	  	 */
-	  	 fromSuit = rand() % 4;
-	  	 toSuit = rand() % 4;
+	  	 fromSuit = rand() % NUM_SUITS;
+	  	 toSuit = rand() % NUM_SUITS;
 	  	 fromCard = rand() % NUM_SUIT_CARDS;
 	  	 toCard = rand() % NUM_SUIT_CARDS;
 	  	 
@@ -227,24 +234,37 @@ void shuffleDeck(int spades[] , int hearts[] , int diamonds[] , int clubs[] , in
 				switch (toSuit)
 				{
 				 case 0:	// to spades
-				 	  temp = spades[toCard];
+					  temp = cardDeck[0][toCard];
+					  cardDeck[0][toCard] = cardDeck[0][fromCard];
+					  cardDeck[0][fromCard] = temp;
+					 /*temp = spades[toCard];
 				 	  temp = spades[toCard] = spades[fromCard];
-				 	  spades[fromCard] = temp;
+				 	  spades[fromCard] = temp;*/
 				 	  break;
 				 case 1:	// to hearts
-				 	  temp = hearts[toCard];
+					  temp = cardDeck[1][toCard];
+					  cardDeck[1][toCard] = cardDeck[0][fromCard];
+					  cardDeck[0][fromCard] = temp;
+				 	  /*temp = hearts[toCard];
 				 	  temp = hearts[toCard] = spades[fromCard];
 				 	  spades[fromCard] = temp;
+				 	  */
 				 	  break;
 				 case 2:	// to diamonds
-				 	  temp = diamonds[toCard];
+					  temp = cardDeck[2][toCard];
+					  cardDeck[2][toCard] = cardDeck[0][fromCard];
+					  cardDeck[0][fromCard] = temp;
+				 	  /*temp = diamonds[toCard];
 				 	  temp = diamonds[toCard] = spades[fromCard];
-				 	  spades[fromCard] = temp;
+				 	  spades[fromCard] = temp;*/
 				 	  break;
 				 case 3:	// to clubs
-				 	  temp = clubs[toCard];
+					  temp = cardDeck[3][toCard];
+					  cardDeck[3][toCard] = cardDeck[0][fromCard];
+					  cardDeck[0][fromCard] = temp;
+				 	  /*temp = clubs[toCard];
 				 	  temp = clubs[toCard] = spades[fromCard];
-				 	  spades[fromCard] = temp;
+				 	  spades[fromCard] = temp;*/
 				 	  break;
 				 default:
 				 	  noProblem = false;
@@ -255,24 +275,36 @@ void shuffleDeck(int spades[] , int hearts[] , int diamonds[] , int clubs[] , in
 				switch (toSuit)
 				{
 				 case 0:	// to spades
-				 	  temp = spades[toCard];
+					  temp = cardDeck[0][toCard];
+					  cardDeck[0][toCard] = cardDeck[1][fromCard];
+					  cardDeck[1][fromCard] = temp;
+				 	  /*temp = spades[toCard];
 				 	  temp = spades[toCard] = hearts[fromCard];
-				 	  hearts[fromCard] = temp;
+				 	  hearts[fromCard] = temp;*/
 				 	  break;
 				 case 1:	// to hearts
-				 	  temp = hearts[toCard];
+					  temp = cardDeck[1][toCard];
+					  cardDeck[1][toCard] = cardDeck[1][fromCard];
+					  cardDeck[1][fromCard] = temp;
+				 	  /*temp = hearts[toCard];
 				 	  temp = hearts[toCard] = hearts[fromCard];
-				 	  hearts[fromCard] = temp;
+				 	  hearts[fromCard] = temp;*/
 				 	  break;
 				 case 2:	// to diamonds
-				 	  temp = diamonds[toCard];
+					  temp = cardDeck[2][toCard];
+					  cardDeck[2][toCard] = cardDeck[1][fromCard];
+					  cardDeck[1][fromCard] = temp;
+				 	  /*temp = diamonds[toCard];
 				 	  temp = diamonds[toCard] = hearts[fromCard];
-				 	  hearts[fromCard] = temp;
+				 	  hearts[fromCard] = temp;*/
 				 	  break;
 				 case 3:	// to clubs
-				 	  temp = clubs[toCard];
+					  temp = cardDeck[3][toCard];
+					  cardDeck[3][toCard] = cardDeck[1][fromCard];
+					  cardDeck[1][fromCard] = temp;
+				 	  /*temp = clubs[toCard];
 				 	  temp = clubs[toCard] = hearts[fromCard];
-				 	  hearts[fromCard] = temp;
+				 	  hearts[fromCard] = temp;*/
 				 	  break;
 				 default:
 				 	  noProblem = false;
@@ -283,24 +315,36 @@ void shuffleDeck(int spades[] , int hearts[] , int diamonds[] , int clubs[] , in
 				switch (toSuit)
 				{
 				 case 0:	// to spades
-				 	  temp = spades[toCard];
+					  temp = cardDeck[0][toCard];
+					  cardDeck[0][toCard] = cardDeck[2][fromCard];
+					  cardDeck[2][fromCard] = temp;
+				 	  /*temp = spades[toCard];
 				 	  temp = spades[toCard] = diamonds[fromCard];
-				 	  diamonds[fromCard] = temp;
+				 	  diamonds[fromCard] = temp;*/
 				 	  break;
 				 case 1:	// to hearts
-				 	  temp = hearts[toCard];
+					  temp = cardDeck[1][toCard];
+					  cardDeck[1][toCard] = cardDeck[2][fromCard];
+					  cardDeck[2][fromCard] = temp;
+					  /*temp = hearts[toCard];
 				 	  temp = hearts[toCard] = diamonds[fromCard];
-				 	  diamonds[fromCard] = temp;
+				 	  diamonds[fromCard] = temp;*/
 				 	  break;
 				 case 2:	// to diamonds
-				 	  temp = diamonds[toCard];
+					  temp = cardDeck[2][toCard];
+					  cardDeck[2][toCard] = cardDeck[2][fromCard];
+					  cardDeck[2][fromCard] = temp;
+				 	  /*temp = diamonds[toCard];
 				 	  temp = diamonds[toCard] = diamonds[fromCard];
-				 	  diamonds[fromCard] = temp;
+				 	  diamonds[fromCard] = temp;*/
 				 	  break;
 				 case 3:	// to clubs
-				 	  temp = clubs[toCard];
+					  temp = cardDeck[3][toCard];
+					  cardDeck[3][toCard] = cardDeck[2][fromCard];
+					  cardDeck[2][fromCard] = temp;
+				 	  /*temp = clubs[toCard];
 				 	  temp = clubs[toCard] = diamonds[fromCard];
-				 	  diamonds[fromCard] = temp;
+				 	  diamonds[fromCard] = temp;*/
 				 	  break;
 				 default:
 				 	  noProblem = false;
@@ -311,24 +355,36 @@ void shuffleDeck(int spades[] , int hearts[] , int diamonds[] , int clubs[] , in
 				switch (toSuit)
 				{
 				 case 0:	// to spades
-				 	  temp = spades[toCard];
+					  temp = cardDeck[0][toCard];
+					  cardDeck[0][toCard] = cardDeck[3][fromCard];
+					  cardDeck[3][fromCard] = temp;
+				 	 /* temp = spades[toCard];
 				 	  temp = spades[toCard] = clubs[fromCard];
-				 	  clubs[fromCard] = temp;
+				 	  clubs[fromCard] = temp;*/
 				 	  break;
 				 case 1:	// to hearts
-				 	  temp = hearts[toCard];
+					  temp = cardDeck[1][toCard];
+					  cardDeck[1][toCard] = cardDeck[3][fromCard];
+					  cardDeck[3][fromCard] = temp;
+				 	  /*temp = hearts[toCard];
 				 	  temp = hearts[toCard] = clubs[fromCard];
-				 	  clubs[fromCard] = temp;
+				 	  clubs[fromCard] = temp;*/
 				 	  break;
 				 case 2:	// to diamonds
-				 	  temp = diamonds[toCard];
+					  temp = cardDeck[2][toCard];
+					  cardDeck[2][toCard] = cardDeck[3][fromCard];
+					  cardDeck[3][fromCard] = temp;
+				 	  /*temp = diamonds[toCard];
 				 	  temp = diamonds[toCard] = clubs[fromCard];
-				 	  clubs[fromCard] = temp;
+				 	  clubs[fromCard] = temp;*/
 				 	  break;
 				 case 3:	// to clubs
-				 	  temp = clubs[toCard];
+					  temp = cardDeck[3][toCard];
+					  cardDeck[3][toCard] = cardDeck[3][fromCard];
+					  cardDeck[3][fromCard] = temp;
+				 	  /*temp = clubs[toCard];
 				 	  temp = clubs[toCard] = clubs[fromCard];
-				 	  clubs[fromCard] = temp;
+				 	  clubs[fromCard] = temp;*/
 				 	  break;
 				 default:
 				 	  noProblem = false;
@@ -341,7 +397,6 @@ void shuffleDeck(int spades[] , int hearts[] , int diamonds[] , int clubs[] , in
  		 }; // switch (fromSuit)
 	  	 
 	 } // for (swap = 0; swap < NUM_SWAPS; ++swap)
- 	 
 } // void shuffleDeck( )
 
 /**
@@ -359,7 +414,7 @@ void shuffleDeck(int spades[] , int hearts[] , int diamonds[] , int clubs[] , in
 void displayCard(int cardDeck[][NUM_SUIT_CARDS] , int suit, int card)
 {
 
-	if( card == 0) /* Ace */
+	if( cardDeck[suit][card] == 0) /* Ace */
 	{
 		cout << "A";
 		switch(suit)
@@ -383,7 +438,7 @@ void displayCard(int cardDeck[][NUM_SUIT_CARDS] , int suit, int card)
 		}
 	}
 
-	if( card >= 1 && card <=8) /* 2-9 */
+	if( cardDeck[suit][card] >= 1 && cardDeck[suit][card] <=8) /* 2-9 */
 	{
 		cout << (cardDeck[suit][card] + 1); /* Without plus one you're just printing the index */
 		switch(suit)
@@ -407,12 +462,12 @@ void displayCard(int cardDeck[][NUM_SUIT_CARDS] , int suit, int card)
 		}
 	}
 
-	if( card >=9) /* 10-K */
+	if( cardDeck[suit][card] >=9) /* 10-K */
 	{
 		switch(suit)
 		{
 			case 0: /* spades */
-				switch(card)
+				switch(cardDeck[suit][card])
 				{
 					case 9: /* 10 */
 						cout << "10";
@@ -434,7 +489,7 @@ void displayCard(int cardDeck[][NUM_SUIT_CARDS] , int suit, int card)
 				break; /* end spades */
 
 			case 1: /* hearts */
-				switch(card)
+				switch(cardDeck[suit][card])
 				{
 					case 9: /* 10 */
 						cout << "10";
@@ -456,7 +511,7 @@ void displayCard(int cardDeck[][NUM_SUIT_CARDS] , int suit, int card)
 				break; /* end hearts */
 
 			case 2: /* diamonds */
-				switch(card)
+				switch(cardDeck[suit][card])
 				{
 					case 9: /* 10 */
 						cout << "10";
@@ -478,7 +533,7 @@ void displayCard(int cardDeck[][NUM_SUIT_CARDS] , int suit, int card)
 				break; /* End Diamonds */
 
 			case 3: /* clubs */
-				switch(card)
+				switch(cardDeck[suit][card])
 				{
 					case 9: /* 10 */
 						cout << "10";
