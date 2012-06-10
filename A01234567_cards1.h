@@ -41,17 +41,17 @@
     along with CardGame.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/* And parallel arrays */
-
 #include <string>
 
 using namespace std;
 
+const int NUM_SUITS = 4;
 const int NUM_SUIT_CARDS = 13;
 
 void setupRand();
-void freshDeck(int [] , int [] , int [] , int [] , int );
-void displayDeck(int [] , int [] , int [] , int [] , int );
-void shuffleDeck(int [] , int [] , int [] , int [] , int );
+void freshDeck(int [][NUM_SUIT_CARDS] , int ,  int );
+void displayDeck(int [][NUM_SUIT_CARDS] , int ,  int );
+void shuffleDeck(int [][NUM_SUIT_CARDS] , int ,  int );
+void displayCard(int [][NUM_SUIT_CARDS] , int , int );
 
 #endif

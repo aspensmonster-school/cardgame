@@ -1,5 +1,7 @@
 /**\file A01234567_cards1.cpp
  * \brief Contains main.cpp and performs the program loop.
+ * It seeds the random number generator, gets a fresh deck,
+ * displays it, shuffles it, and displays it again.
 
   Simulates dealing a deck of cards to four players;
 
@@ -53,19 +55,17 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    int Spades[NUM_SUIT_CARDS];
-    int Hearts[NUM_SUIT_CARDS];
-    int Diamonds[NUM_SUIT_CARDS];
-    int Clubs[NUM_SUIT_CARDS];
+
+	int cardDeck[NUM_SUITS][NUM_SUIT_CARDS];
 
     setupRand();
     cout << "\nA new deck:" << endl;
-    freshDeck(Spades, Hearts, Diamonds, Clubs, NUM_SUIT_CARDS);
-    displayDeck(Spades, Hearts, Diamonds, Clubs, NUM_SUIT_CARDS);
+    freshDeck(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
+    displayDeck(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
     
     cout << "\nand a shuffled deck:" << endl;
-    shuffleDeck(Spades, Hearts, Diamonds, Clubs, NUM_SUIT_CARDS);
-    displayDeck(Spades, Hearts, Diamonds, Clubs, NUM_SUIT_CARDS);
+//    shuffleDeck(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
+    displayDeck(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
 
 	cout << "Press ENTER to Continue." << endl;
 	cin.get();

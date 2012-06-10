@@ -2,6 +2,7 @@ cardgame
 ========
 
 License: GNU GPL version 3. See COPYING file.
+
 Documentation: I'll probably put it up on my personal domain at
 some point.
 
