@@ -80,8 +80,13 @@ $(EXECUTABLE): $(OBJECTS)
 # steps right off the bat ( $(CXX) -c $(SOURCES) ... ), since 
 # there's no easy automated way to go through preprocess and compile.
 
-A01234567_preprocessed: $(SOURCES)
-	$(CXX) -E $(SOURCES) > $(PP)
+#A01234567_preprocessed: $(SOURCES)
+#	$(CXX) -E $(SOURCES) > $(PP)
+
+A01234567_preprocessed: $(PP)
+
+$(PP): %.ii : %.cpp
+	$(CXX) -E $< > $@
 
 # ===========================================================
 
@@ -89,8 +94,13 @@ A01234567_preprocessed: $(SOURCES)
 
 # it takes the preprocessed file and spits out assembler (.s files)
 
-A01234567_compiled: $(PP)
-	$(CXX) -S $(CXXFLAGS) $(PP) -o $(ASM)
+#A01234567_compiled: $(PP)
+#	$(CXX) -S $(CXXFLAGS) $(PP) -o $(ASM)
+
+A01234567_compiled: $(ASM)
+
+$(ASM): %.s : %.ii
+	$(CXX) -S $(CXXFLAGS) $< -o $@
 
 # ===========================================================
 
@@ -101,8 +111,13 @@ A01234567_compiled: $(PP)
 # it is still necessary to pass the -c flag to tell g++
 # not to link.
 
-A01234567_assembled: $(ASM)
-	$(CXX) -c $(ASM) -o $(OBJECTS) && hexdump $(OBJECTS) > A01234567_o_dump 
+#A01234567_assembled: $(ASM)
+#	$(CXX) -c $(ASM) -o $(OBJECTS) && hexdump $(OBJECTS) > A01234567_o_dump 
+
+A01234567_assembled: $(OBJECTS)
+
+$(OBJECTS): %.o : %.s
+	$(CXX) -c $< -o $@ && hexdump $@ > $@.dump
 
 # ===========================================================
 
