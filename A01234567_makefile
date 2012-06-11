@@ -69,6 +69,16 @@ $(EXECUTABLE): $(OBJECTS)
 # preprocessed produces source file with include statements expanded
 
 # it redirects the output to file A01234567_hello.ii
+# WARNING: Only works with a single file. According to manual for
+# g++, there is no systematic way to output all preprocessed
+# source files separately for use in the compiling step. You'd
+# have to 
+# $(CXX) -E $each-source.cpp > $each-source.ii
+# Which of course breaks this lovely automated step-by-step we have.
+# Not sure if the same problem applys for the compile step.
+# I'd imagine this is why normal compilation does the first three
+# steps right off the bat ( $(CXX) -c $(SOURCES) ... ), since 
+# there's no easy automated way to go through preprocess and compile.
 
 A01234567_preprocessed: $(SOURCES)
 	$(CXX) -E $(SOURCES) > $(PP)
