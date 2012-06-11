@@ -1,5 +1,5 @@
-#ifndef CARDS1
-#define CARDS1
+#ifndef CARDS2
+#define CARDS2
 
 /**\file A01234567_cards2.h
  * \brief Header that defines the functions found in A01234567_cards1Functions.cpp
@@ -75,10 +75,16 @@ const int NUM_SUITS = 4;
 const int NUM_SUIT_CARDS = 13;
 const int DECK_SIZE = NUM_SUITS * NUM_SUIT_CARDS;
 
+const int SPADE = 0;
+const int HEART = 1;
+const int DIAMOND = 2;
+const int CLUB = 3;
+
+/* These arrays would probably be better implemented as maps */
+
 const string valueSymbol[NUM_SUIT_CARDS] = {
 		"A","2","3","4","5","6","7","8","9","10","J","Q","K"
 };
-
 const char suitSymbol[NUM_SUITS] = {
 		'S','H','D','C'
 };
