@@ -80,6 +80,8 @@ $(EXECUTABLE): $(OBJECTS)
 # steps right off the bat ( $(CXX) -c $(SOURCES) ... ), since 
 # there's no easy automated way to go through preprocess and compile.
 
+# UPDATED: Scratch that up there. Solved it below for all steps.
+
 #A01234567_preprocessed: $(SOURCES)
 #	$(CXX) -E $(SOURCES) > $(PP)
 
