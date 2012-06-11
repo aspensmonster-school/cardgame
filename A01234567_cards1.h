@@ -45,8 +45,41 @@
 
 using namespace std;
 
+struct Card{
+
+	/* Sensible naming scheme
+	int suit;
+	int value;
+	string valueSymbol;
+	char suitSymbol;
+	bool held;
+	bool visible;
+	int initIndex;
+	*/
+
+	/* Required naming scheme */
+
+	int suit;
+	int faceValue;
+	string vSymbol;
+	char sSymbol;
+	bool isHeld;
+	bool isVisible;
+	int initIndex;
+
+};
+
 const int NUM_SUITS = 4;
 const int NUM_SUIT_CARDS = 13;
+const int DECK_SIZE = NUM_SUITS * NUM_SUIT_CARDS;
+
+const string valueSymbol[NUM_SUIT_CARDS] = {
+		"A","2","3","4","5","6","7","8","9","10","J","Q","K"
+};
+
+const char suitSymbol[NUM_SUITS] = {
+		'S','H','D','C'
+};
 
 void setupRand();
 void freshDeck(int [][NUM_SUIT_CARDS] , int ,  int );
