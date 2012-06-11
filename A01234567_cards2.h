@@ -1,7 +1,7 @@
 #ifndef CARDS1
 #define CARDS1
 
-/**\file A01234567_cards1.h
+/**\file A01234567_cards2.h
  * \brief Header that defines the functions found in A01234567_cards1Functions.cpp
 \verbatim
   First stage of Card project for CS2308-501 Summer 2012
@@ -48,6 +48,7 @@ using namespace std;
 struct Card{
 
 	/* Sensible naming scheme
+
 	int suit;
 	int value;
 	string valueSymbol;
@@ -55,6 +56,7 @@ struct Card{
 	bool held;
 	bool visible;
 	int initIndex;
+
 	*/
 
 	/* Required naming scheme */
