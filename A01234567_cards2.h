@@ -90,7 +90,7 @@ const char suitSymbol[NUM_SUITS] = {
 };
 
 void setupRand();
-void freshDeck(int [][NUM_SUIT_CARDS] , int ,  int );
+void refresh(int [][NUM_SUIT_CARDS] , int ,  int );
 void displayDeck(int [][NUM_SUIT_CARDS] , int ,  int );
 void shuffleDeck(int [][NUM_SUIT_CARDS] , int ,  int );
 void displayCard(int [][NUM_SUIT_CARDS] , int , int );

@@ -18,6 +18,7 @@ LDFLAGS=
 SOURCES := $(wildcard *.cpp)
 PP=$(SOURCES:.cpp=.ii)
 ASM=$(SOURCES:.cpp=.s)
+OBJECTS-INT=$(SOURCES:.cpp=-int.o)
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=A01234567_cards
 
@@ -31,7 +32,7 @@ output: $(EXECUTABLE)
 $(EXECUTABLE): $(OBJECTS)
 	$(CXX) $(LDFLAGS) $(OBJECTS) -o $@
 
-.cpp.o:
+$(OBJECTS): %.o : %.cpp
 	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 # ===========================================================
@@ -82,9 +83,6 @@ $(EXECUTABLE): $(OBJECTS)
 
 # UPDATED: Scratch that up there. Solved it below for all steps.
 
-#A01234567_preprocessed: $(SOURCES)
-#	$(CXX) -E $(SOURCES) > $(PP)
-
 A01234567_preprocessed: $(PP)
 
 $(PP): %.ii : %.cpp
@@ -95,9 +93,6 @@ $(PP): %.ii : %.cpp
 # compiled produces assembly language file A01234567_hello.s
 
 # it takes the preprocessed file and spits out assembler (.s files)
-
-#A01234567_compiled: $(PP)
-#	$(CXX) -S $(CXXFLAGS) $(PP) -o $(ASM)
 
 A01234567_compiled: $(ASM)
 
@@ -113,12 +108,9 @@ $(ASM): %.s : %.ii
 # it is still necessary to pass the -c flag to tell g++
 # not to link.
 
-#A01234567_assembled: $(ASM)
-#	$(CXX) -c $(ASM) -o $(OBJECTS) && hexdump $(OBJECTS) > A01234567_o_dump 
+A01234567_assembled: $(OBJECTS-INT)
 
-A01234567_assembled: $(OBJECTS)
-
-$(OBJECTS): %.o : %.s
+$(OBJECTS-INT): %-int.o : %.s
 	$(CXX) -c $< -o $@ && hexdump $@ > $@.dump
 
 # ===========================================================
@@ -131,8 +123,8 @@ $(OBJECTS): %.o : %.s
 # the linking. We don't use ld ourselves because we don't
 # hate ourselves.
 
-A01234567_linked: $(OBJECTS)
-	$(CXX) $(LDFLAGS) $(OBJECTS) -o $(EXECUTABLE) && hexdump $(EXECUTABLE) > A01234567_x_dump 
+A01234567_linked: $(OBJECTS-INT)
+	$(CXX) $(LDFLAGS) $(OBJECTS-INT) -o $(EXECUTABLE) && hexdump $(EXECUTABLE) > A01234567_x_dump 
 
 # ===========================================================
 

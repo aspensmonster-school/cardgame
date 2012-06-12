@@ -78,7 +78,7 @@ void setupRand()
 
 */
 
-void freshDeck(int cardDeck[][NUM_SUIT_CARDS] , int suits , int cards)
+void refresh(int cardDeck[][NUM_SUIT_CARDS] , int suits , int cards)
 {
  	 // just assign each element its own index
  	 for (int i = 0 ; i < suits ; i++)

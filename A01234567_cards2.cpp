@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 
     setupRand();
     cout << "\nA new deck:" << endl;
-    freshDeck(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
+    refresh(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
     displayDeck(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
     
     cout << "\nand a shuffled deck:" << endl;
