@@ -56,16 +56,23 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 
-	int cardDeck[NUM_SUITS][NUM_SUIT_CARDS];
+	Card deck[DECK_SIZE];
+	Card hand[DECK_SIZE];
+	Card pot[DECK_SIZE];
+
 
     setupRand();
-    cout << "\nA new deck:" << endl;
-    refresh(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
-    displayDeck(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
+    /* cout << "\nA new deck:" << endl; */
+
+    refresh(deck); /* taking default for inSet, i.e., cardDeck is the shoe */
+    refresh(hand,false);
+    refresh(pot,false);
+
+    display(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
     
     cout << "\nand a shuffled deck:" << endl;
     shuffleDeck(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
-    displayDeck(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
+    display(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
 
 	cout << "Press ENTER to Continue." << endl;
 	cin.get();

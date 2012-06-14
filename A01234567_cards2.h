@@ -89,10 +89,23 @@ const char suitSymbol[NUM_SUITS] = {
 		'S','H','D','C'
 };
 
+/* Main functions */
 void setupRand();
-void refresh(Card cardSet[], bool inSet = true);
-void displayDeck(int [][NUM_SUIT_CARDS] , int ,  int );
-void shuffleDeck(int [][NUM_SUIT_CARDS] , int ,  int );
-void displayCard(int [][NUM_SUIT_CARDS] , int , int );
+void refresh(Card[], bool inSet = true);
+void display(Card[], bool debugging = false);
+void shuffle(Card[]);
+void displayCard(Card, bool debugging = false);
+
+/* Helper functions for the functions defined above */
+Card initialize(int, int, int, bool isHere = true);
+Card pickUp(Card[], int);
+Card play(Card[], int, bool faceUp = false);
+void deal(Card[], int);
+
+/* Test Suite */
+void testCardSet(Card[]);
+void testDisplay(Card[]);
+void reveal(Card[]);
+void hide(Card[]);
 
 #endif

@@ -128,7 +128,7 @@ void refresh(Card cardSet[], bool inSet)
 
 */
 
-void displayDeck(int cardDeck[][NUM_SUIT_CARDS] , int suits, int cards)
+void display(int cardDeck[][NUM_SUIT_CARDS] , int suits, int cards)
 {
 
 	for (int i = 0 ; i < suits ; i++)
