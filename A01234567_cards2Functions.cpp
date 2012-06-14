@@ -52,7 +52,7 @@ void setupRand()
     // Get the system time.
     unsigned seed = time(0);
 
-    // Seed the random number generator with unsidned system time
+    // Seed the random number generator with unsigned system time
     srand(seed);
 
 } //
@@ -86,29 +86,16 @@ void refresh(Card cardSet[], bool inSet)
 {
 
 	//call initialize... separately? Why?
-	/*
-	 *
-	 * for ( int i = 0 ; i < NUM_SUITS ; i++)
-	 * {
-	 * 		for ( int j = 0 ; j < NUM_CARDS ; j++)
-	 * 		{
-	 * 			cardSet[i] = initialize(j+(i*NUM_CARDS),i,j,inSet);
-	 * 		}
-	 * }
-	 *
-	 */
 
- 	 // just assign each element its own index
- 	/*
-	for (int i = 0 ; i < suits ; i++)
- 	 {
- 		 for (int j = 0 ; j < cards ; j++)
- 		 {
- 			 cardDeck[i][j] = j;
- 		 }
-	 }
- 	 */
-} // void freshDeck( )
+	for ( int i = 0 ; i < NUM_SUITS ; i++)
+	{
+		for ( int j = 0 ; j < NUM_SUIT_CARDS ; j++)
+		{
+			cardSet[i] = initialize(j+(i*NUM_SUIT_CARDS),i,j,inSet);
+		}
+	}
+
+} // void fresh( )
 
 /**
 
@@ -135,28 +122,12 @@ void refresh(Card cardSet[], bool inSet)
 void display(Card cardSet[], bool debugging)
 {
 
-	/*
-	 *
-	 * for ( int i = 0 ; i < DECK_SIZE ; i++)
-	 * {
-	 * 		displayCard(cardSet[i],debugging);
-	 * }
-	 *
-	 */
-
-	/*
-	for (int i = 0 ; i < suits ; i++)
+	for ( int i = 0 ; i < DECK_SIZE ; i++)
 	{
-		for (int j = 0 ; j < cards ; j++)
-		{
-			displayCard(cardDeck,i,j);
-			cout << ", ";
-		}
-		cout << "\n";
+		displayCard(cardSet[i],debugging);
 	}
-	*/
 
-} // void displayDeck( )
+} // void display( )
 
 /**
 
@@ -189,9 +160,6 @@ void display(Card cardSet[], bool debugging)
 
   \link http://en.wikipedia.org/wiki/Fisher-Yates_shuffle#The_modern_algorithm
 
-  Sidenote: In what universe is that kind of pseudocode "universal?"
-  I haven't the foggiest idea what's going on up there.
-
   \param[in] cardSet Array of Card structs. Array forms basis for a deck. Each
   player has a full "deck" of 52 struct cards, but only certain cards are revealed.
 
@@ -200,185 +168,123 @@ void display(Card cardSet[], bool debugging)
 void shuffle(Card cardSet[])
 {
 
-	/* Yeah... we're just going to do away with the old algorithm.
-	 * Use the Knuth shuffle.
-	 *
-	 * for ( int i = DECK_SIZE ; i < 0 ; i--)
-	 * {
-	 * 		j = rand() % i;
-	 * 		Card temp = cardSet[i];
-	 * 		cardSet[i] = cardSet[j];
-	 * 		cardSet[j] = temp;
-	 * }
-	 *
-	 */
+	/* Knuth Shuffle */
 
-} // void shuffleDeck( )
+	for ( int i = DECK_SIZE ; i > 0 ; i--)
+	{
+		int j = rand() % i;
+		Card temp = cardSet[i];
+		cardSet[i] = cardSet[j];
+		cardSet[j] = temp;
+	}
+
+} // void shuffle( )
 
 /**
  *
- * Displays a card in the deck. Takes the position in the array
- * (determined by the suit and card integers passed), and displays
- * the appropriate card. The Ace and 2-9 cases are simpler and
- * require fewer switches. 10-K require nested switches.
+ * Displays a card in the deck. Depending on the debugging
+ * flag and the flags in the struct (isHeld, isVisible).
  *
- * @param cardDeck 2D array that holds the cards
- * @param suit Specifies the suit, 0-3
- * @param card Specifies the card, 0-12
+ * \param card a single Card struct.
+ * \param debugging a flag that specifies whether or not to
+ * spit out the entire array.
  */
 
-void displayCard(int cardDeck[][NUM_SUIT_CARDS] , int suit, int card)
+void displayCard(Card card, bool debugging)
 {
 
-	if( cardDeck[suit][card] == 0) /* Ace */
+	if ( debugging == true)
 	{
-		cout << "A";
-		switch(suit)
-		{
-			case 0: /* spades */
-				cout << "S";
-				break;
-			case 1: /* hearts */
-				cout << "H";
-				break;
-			case 2: /* diamonds */
-				cout << "D";
-				break;
-			case 3: /* clubs */
-				cout << "C";
-				break;
-			default: /* what did you do? */
-				cout << "?";
-				break;
-
-		}
+		cout << card.vSymbol << card.sSymbol;
 	}
-
-	if( cardDeck[suit][card] >= 1 && cardDeck[suit][card] <=8) /* 2-9 */
+	else
+	if ( card.isHeld == true && card.isVisible == true )
 	{
-		cout << (cardDeck[suit][card] + 1); /* Without plus one you're just printing the index */
-		switch(suit)
-		{
-			case 0: /* spades */
-				cout << "S";
-				break;
-			case 1: /* hearts */
-				cout << "H";
-				break;
-			case 2: /* diamonds */
-				cout << "D";
-				break;
-			case 3: /* clubs */
-				cout << "C";
-				break;
-			default: /* what did you do? */
-				cout << "?";
-				break;
-
-		}
+		cout << card.vSymbol << card.sSymbol;
 	}
-
-	if( cardDeck[suit][card] >=9) /* 10-K */
+	else
 	{
-		switch(suit)
-		{
-			case 0: /* spades */
-				switch(cardDeck[suit][card])
-				{
-					case 9: /* 10 */
-						cout << "10";
-						break;
-					case 10: /* Jack */
-						cout << "J";
-						break;
-					case 11: /* Queen */
-						cout << "Q";
-						break;
-					case 12: /* King */
-						cout << "K";
-						break;
-					default: /* what did you do? */
-						cout << "?";
-						break;
-				}
-				cout << "S";
-				break; /* end spades */
-
-			case 1: /* hearts */
-				switch(cardDeck[suit][card])
-				{
-					case 9: /* 10 */
-						cout << "10";
-						break;
-					case 10: /* Jack */
-						cout << "J";
-						break;
-					case 11: /* Queen */
-						cout << "Q";
-						break;
-					case 12: /* King */
-						cout << "K";
-						break;
-					default: /* what did you do? */
-						cout << "?";
-						break;
-				}
-				cout << "H";
-				break; /* end hearts */
-
-			case 2: /* diamonds */
-				switch(cardDeck[suit][card])
-				{
-					case 9: /* 10 */
-						cout << "10";
-						break;
-					case 10: /* Jack */
-						cout << "J";
-						break;
-					case 11: /* Queen */
-						cout << "Q";
-						break;
-					case 12: /* King */
-						cout << "K";
-						break;
-					default: /* what did you do? */
-						cout << "?";
-						break;
-				}
-				cout << "D";
-				break; /* End Diamonds */
-
-			case 3: /* clubs */
-				switch(cardDeck[suit][card])
-				{
-					case 9: /* 10 */
-						cout << "10";
-						break;
-					case 10: /* Jack */
-						cout << "J";
-						break;
-					case 11: /* Queen */
-						cout << "Q";
-						break;
-					case 12: /* King */
-						cout << "K";
-						break;
-					default: /* what did you do? */
-						cout << "?";
-						break;
-				}
-				cout << "C";
-				break; /* End Clubs */
-
-			default: /* what did you do? */
-				cout << "?";
-				break;
-
-		} /* end suit switch */
-
-	} /* end if 10-K */
+		return;
+	}
 
 }
 
+Card initialize(int thisIndex, int thisSuit, int thisValue, bool isHere)
+{
 
+	Card thisCard;
 
+	thisCard.suit = thisSuit;
+	thisCard.faceValue = thisValue;
+
+	thisCard.sSymbol = suitSymbol[thisSuit];
+	thisCard.vSymbol = valueSymbol[thisValue];
+
+	thisCard.isHeld = isHere;
+	thisCard.isVisible = true;
+
+	thisCard.initIndex = thisIndex;
+
+	return thisCard;
+
+}
+
+/**
+ *
+ * \warn Does not update state of other arrays or reset
+ * the changes made to the passed array.
+ *
+ */
+
+Card pickUp(Card cardSet [ ] , int thisCard )
+{
+
+	/* Arrays are passed by reference. Why are we
+	 * "returning" the card? The test suit will pick
+	 * up 10 random cards, but doesn't put them back.
+	 * The spec doesn't say anything about updating the
+	 * state of the other decks. I.e., you can "pick up"
+	 * the ace of spades in the player's hand but the
+	 * deck will still have the ace of spades according
+	 * to the spec.
+	 */
+
+	cardSet[thisCard].isHeld = true;
+	cardSet[thisCard].isVisible = true;
+	return cardSet[thisCard];
+
+}
+
+/**
+ *
+ * \warn Does not update state of other arrays.
+ * Sets isVisible incorrectly. If you "play" a card,
+ * it is no longer in your hand. isHeld is obviously
+ * false, but isVisible should also be false for your hand,
+ * and either true or false for the "table/pot" array that
+ * you should also be updating.
+ *
+ */
+
+Card play(Card cardSet[], int thisCard, bool faceUp)
+{
+
+	/* Same pass by reference issue here as in
+	 * pickUp.
+	 */
+
+	cardSet[thisCard].isHeld = false;
+	cardSet[thisCard].isVisible = faceUp;
+	return cardSet[thisCard];
+
+}
+
+void deal(Card cardSet[], int numCards)
+{
+	for ( int i = 0 ; i < numCards ; i++)
+	{
+		Card temp = play(cardSet,i);
+		cout << temp.vSymbol << temp.sSymbol << ", ";
+	}
+	cout << endl;
+}
