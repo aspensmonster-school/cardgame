@@ -59,9 +59,10 @@ void setupRand()
 
 /**
 
-  Assigns all suit and number values to the card deck (2D array)
+  I really don't think "refresh" is a good name for what amounts to a constructor
+  function.
 
-  Creates a fresh deck made from a 2D array.
+
 
   Original Author: Carl Gregory
 
@@ -71,24 +72,39 @@ void setupRand()
 
   Date: 09/06/12
 
-  \param[in] cardDeck 2D array that contains the deck. Rows are suits,
-  	  columns are cards.
-  \param[in] suits Number of card suits. NUM_SUITS is usually passed here.
-  \param[in] cards Size of each card suit. NUM_SUIT_CARDS is usually passed here.
-
+  \param[in] cardSet Array of Card structs. Array forms basis for a deck. Each
+  player has a full "deck" of 52 struct cards, but only certain cards are revealed.
+  \param[in] inSet A boolean value that basically states whether or not the given
+  array of structs is the shoe (true if the array is the shoe). A player's hand,
+  or the table's pot/trash, instead sets inSet to false.
 */
 
-void refresh(int cardDeck[][NUM_SUIT_CARDS] , int suits , int cards)
+void refresh(Card cardSet[], bool inSet)
 {
+
+	//call initialize... separately? Why?
+	/*
+	 *
+	 * for ( int i = 0 ; i < NUM_SUITS ; i++)
+	 * {
+	 * 		for ( int j = 0 ; j < NUM_CARDS ; j++)
+	 * 		{
+	 * 			cardSet[i] = initialize(j+(i*NUM_CARDS),i,j,inSet);
+	 * 		}
+	 * }
+	 *
+	 */
+
  	 // just assign each element its own index
- 	 for (int i = 0 ; i < suits ; i++)
+ 	/*
+	for (int i = 0 ; i < suits ; i++)
  	 {
  		 for (int j = 0 ; j < cards ; j++)
  		 {
  			 cardDeck[i][j] = j;
  		 }
 	 }
- 	 
+ 	 */
 } // void freshDeck( )
 
 /**

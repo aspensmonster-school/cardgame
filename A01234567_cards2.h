@@ -2,7 +2,7 @@
 #define CARDS2
 
 /**\file A01234567_cards2.h
- * \brief Header that defines the functions found in A01234567_cards1Functions.cpp
+ * \brief Header that defines the functions found in A01234567_cards2Functions.cpp
 \verbatim
   First stage of Card project for CS2308-501 Summer 2012
 	- Simulates dealing a deck of cards to four players;
@@ -90,7 +90,7 @@ const char suitSymbol[NUM_SUITS] = {
 };
 
 void setupRand();
-void refresh(int [][NUM_SUIT_CARDS] , int ,  int );
+void refresh(Card cardSet[], bool inSet = true);
 void displayDeck(int [][NUM_SUIT_CARDS] , int ,  int );
 void shuffleDeck(int [][NUM_SUIT_CARDS] , int ,  int );
 void displayCard(int [][NUM_SUIT_CARDS] , int , int );
