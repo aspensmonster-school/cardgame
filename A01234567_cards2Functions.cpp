@@ -62,8 +62,6 @@ void setupRand()
   I really don't think "refresh" is a good name for what amounts to a constructor
   function.
 
-
-
   Original Author: Carl Gregory
 
   Date: 25/04/12 13:48
@@ -72,11 +70,16 @@ void setupRand()
 
   Date: 09/06/12
 
+  \pre The array of Card structs is filled with uninitialized structs
+
+  \post Each struct is initialized with appropriate values
+
   \param[in] cardSet Array of Card structs. Array forms basis for a deck. Each
   player has a full "deck" of 52 struct cards, but only certain cards are revealed.
   \param[in] inSet A boolean value that basically states whether or not the given
   array of structs is the shoe (true if the array is the shoe). A player's hand,
   or the table's pot/trash, instead sets inSet to false.
+
 */
 
 void refresh(Card cardSet[], bool inSet)
@@ -109,9 +112,10 @@ void refresh(Card cardSet[], bool inSet)
 
 /**
 
-  Displays the full card deck (2D) in its current state.
-  Iterates over the deck using nested for loop, passing
-  each cell of the array to displayCard.
+  This function takes an array of Card structs and then proceeds to
+  call another function to actually do the job...? Lolwut?
+  I can understand wanting the freedom to pass either the whole deck
+  or a card. So why not just take advantage of polymorphism here?
 
   Original Author: Carl Gregory
 
@@ -121,16 +125,26 @@ void refresh(Card cardSet[], bool inSet)
 
   Date: 09/06/12
 
-  \param[in] cardDeck 2D array that contains the deck. Rows are suits,
-  	  columns are cards.
-  \param[in] suits Number of card suits. NUM_SUITS is usually passed here.
-  \param[in] cards Size of each card suit. NUM_SUIT_CARDS is usually passed here.
+  \param[in] cardSet Array of Card structs. Array forms basis for a deck. Each
+  player has a full "deck" of 52 struct cards, but only certain cards are revealed.
+  \param[in] debugging A flag that, when set to true, will print out helpful debugging
+  information.
 
 */
 
-void display(int cardDeck[][NUM_SUIT_CARDS] , int suits, int cards)
+void display(Card cardSet[], bool debugging)
 {
 
+	/*
+	 *
+	 * for ( int i = 0 ; i < DECK_SIZE ; i++)
+	 * {
+	 * 		displayCard(cardSet[i],debugging);
+	 * }
+	 *
+	 */
+
+	/*
 	for (int i = 0 ; i < suits ; i++)
 	{
 		for (int j = 0 ; j < cards ; j++)
@@ -140,279 +154,65 @@ void display(int cardDeck[][NUM_SUIT_CARDS] , int suits, int cards)
 		}
 		cout << "\n";
 	}
+	*/
 
 } // void displayDeck( )
 
 /**
 
-  Randomly swaps card values in random suits
-  in the card deck (4 parallel arrays).
+  Randomly swaps card values in the array of Card structs.
+  Uses the Knuth Shuffle algorithm to do so.
 
-\warning This doesn't actually "shuffle" the deck from what I can tell. It swaps up card values
-but not suits. You still have all spades, then all hearts, then all diamonds,
-then all clubs being displayed. A better design would just be to define a
-card object and make a vector full of those. Much easier to do and what I'll
-be adding later this weekend.
+  \pre The deck is initialized and the cards are in any particular order.
+  Typically this function is called from main right after creating a deck,
+  as the created deck is in order and needs to be shuffled.
 
-\pre The deck is initialized and the cards are in any particular order.
-Typically this function is called from main right after creating a deck,
-as the created deck is in order and needs to be shuffled.
-
-\post The deck is shuffled.
+  \post The deck is shuffled.
 
   Original Author: Carl Gregory
 
   Date: 25/04/12 13:48
 
-\verbatim
+  \verbatim
   Algorithm:
 
-	  for the chosen number of swaps:
+  Uses the Knuth Shuffle to randomize the elements of the array.
 
-		generate two random numbers (from and to) for the card value
+  Taken right from wikipedia:
 
-		generate two random numbers (from and to) for the suit
+  To shuffle an array a of n elements (indices 0..n-1):
+  for i from n − 1 downto 1 do
+       j ← random integer with 0 ≤ j ≤ i
+       exchange a[j] and a[i]
 
-		time-tested swap technique:
+  \endverbatim
 
-			set a temp value to (to suit)[ (to card) ]
+  \link http://en.wikipedia.org/wiki/Fisher-Yates_shuffle#The_modern_algorithm
 
-			set (to   suit)[ (to   card) ] to
+  Sidenote: In what universe is that kind of pseudocode "universal?"
+  I haven't the foggiest idea what's going on up there.
 
-				(from suit)[ (from card) ]
-
-			set (from suit)[ (from card) ] to the temp value
-\endverbatim
-
-Sidenote: In what universe is that kind of pseudocode "universal?"
-I haven't the foggiest idea what's going on up there.
-
-  \param[in] spades Contains number values of spades cards
-  \param[in] hearts Contains number values of hearts cards
-  \param[in] diamonds Contains number values of diamonds cards
-  \param[in] clubs Contains number values of clubs cards
-  \param[in] size Size of each card suite, typically 13.
+  \param[in] cardSet Array of Card structs. Array forms basis for a deck. Each
+  player has a full "deck" of 52 struct cards, but only certain cards are revealed.
 
 */
 
-void shuffleDeck(int cardDeck[][NUM_SUIT_CARDS], int suits , int cards)
+void shuffle(Card cardSet[])
 {
 
- 	 const int NUM_SWAPS = cards;
- 	 
- 	 int fromSuit, toSuit;
- 	 int fromCard, toCard;
- 	 int swap, temp;
- 	 
- 	 bool noProblem = true;
- 	 
- 	 /*
- 	   I think there are actual statistics on such things as "after three normal
- 	   shuffles the deck is effectively back to its starting point", none of
- 	   which I really trust, but clearly the number of swaps makes a difference
- 	   here.
- 	   
- 	   To allow a "fudge factor", I don't check for duplicates, that is, I allow
- 	   a card to be swapped with itself.  This makes each shuffle involve a
- 	   different number of cards each time.
- 	   
- 	   I have no idea whatsoever whether this makes any difference, or whether
- 	   that difference is desirable or not.
- 	 */
-  	 noProblem = true;
- 	 for (swap = 0; ( (swap < NUM_SWAPS) && noProblem ); ++swap)
- 	 {
-	  	 /*
-		    We know it's 4 suits because there are four array parameters;
-			couldn't be more general using a defined constant NUM_SUITS here
-			because we would have to change the parameter list each time we
-			change the value of the constant
-			
-			This wouldn't be the case with, say, a 2-D array --
-			in that case we would HAVE to use something like NUM_SUITS instead
-			of the literal 4
-	  	 */
-	  	 fromSuit = rand() % NUM_SUITS;
-	  	 toSuit = rand() % NUM_SUITS;
-	  	 fromCard = rand() % NUM_SUIT_CARDS;
-	  	 toCard = rand() % NUM_SUIT_CARDS;
-	  	 
-		 /*
-		  time-tested swap technique, but a bit awkward with separate arrays
-				set a temp value to (to suit)[ (to card) ]
-				set (to   suit)[ (to   card) ] to
-					(from suit)[ (from card) ]
-				set (from suit)[ (from card) ] to the temp value
-		 */
-	  	 switch (fromSuit)
-	  	 {
-		  	 case 0:		// from spades
-				switch (toSuit)
-				{
-				 case 0:	// to spades
-					  temp = cardDeck[0][toCard];
-					  cardDeck[0][toCard] = cardDeck[0][fromCard];
-					  cardDeck[0][fromCard] = temp;
-					 /*temp = spades[toCard];
-				 	  temp = spades[toCard] = spades[fromCard];
-				 	  spades[fromCard] = temp;*/
-				 	  break;
-				 case 1:	// to hearts
-					  temp = cardDeck[1][toCard];
-					  cardDeck[1][toCard] = cardDeck[0][fromCard];
-					  cardDeck[0][fromCard] = temp;
-				 	  /*temp = hearts[toCard];
-				 	  temp = hearts[toCard] = spades[fromCard];
-				 	  spades[fromCard] = temp;
-				 	  */
-				 	  break;
-				 case 2:	// to diamonds
-					  temp = cardDeck[2][toCard];
-					  cardDeck[2][toCard] = cardDeck[0][fromCard];
-					  cardDeck[0][fromCard] = temp;
-				 	  /*temp = diamonds[toCard];
-				 	  temp = diamonds[toCard] = spades[fromCard];
-				 	  spades[fromCard] = temp;*/
-				 	  break;
-				 case 3:	// to clubs
-					  temp = cardDeck[3][toCard];
-					  cardDeck[3][toCard] = cardDeck[0][fromCard];
-					  cardDeck[0][fromCard] = temp;
-				 	  /*temp = clubs[toCard];
-				 	  temp = clubs[toCard] = spades[fromCard];
-				 	  spades[fromCard] = temp;*/
-				 	  break;
-				 default:
-				 	  noProblem = false;
-				 	  break;
-				}; // switch (toSuit) from spades
-				break;
-		  	 case 1:		// from to hearts
-				switch (toSuit)
-				{
-				 case 0:	// to spades
-					  temp = cardDeck[0][toCard];
-					  cardDeck[0][toCard] = cardDeck[1][fromCard];
-					  cardDeck[1][fromCard] = temp;
-				 	  /*temp = spades[toCard];
-				 	  temp = spades[toCard] = hearts[fromCard];
-				 	  hearts[fromCard] = temp;*/
-				 	  break;
-				 case 1:	// to hearts
-					  temp = cardDeck[1][toCard];
-					  cardDeck[1][toCard] = cardDeck[1][fromCard];
-					  cardDeck[1][fromCard] = temp;
-				 	  /*temp = hearts[toCard];
-				 	  temp = hearts[toCard] = hearts[fromCard];
-				 	  hearts[fromCard] = temp;*/
-				 	  break;
-				 case 2:	// to diamonds
-					  temp = cardDeck[2][toCard];
-					  cardDeck[2][toCard] = cardDeck[1][fromCard];
-					  cardDeck[1][fromCard] = temp;
-				 	  /*temp = diamonds[toCard];
-				 	  temp = diamonds[toCard] = hearts[fromCard];
-				 	  hearts[fromCard] = temp;*/
-				 	  break;
-				 case 3:	// to clubs
-					  temp = cardDeck[3][toCard];
-					  cardDeck[3][toCard] = cardDeck[1][fromCard];
-					  cardDeck[1][fromCard] = temp;
-				 	  /*temp = clubs[toCard];
-				 	  temp = clubs[toCard] = hearts[fromCard];
-				 	  hearts[fromCard] = temp;*/
-				 	  break;
-				 default:
-				 	  noProblem = false;
-				 	  break;
-				}; // switch (toSuit) from hearts
-				break;
-		  	 case 2:		// from diamonds
-				switch (toSuit)
-				{
-				 case 0:	// to spades
-					  temp = cardDeck[0][toCard];
-					  cardDeck[0][toCard] = cardDeck[2][fromCard];
-					  cardDeck[2][fromCard] = temp;
-				 	  /*temp = spades[toCard];
-				 	  temp = spades[toCard] = diamonds[fromCard];
-				 	  diamonds[fromCard] = temp;*/
-				 	  break;
-				 case 1:	// to hearts
-					  temp = cardDeck[1][toCard];
-					  cardDeck[1][toCard] = cardDeck[2][fromCard];
-					  cardDeck[2][fromCard] = temp;
-					  /*temp = hearts[toCard];
-				 	  temp = hearts[toCard] = diamonds[fromCard];
-				 	  diamonds[fromCard] = temp;*/
-				 	  break;
-				 case 2:	// to diamonds
-					  temp = cardDeck[2][toCard];
-					  cardDeck[2][toCard] = cardDeck[2][fromCard];
-					  cardDeck[2][fromCard] = temp;
-				 	  /*temp = diamonds[toCard];
-				 	  temp = diamonds[toCard] = diamonds[fromCard];
-				 	  diamonds[fromCard] = temp;*/
-				 	  break;
-				 case 3:	// to clubs
-					  temp = cardDeck[3][toCard];
-					  cardDeck[3][toCard] = cardDeck[2][fromCard];
-					  cardDeck[2][fromCard] = temp;
-				 	  /*temp = clubs[toCard];
-				 	  temp = clubs[toCard] = diamonds[fromCard];
-				 	  diamonds[fromCard] = temp;*/
-				 	  break;
-				 default:
-				 	  noProblem = false;
-				 	  break;
-				}; // switch (toSuit) from diamonds
-				break;
-		  	 case 3:		// from clubs
-				switch (toSuit)
-				{
-				 case 0:	// to spades
-					  temp = cardDeck[0][toCard];
-					  cardDeck[0][toCard] = cardDeck[3][fromCard];
-					  cardDeck[3][fromCard] = temp;
-				 	 /* temp = spades[toCard];
-				 	  temp = spades[toCard] = clubs[fromCard];
-				 	  clubs[fromCard] = temp;*/
-				 	  break;
-				 case 1:	// to hearts
-					  temp = cardDeck[1][toCard];
-					  cardDeck[1][toCard] = cardDeck[3][fromCard];
-					  cardDeck[3][fromCard] = temp;
-				 	  /*temp = hearts[toCard];
-				 	  temp = hearts[toCard] = clubs[fromCard];
-				 	  clubs[fromCard] = temp;*/
-				 	  break;
-				 case 2:	// to diamonds
-					  temp = cardDeck[2][toCard];
-					  cardDeck[2][toCard] = cardDeck[3][fromCard];
-					  cardDeck[3][fromCard] = temp;
-				 	  /*temp = diamonds[toCard];
-				 	  temp = diamonds[toCard] = clubs[fromCard];
-				 	  clubs[fromCard] = temp;*/
-				 	  break;
-				 case 3:	// to clubs
-					  temp = cardDeck[3][toCard];
-					  cardDeck[3][toCard] = cardDeck[3][fromCard];
-					  cardDeck[3][fromCard] = temp;
-				 	  /*temp = clubs[toCard];
-				 	  temp = clubs[toCard] = clubs[fromCard];
-				 	  clubs[fromCard] = temp;*/
-				 	  break;
-				 default:
-				 	  noProblem = false;
-				 	  break;
-				}; // switch (toSuit) from clubs
-				break;
-		  	 default:
-			 	  noProblem = false;
-			 	  break;
- 		 }; // switch (fromSuit)
-	  	 
-	 } // for (swap = 0; swap < NUM_SWAPS; ++swap)
+	/* Yeah... we're just going to do away with the old algorithm.
+	 * Use the Knuth shuffle.
+	 *
+	 * for ( int i = DECK_SIZE ; i < 0 ; i--)
+	 * {
+	 * 		j = rand() % i;
+	 * 		Card temp = cardSet[i];
+	 * 		cardSet[i] = cardSet[j];
+	 * 		cardSet[j] = temp;
+	 * }
+	 *
+	 */
+
 } // void shuffleDeck( )
 
 /**

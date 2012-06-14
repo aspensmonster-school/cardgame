@@ -68,13 +68,26 @@ int main(int argc, char *argv[])
     refresh(hand,false);
     refresh(pot,false);
 
+
+    /* Call testing functions here */
+
+    cout <<"\n Testing deck:" << endl;
+    testCardSet(deck);
+    cout <<"\n Testing hand:" << endl;
+    testCardSet(hand);
+    cout <<"\n Testing pot:" << endl;
+    testCardSet(pot);
+
+    /*
     display(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
     
     cout << "\nand a shuffled deck:" << endl;
     shuffleDeck(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
     display(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
+     */
 
-	cout << "Press ENTER to Continue." << endl;
+    cout << "Press ENTER to Continue." << endl;
 	cin.get();
-    return EXIT_SUCCESS;
+
+	return EXIT_SUCCESS;
 }
