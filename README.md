@@ -3,7 +3,9 @@ cardgame
 
 License: GNU GPL version 3. See COPYING file or http://www.gnu.org/licenses/gpl-3.0.html
 
-Doxygen: http://cs2.aspensmonster.com
+Documentation: 
+	HW2: http://cs2.aspensmonster.com
+	HW3: http://cs3.aspensmonster.com
 
 This is for a Computer Science 2 class at Texas State University.
 I'm incorporating git and doxygen in an attempt to at least start

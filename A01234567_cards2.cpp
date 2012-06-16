@@ -47,10 +47,11 @@ using namespace std;
  * Not sure why we've got argc and *argv[] here, seeing as
  * the program takes no CLI arguments.
  *
- * @param argc Number of arguments passed to command on CLI
- * @param argv Contains the flag/option+value/argument parameter pairs
+ * \param argc Number of arguments passed to command on CLI
+ * \param argv Contains the flag/option+value/argument parameter pairs
  *        like "-c 5 -d 2" or whatever.
- * @return EXIT_SUCCESS in a perfect world. Some integer other than zero otherwise.
+ *
+ * \return \c EXIT_SUCCESS in a perfect world. Some integer other than zero otherwise.
  */
 
 int main(int argc, char *argv[])
@@ -64,12 +65,17 @@ int main(int argc, char *argv[])
     setupRand();
     /* cout << "\nA new deck:" << endl; */
 
-    refresh(deck); /* taking default for inSet, i.e., cardDeck is the shoe */
+    refresh(deck); /* taking default for inSet, i.e., deck is the shoe */
     refresh(hand,false);
     refresh(pot,false);
 
 
     /* Call testing functions here */
+
+    /**
+     * \warning None of these testing functions update the state of
+     * other arrays when they should. See dox for the functions file.
+     */
 
     cout <<"\n Testing deck:" << endl;
     testCardSet(deck);
