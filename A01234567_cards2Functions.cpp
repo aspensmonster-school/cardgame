@@ -147,7 +147,18 @@ Card initialize(int thisIndex, int thisSuit, int thisValue, bool isHere)
   I can understand wanting the freedom to pass either the whole deck
   or a card. So why not just take advantage of polymorphism here?
 
-  \warning [See displayCard]
+ * \warning [See displayCard] There are two mutually exclusive requirements
+ * in the spec regarding these two methods. The spec states that \c display
+ * shall "[pass] on" the \c debugging flag to \c displayCard, implying
+ * that actual display is performed from \c displayCard. In the requirements
+ * for display, if \c debugging is \c false , then the program shall only
+ * display the cards in cardSet whose \c isVisible parameters are set to
+ * \c true. HOWEVER, the requirements for \c displayCard state that BOTH
+ * \c isVisible AND \c isHeld must be true for a card to be displayed.
+ *
+ * \warning The sample file appears to operate on the first principle (only
+ * \c isVisible needs to be set to \c true in order for display to occur).
+ * However, it's still a conflict that has yet to be caught as far as I know.
 
   Original Author: Carl Gregory
 
