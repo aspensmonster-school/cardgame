@@ -98,11 +98,56 @@ void refresh(Card cardSet[], bool inSet)
 } // void fresh( )
 
 /**
+ * This function is typically called from the \c refresh function.
+ * It returns a fully initialized Card struct based on the parameters
+ * passed.
+ *
+ *
+ * \pre memory has been allocated for an array of Card structs,
+ * but the structs themselves have yet to be initialized.
+ * \post the Card struct is initialized and returned, typically
+ * to the \c refresh function that assigns it to an index in an array
+ * of Card structs.
+ *
+ * \param thisIndex marks the cards original location in the array. This
+ * initial location can also serve as a unique identifier, assuming that
+ * all arrays of Card structs are initialized in the same manner (they are).
+ * \param thisSuit specifies the suit of the Card to be returned...
+ * \param thisValue ...and its value.
+ * \param isHere a flag that specifies whether the deck being filled is the
+ * shoe, a players hand, or the trash/pot.
+ *
+ * \return A fully initialized Card struct.
+ */
+
+Card initialize(int thisIndex, int thisSuit, int thisValue, bool isHere)
+{
+
+	Card thisCard;
+
+	thisCard.suit = thisSuit;
+	thisCard.faceValue = thisValue;
+
+	thisCard.sSymbol = suitSymbol[thisSuit];
+	thisCard.vSymbol = valueSymbol[thisValue];
+
+	thisCard.isHeld = isHere;
+	thisCard.isVisible = true;
+
+	thisCard.initIndex = thisIndex;
+
+	return thisCard;
+
+}
+
+/**
 
   This function takes an array of Card structs and then proceeds to
   call another function to actually do the job...? Lolwut?
   I can understand wanting the freedom to pass either the whole deck
   or a card. So why not just take advantage of polymorphism here?
+
+  \warning [See displayCard]
 
   Original Author: Carl Gregory
 
@@ -134,6 +179,51 @@ void display(Card cardSet[], bool debugging)
 	}
 
 } // void display( )
+
+/**
+ *
+ * Displays a card in the deck depending on the debugging
+ * flag and the flags in the struct (\c isHeld , \c isVisible ).
+ * If debugging is true, all cards are shown. Otherwise,
+ * a card is only shown if it is both held by the array and
+ * marked as visible.
+ *
+ * \warning [See display] There are two mutually exclusive requirements
+ * in the spec regarding these two methods. The spec states that \c display
+ * shall "[pass] on" the \c debugging flag to \c displayCard, implying
+ * that actual display is performed from \c displayCard. In the requirements
+ * for display, if \c debugging is \c false , then the program shall only
+ * display the cards in cardSet whose \c isVisible parameters are set to
+ * \c true. HOWEVER, the requirements for \c displayCard state that BOTH
+ * \c isVisible AND \c isHeld must be true for a card to be displayed.
+ *
+ * \warning The sample file appears to operate on the first principle (only
+ * \c isVisible needs to be set to \c true in order for display to occur).
+ * However, it's still a conflict that has yet to be caught as far as I know.
+ *
+ * \param card a single Card struct.
+ * \param debugging a flag that specifies whether or not to
+ * spit out the entire array.
+ */
+
+void displayCard(Card card, bool debugging)
+{
+
+	if ( debugging == true)
+	{
+		cout << card.vSymbol << card.sSymbol << ",";
+	}
+	else
+	if ( card.isHeld == true && card.isVisible == true )
+	{
+		cout << card.vSymbol << card.sSymbol << ",";
+	}
+	else
+	{
+		return;
+	}
+
+}
 
 /**
 
@@ -188,81 +278,6 @@ void shuffle(Card cardSet[])
 
 /**
  *
- * Displays a card in the deck depending on the debugging
- * flag and the flags in the struct (\c isHeld , \c isVisible ).
- * If debugging is true, all cards are shown. Otherwise,
- * a card is only shown if it is both held by the array and
- * marked as visible.
- *
- * \param card a single Card struct.
- * \param debugging a flag that specifies whether or not to
- * spit out the entire array.
- */
-
-void displayCard(Card card, bool debugging)
-{
-
-	if ( debugging == true)
-	{
-		cout << card.vSymbol << card.sSymbol << ",";
-	}
-	else
-	if ( card.isHeld == true && card.isVisible == true )
-	{
-		cout << card.vSymbol << card.sSymbol << ",";
-	}
-	else
-	{
-		return;
-	}
-
-}
-
-/**
- * This function is typically called from the \c refresh function.
- * It returns a fully initialized Card struct based on the parameters
- * passed.
- *
- *
- * \pre memory has been allocated for an array of Card structs,
- * but the structs themselves have yet to be initialized.
- * \post the Card struct is initialized and returned, typically
- * to the \c refresh function that assigns it to an index in an array
- * of Card structs.
- *
- * \param thisIndex marks the cards original location in the array. This
- * initial location can also serve as a unique identifier, assuming that
- * all arrays of Card structs are initialized in the same manner (they are).
- * \param thisSuit specifies the suit of the Card to be returned...
- * \param thisValue ...and its value.
- * \param isHere a flag that specifies whether the deck being filled is the
- * shoe, a players hand, or the trash/pot.
- *
- * \return A fully initialized Card struct.
- */
-
-Card initialize(int thisIndex, int thisSuit, int thisValue, bool isHere)
-{
-
-	Card thisCard;
-
-	thisCard.suit = thisSuit;
-	thisCard.faceValue = thisValue;
-
-	thisCard.sSymbol = suitSymbol[thisSuit];
-	thisCard.vSymbol = valueSymbol[thisValue];
-
-	thisCard.isHeld = isHere;
-	thisCard.isVisible = true;
-
-	thisCard.initIndex = thisIndex;
-
-	return thisCard;
-
-}
-
-/**
- *
  * This function carries out the act of picking up a card,
  * either from the shoe or the pot/trash. Presumably, a player
  * will select a card from either of those decks; we pass the
@@ -311,6 +326,39 @@ Card pickUp(Card cardSet [ ] , int thisCard )
 
 /**
  *
+ * This function will "deal" the first <tt> numCards </tt>
+ * from the start of <tt> cardSet[] </tt> .
+ *
+ * \warning Does not update state of other arrays or reset
+ * the changes made to the passed array.
+ *
+ * \pre \c the cardSet[] array's first \c numCards members have
+ * their \c isHeld and \c isVisible set to some value.
+ * \post \c the cardSet[] array's first \c numCards members have
+ * \c isHeld set to \c false and \c isVisible set to \c true.
+ *
+ * \param cardSet
+ * \param numCards
+ */
+
+void deal(Card cardSet[], int numCards)
+{
+	for ( int i = 0 ; i < numCards ; i++)
+	{
+		Card temp = play(cardSet,i);
+		cout << temp.vSymbol << temp.sSymbol << ",";
+
+		/* Print out 13 cards per line */
+		if( (i+1) % NUM_SUIT_CARDS == 0 && numCards != 13)
+		{
+			cout << endl;
+		}
+	}
+	cout << endl;
+}
+
+/**
+ *
  * This function attempts to mimic the concept of "playing"
  * a card onto the table.
  *
@@ -355,37 +403,4 @@ Card play(Card cardSet[], int thisCard, bool faceUp)
 	cardSet[thisCard].isVisible = faceUp;
 	return cardSet[thisCard];
 
-}
-
-/**
- *
- * This function will "deal" the first <tt> numCards </tt>
- * from the start of <tt> cardSet[] </tt> .
- *
- * \warning Does not update state of other arrays or reset
- * the changes made to the passed array.
- *
- * \pre \c the cardSet[] array's first \c numCards members have
- * their \c isHeld and \c isVisible set to some value.
- * \post \c the cardSet[] array's first \c numCards members have
- * \c isHeld set to \c false and \c isVisible set to \c true.
- *
- * \param cardSet
- * \param numCards
- */
-
-void deal(Card cardSet[], int numCards)
-{
-	for ( int i = 0 ; i < numCards ; i++)
-	{
-		Card temp = play(cardSet,i);
-		cout << temp.vSymbol << temp.sSymbol << ",";
-
-		/* Print out 13 cards per line */
-		if( (i+1) % NUM_SUIT_CARDS == 0 && numCards != 13)
-		{
-			cout << endl;
-		}
-	}
-	cout << endl;
 }
