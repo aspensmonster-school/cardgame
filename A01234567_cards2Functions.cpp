@@ -176,7 +176,7 @@ void shuffle(Card cardSet[])
 
 	/* Knuth Shuffle */
 
-	for ( int i = DECK_SIZE ; i > 0 ; i--)
+	for ( int i = DECK_SIZE - 1 ; i > 0 ; i--)
 	{
 		int j = rand() % i;
 		Card temp = cardSet[i];

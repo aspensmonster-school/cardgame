@@ -61,35 +61,18 @@ int main(int argc, char *argv[])
 	Card hand[DECK_SIZE];
 	Card pot[DECK_SIZE];
 
-
     setupRand();
-    /* cout << "\nA new deck:" << endl; */
-
-    /* refresh occurs in test suite for HW3
-    refresh(deck);
-    refresh(hand,false);
-    refresh(pot,false);
-    */
-
-
-    /* Call testing functions here */
 
     /**
      * \warning None of these testing functions update the state of
      * other arrays when they should. See dox for the functions file.
      */
 
+
     testCardSet(deck, "Deck");
     testCardSet(hand, "Hand");
     testCardSet(pot, "Table");
 
-    /*
-    display(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
-    
-    cout << "\nand a shuffled deck:" << endl;
-    shuffleDeck(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
-    display(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
-     */
 
     cout << "Press ENTER to Continue." << endl;
 	cin.get();
