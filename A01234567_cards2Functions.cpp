@@ -91,7 +91,7 @@ void refresh(Card cardSet[], bool inSet)
 	{
 		for ( int j = 0 ; j < NUM_SUIT_CARDS ; j++)
 		{
-			cardSet[i] = initialize(j+(i*NUM_SUIT_CARDS),i,j,inSet);
+			cardSet[j+(i*NUM_SUIT_CARDS)] = initialize(j+(i*NUM_SUIT_CARDS),i,j,inSet);
 		}
 	}
 
@@ -125,6 +125,12 @@ void display(Card cardSet[], bool debugging)
 	for ( int i = 0 ; i < DECK_SIZE ; i++)
 	{
 		displayCard(cardSet[i],debugging);
+
+		/* Print out 13 cards per line */
+		if( (i+1) % NUM_SUIT_CARDS == 0 )
+		{
+			cout << endl;
+		}
 	}
 
 } // void display( )
@@ -198,12 +204,12 @@ void displayCard(Card card, bool debugging)
 
 	if ( debugging == true)
 	{
-		cout << card.vSymbol << card.sSymbol;
+		cout << card.vSymbol << card.sSymbol << ",";
 	}
 	else
 	if ( card.isHeld == true && card.isVisible == true )
 	{
-		cout << card.vSymbol << card.sSymbol;
+		cout << card.vSymbol << card.sSymbol << ",";
 	}
 	else
 	{

@@ -65,9 +65,11 @@ int main(int argc, char *argv[])
     setupRand();
     /* cout << "\nA new deck:" << endl; */
 
-    refresh(deck); /* taking default for inSet, i.e., deck is the shoe */
+    /* refresh occurs in test suite for HW3
+    refresh(deck);
     refresh(hand,false);
     refresh(pot,false);
+    */
 
 
     /* Call testing functions here */
@@ -77,13 +79,13 @@ int main(int argc, char *argv[])
      * other arrays when they should. See dox for the functions file.
      */
 
-    cout <<"\n Testing deck:" << endl;
-    testCardSet(deck);
-    cout <<"\n Testing hand:" << endl;
+    //cout <<"\n Testing deck:" << endl;
+    testCardSet(deck, "Deck");
+    /*cout <<"\n Testing hand:" << endl;
     testCardSet(hand);
     cout <<"\n Testing pot:" << endl;
     testCardSet(pot);
-
+	*/
     /*
     display(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
     

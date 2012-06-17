@@ -103,7 +103,7 @@ Card play(Card[], int, bool faceUp = false);
 void deal(Card[], int);
 
 /* Test Suite */
-void testCardSet(Card[]);
+void testCardSet(Card[], string);
 void testDisplay(Card[]);
 void reveal(Card[]);
 void hide(Card[]);
