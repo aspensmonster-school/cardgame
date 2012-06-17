@@ -52,7 +52,7 @@ using namespace std;
  * \param arrayName
  */
 
-void testCardSet(Card cardSet[], string arrayName)
+void testCardSet(Card cardSet[], string arrayName, bool inSet)
 {
 
 	/* It's times like these when I really wish I knew ncurses */
@@ -82,7 +82,7 @@ void testCardSet(Card cardSet[], string arrayName)
 	cout << "\n  +---------+";
 	cout << "\n";
 
-	refresh(cardSet); /* use default value of true for inSet */
+	refresh(cardSet,inSet); /* use default value of true for inSet */
 	testDisplay(cardSet);
 
 	cout << "\n  +------------+";
@@ -109,7 +109,7 @@ void testCardSet(Card cardSet[], string arrayName)
 	/* Gonna start picking up ten random cards and showing them */
 	for (int i = 0 ; i < 10 ; i++)
 	{
-		int random = rand() % DECK_SIZE;
+		int random = rand() % DECK_SIZE; /* MIGHT BE SAME NUMBER MULTIPLE TIMES */
 		Card temp = pickUp(cardSet, random);
 		displayCard(temp,true); /*always true here for sake of showing cards picked */
 	}
@@ -126,7 +126,7 @@ void testCardSet(Card cardSet[], string arrayName)
 
 	for (int i = 0 ; i < 10 ; i++)
 	{
-		int random = rand() % DECK_SIZE;
+		int random = rand() % DECK_SIZE; /* MIGHT BE SAME NUMBER MULTIPLE TIMES */
 		Card temp = play(cardSet, random);
 		displayCard(temp,true); /*always true here for sake of showing cards picked */
 	}
@@ -156,14 +156,14 @@ void testCardSet(Card cardSet[], string arrayName)
 	cout << "\n  +-------+";
 	cout << "\n\n";
 
-	refresh(cardSet);
+	refresh(cardSet,inSet);
 	reveal(cardSet);
 	shuffle(cardSet);
 	testDisplay(cardSet);
 
-	cout << "\n  +-------+";
+	cout << "\n  +------+";
 	cout << "\n  |DEAL 5|";
-	cout << "\n  +-------+";
+	cout << "\n  +------+";
 	cout << "\n\n";
 
 	reveal(cardSet);

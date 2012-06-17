@@ -69,10 +69,9 @@ int main(int argc, char *argv[])
      */
 
 
-    testCardSet(deck, "Deck");
-    testCardSet(hand, "Hand");
-    testCardSet(pot, "Table");
-
+    testCardSet(deck, "Deck",true);
+    testCardSet(pot, "Table",false);
+    testCardSet(hand, "Hand",false);
 
     cout << "Press ENTER to Continue." << endl;
 	cin.get();
