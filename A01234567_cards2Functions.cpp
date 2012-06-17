@@ -379,7 +379,13 @@ void deal(Card cardSet[], int numCards)
 	for ( int i = 0 ; i < numCards ; i++)
 	{
 		Card temp = play(cardSet,i);
-		cout << temp.vSymbol << temp.sSymbol << ", ";
+		cout << temp.vSymbol << temp.sSymbol << ",";
+
+		/* Print out 13 cards per line */
+		if( (i+1) % NUM_SUIT_CARDS == 0 && numCards != 13)
+		{
+			cout << endl;
+		}
 	}
 	cout << endl;
 }

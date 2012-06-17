@@ -79,13 +79,10 @@ int main(int argc, char *argv[])
      * other arrays when they should. See dox for the functions file.
      */
 
-    //cout <<"\n Testing deck:" << endl;
     testCardSet(deck, "Deck");
-    /*cout <<"\n Testing hand:" << endl;
-    testCardSet(hand);
-    cout <<"\n Testing pot:" << endl;
-    testCardSet(pot);
-	*/
+    testCardSet(hand, "Hand");
+    testCardSet(pot, "Table");
+
     /*
     display(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
     

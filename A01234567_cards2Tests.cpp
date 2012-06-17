@@ -39,8 +39,14 @@ using namespace std;
  * All it ever does is spit out the contents of the array, which, according to our
  * models, will ALWAYS have the same cards, even if they are in a different order.
  * The output showing the state of the cards as seen by the players is all one really
- * needs to see, with perhaps a sentence preceeding the out that explains the desired
+ * needs to see, with perhaps a sentence preceding the out that explains the desired
  * outcome.
+ *
+ * \warning The numerous design problems documented in the warning flags in
+ * A01234567_cards2Functions.cpp don't obviously manifest themselves here, which
+ * throws into question the utility of the test suite in its current spec'd form
+ * for anything other than bugs that will already obviously manifest at runtime.
+ * Or maybe I'm just being a cynical, contrarian bastard.
  *
  * \param cardSet
  * \param arrayName
@@ -133,7 +139,44 @@ void testCardSet(Card cardSet[], string arrayName)
 	cout << "\n  +-------+";
 	cout << "\n\n";
 
+	reveal(cardSet);
+	deal(cardSet,13);
+	testDisplay(cardSet);
 
+	cout << "\n  +--------+";
+	cout << "\n  |DEAL ALL|";
+	cout << "\n  +--------+";
+	cout << "\n\n";
+
+	deal(cardSet,DECK_SIZE);
+	testDisplay(cardSet);
+
+	cout << "\n  +-------+";
+	cout << "\n  |SHUFFLE|";
+	cout << "\n  +-------+";
+	cout << "\n\n";
+
+	refresh(cardSet);
+	reveal(cardSet);
+	shuffle(cardSet);
+	testDisplay(cardSet);
+
+	cout << "\n  +-------+";
+	cout << "\n  |DEAL 5|";
+	cout << "\n  +-------+";
+	cout << "\n\n";
+
+	reveal(cardSet);
+	deal(cardSet,5);
+	testDisplay(cardSet);
+
+	cout << "\n  +--------+";
+	cout << "\n  |DEAL ALL|";
+	cout << "\n  +--------+";
+	cout << "\n\n";
+
+	deal(cardSet,DECK_SIZE);
+	testDisplay(cardSet);
 
 }
 
