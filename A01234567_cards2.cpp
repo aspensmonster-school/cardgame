@@ -1,4 +1,4 @@
-/**\file A01234567_cards1.cpp
+/**\file A01234567_cards2.cpp
  * \brief Contains main.cpp and performs the program loop.
  * It seeds the random number generator, gets a fresh deck,
  * displays it, shuffles it, and displays it again.
@@ -38,7 +38,7 @@
 #include <string>
 #include <cstdlib> /* You need this lib in order to use the EXIT_SUCCESS macro */
 
-#include "A01234567_cards1.h"
+#include "A01234567_cards2.h"
 
 using namespace std;
 
@@ -47,27 +47,34 @@ using namespace std;
  * Not sure why we've got argc and *argv[] here, seeing as
  * the program takes no CLI arguments.
  *
- * @param argc Number of arguments passed to command on CLI
- * @param argv Contains the flag/option+value/argument parameter pairs
+ * \param argc Number of arguments passed to command on CLI
+ * \param argv Contains the flag/option+value/argument parameter pairs
  *        like "-c 5 -d 2" or whatever.
- * @return EXIT_SUCCESS in a perfect world. Some integer other than zero otherwise.
+ *
+ * \return \c EXIT_SUCCESS in a perfect world. Some integer other than zero otherwise.
  */
 
 int main(int argc, char *argv[])
 {
 
-	int cardDeck[NUM_SUITS][NUM_SUIT_CARDS];
+	Card deck[DECK_SIZE];
+	Card hand[DECK_SIZE];
+	Card pot[DECK_SIZE];
 
     setupRand();
-    cout << "\nA new deck:" << endl;
-    freshDeck(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
-    displayDeck(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
-    
-    cout << "\nand a shuffled deck:" << endl;
-    shuffleDeck(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
-    displayDeck(cardDeck,NUM_SUITS, NUM_SUIT_CARDS);
 
-	cout << "Press ENTER to Continue." << endl;
+    /**
+     * \warning None of these testing functions update the state of
+     * other arrays when they should. See dox for the functions file.
+     */
+
+
+    testCardSet(deck, "Deck",true);
+    testCardSet(pot, "Table",false);
+    testCardSet(hand, "Hand",false);
+
+    cout << "Press ENTER to Continue." << endl;
 	cin.get();
-    return EXIT_SUCCESS;
+
+	return EXIT_SUCCESS;
 }

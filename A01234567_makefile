@@ -18,6 +18,7 @@ LDFLAGS=
 SOURCES := $(wildcard *.cpp)
 PP=$(SOURCES:.cpp=.ii)
 ASM=$(SOURCES:.cpp=.s)
+OBJECTS-INT=$(SOURCES:.cpp=-int.o)
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=A01234567_cards
 
@@ -31,7 +32,7 @@ output: $(EXECUTABLE)
 $(EXECUTABLE): $(OBJECTS)
 	$(CXX) $(LDFLAGS) $(OBJECTS) -o $@
 
-.cpp.o:
+$(OBJECTS): %.o : %.cpp
 	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 # ===========================================================
@@ -69,9 +70,23 @@ $(EXECUTABLE): $(OBJECTS)
 # preprocessed produces source file with include statements expanded
 
 # it redirects the output to file A01234567_hello.ii
+# WARNING: Only works with a single file. According to manual for
+# g++, there is no systematic way to output all preprocessed
+# source files separately for use in the compiling step. You'd
+# have to 
+# $(CXX) -E $each-source.cpp > $each-source.ii
+# Which of course breaks this lovely automated step-by-step we have.
+# Not sure if the same problem applys for the compile step.
+# I'd imagine this is why normal compilation does the first three
+# steps right off the bat ( $(CXX) -c $(SOURCES) ... ), since 
+# there's no easy automated way to go through preprocess and compile.
 
-A01234567_preprocessed: $(SOURCES)
-	$(CXX) -E $(SOURCES) > $(PP)
+# UPDATED: Scratch that up there. Solved it below for all steps.
+
+A01234567_preprocessed: $(PP)
+
+$(PP): %.ii : %.cpp
+	$(CXX) -E $< > $@
 
 # ===========================================================
 
@@ -79,8 +94,10 @@ A01234567_preprocessed: $(SOURCES)
 
 # it takes the preprocessed file and spits out assembler (.s files)
 
-A01234567_compiled: $(PP)
-	$(CXX) -S $(CXXFLAGS) $(PP) -o $(ASM)
+A01234567_compiled: $(ASM)
+
+$(ASM): %.s : %.ii
+	$(CXX) -S $(CXXFLAGS) $< -o $@
 
 # ===========================================================
 
@@ -91,8 +108,10 @@ A01234567_compiled: $(PP)
 # it is still necessary to pass the -c flag to tell g++
 # not to link.
 
-A01234567_assembled: $(ASM)
-	$(CXX) -c $(ASM) -o $(OBJECTS) && hexdump $(OBJECTS) > A01234567_o_dump 
+A01234567_assembled: $(OBJECTS-INT)
+
+$(OBJECTS-INT): %-int.o : %.s
+	$(CXX) -c $< -o $@ && hexdump $@ > $@.dump
 
 # ===========================================================
 
@@ -104,8 +123,8 @@ A01234567_assembled: $(ASM)
 # the linking. We don't use ld ourselves because we don't
 # hate ourselves.
 
-A01234567_linked: $(OBJECTS)
-	$(CXX) $(LDFLAGS) $(OBJECTS) -o $(EXECUTABLE) && hexdump $(EXECUTABLE) > A01234567_x_dump 
+A01234567_linked: $(OBJECTS-INT)
+	$(CXX) $(LDFLAGS) $(OBJECTS-INT) -o $(EXECUTABLE) && hexdump $(EXECUTABLE) > A01234567_x_dump 
 
 # ===========================================================
 
