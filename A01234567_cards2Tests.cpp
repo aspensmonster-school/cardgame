@@ -35,11 +35,19 @@ using namespace std;
 
 /**
  *
+ * This function performs various tests on a given array of Card structs. Refreshing,
+ * revealing, hiding, shuffling, playing and dealing are all performed on the deck as
+ * per the specification.
+ *
+ * \warning Please see A01234567_cards2Functions.cpp for documentation on conflicting
+ * requirements in the specification regarding the \c display and \c displayCard functions.
+ * These will have direct effect on the output of this test suite.
+ *
  * \warning The way debugging output is set up, it is useless for actual debugging.
  * All it ever does is spit out the contents of the array, which, according to our
  * models, will ALWAYS have the same cards, even if they are in a different order.
  * The output showing the state of the cards as seen by the players is all one really
- * needs to see, with perhaps a sentence preceding the out that explains the desired
+ * needs to see, with perhaps a sentence preceding the output that explains the desired
  * outcome.
  *
  * \warning The numerous design problems documented in the warning flags in
@@ -48,8 +56,12 @@ using namespace std;
  * for anything other than bugs that will already obviously manifest at runtime.
  * Or maybe I'm just being a cynical, contrarian bastard.
  *
- * \param cardSet
- * \param arrayName
+ * \param[in] cardSet Array of Card structs. Array forms basis for a deck. Each
+ * player has a full "deck" of 52 struct cards, but only certain cards are revealed.
+ * \param[in] arrayName A string that identifies the nature of the cardSet array.
+ * \param[in] inSet A string that specifies the array's Card's initial \c isHeld
+ * parameter. This is passed onto refresh, which then passes it onto initialize.
+ *
  */
 
 void testCardSet(Card cardSet[], string arrayName, bool inSet)
@@ -180,6 +192,15 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 
 }
 
+/**
+ *
+ * This function is called from testCardSet, and then goes on to call the actual
+ * \c display function. It will display both in debug mode and release mode.
+ *
+ * \param[in] cardSet Array of Card structs. Array forms basis for a deck. Each
+ * player has a full "deck" of 52 struct cards, but only certain cards are revealed.
+ */
+
 void testDisplay(Card cardSet[])
 {
 
@@ -191,6 +212,15 @@ void testDisplay(Card cardSet[])
 
 }
 
+/**
+ *
+ * Helpfer function. Sets \c cardSet[i].isVisible to \c true for all elements
+ * of the \c cardSet array.
+ *
+ * \param cardSet Array of Card structs. Array forms basis for a deck. Each
+ * player has a full "deck" of 52 struct cards, but only certain cards are revealed.
+ */
+
 void reveal(Card cardSet[])
 {
 
@@ -201,6 +231,15 @@ void reveal(Card cardSet[])
 
 }
 
+/**
+ *
+ * Helper function. Sets \c cardSet[i].isVisible to \c false for all elements
+ * of the \c cardSet array.
+ *
+ * param cardSet Array of Card structs. Array forms basis for a deck. Each
+ * player has a full "deck" of 52 struct cards, but only certain cards are revealed.
+ */
+
 void hide(Card cardSet[])
 {
 
@@ -210,5 +249,3 @@ void hide(Card cardSet[])
 	}
 
 }
-
-/* Commit Stub: Still need to finish documenting A01234567_cards2Tests.cpp */
