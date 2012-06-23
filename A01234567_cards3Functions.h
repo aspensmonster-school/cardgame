@@ -45,32 +45,6 @@
 
 using namespace std;
 
-struct Card{
-
-	/* Sensible naming scheme
-
-	int suit;
-	int value;
-	string valueSymbol;
-	char suitSymbol;
-	bool held;
-	bool visible;
-	int initIndex;
-
-	*/
-
-	/* Required naming scheme */
-
-	int suit;
-	int faceValue;
-	string vSymbol;
-	char sSymbol;
-	bool isHeld;
-	bool isVisible;
-	int initIndex;
-
-};
-
 const int NUM_SUITS = 4;
 const int NUM_SUIT_CARDS = 13;
 const int DECK_SIZE = NUM_SUITS * NUM_SUIT_CARDS;
@@ -89,23 +63,6 @@ const char suitSymbol[NUM_SUITS] = {
 		'S','H','D','C'
 };
 
-/* Main functions */
 void setupRand();
-void refresh(Card[], bool inSet = true);
-void display(Card[], bool debugging = false);
-void shuffle(Card[]);
-void displayCard(Card, bool debugging = false);
-
-/* Helper functions for the functions defined above */
-Card initialize(int, int, int, bool isHere = true);
-Card pickUp(Card[], int);
-Card play(Card[], int, bool faceUp = false);
-void deal(Card[], int);
-
-/* Test Suite */
-void testCardSet(Card[], string, bool);
-void testDisplay(Card[]);
-void reveal(Card[]);
-void hide(Card[]);
 
 #endif
