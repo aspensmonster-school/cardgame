@@ -1,4 +1,4 @@
-/**\file A01234567_cards2.cpp
+/**\file A01234567_cards3.cpp
  * \brief Contains main.cpp and performs the program loop.
  * It seeds the random number generator, gets a fresh deck,
  * displays it, shuffles it, and displays it again.
@@ -38,7 +38,7 @@
 #include <string>
 #include <cstdlib> /* You need this lib in order to use the EXIT_SUCCESS macro */
 
-#include "A01234567_cards2.h"
+#include "A01234567_cards3.h"
 
 using namespace std;
 

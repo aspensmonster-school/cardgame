@@ -1,4 +1,4 @@
-/** \file A01234567_cards2Tests.cpp
+/** \file A01234567_cards3Tests.cpp
  * \brief Contains functions for a testing suite. Currently does not use
  * preprocessor DEBUG macro, but might in the future.
  *
@@ -29,7 +29,7 @@
 
 #include <iostream> /* cout */
 #include <cstdlib>
-#include "A01234567_cards2.h"
+#include "A01234567_cards3.h"
 
 using namespace std;
 
@@ -39,7 +39,7 @@ using namespace std;
  * revealing, hiding, shuffling, playing and dealing are all performed on the deck as
  * per the specification.
  *
- * \warning Please see A01234567_cards2Functions.cpp for documentation on conflicting
+ * \warning Please see A01234567_cards3Functions.cpp for documentation on conflicting
  * requirements in the specification regarding the \c display and \c displayCard functions.
  * These will have direct effect on the output of this test suite.
  *
@@ -51,7 +51,7 @@ using namespace std;
  * outcome.
  *
  * \warning The numerous design problems documented in the warning flags in
- * A01234567_cards2Functions.cpp don't obviously manifest themselves here, which
+ * A01234567_cards3Functions.cpp don't obviously manifest themselves here, which
  * throws into question the utility of the test suite in its current spec'd form
  * for anything other than bugs that will already obviously manifest at runtime.
  * Or maybe I'm just being a cynical, contrarian bastard.

@@ -1,4 +1,4 @@
-/** \file A01234567_cards2Functions.cpp
+/** \file A01234567_cards3Functions.cpp
   \brief Contains various functions used by the program to do tasks.
 
   Original Author: Carl Gregory
@@ -31,7 +31,7 @@
 #include <cstdlib>   // rand and srand
 #include <ctime>     // For the time function
 
-#include "A01234567_cards2.h"
+#include "A01234567_cards3.h"
 
 using namespace std;
 
