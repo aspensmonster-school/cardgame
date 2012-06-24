@@ -6,15 +6,19 @@
  */
 
 #include "A01234567_Card.h"
+#include <iostream>
 
-void Card::Card()
+Card::Card()
 {
 
 }
 
-void Card::Card(int thisIndex, int thisSuit, int thisValue, bool isHere)
+Card::Card(int thisIndex, int thisSuit, int thisValue, bool isHere)
 {
 	initialize(thisIndex,thisSuit,thisValue,isHere);
+}
+
+Card::~Card() {
 }
 
 /**
@@ -41,9 +45,9 @@ void Card::initialize(int thisIndex, int thisSuit, int thisValue, bool isHere)
 {
 
 	suitValue = thisSuit;
-	suitSymbol = suitSymbol[thisSuit];
+	suitSymbol = suitTable[thisSuit];
 	faceValue = thisValue;
-	faceSymbol = valueSymbol[thisValue];
+	faceSymbol = valueTable[thisValue];
 	isHeld = isHere;
 	isVisible = true;
 	initIndex = thisIndex;
@@ -79,7 +83,7 @@ void Card::initialize(int thisIndex, int thisSuit, int thisValue, bool isHere)
  *
  */
 
-void Card::pickUp(Card cardSet [ ] , int thisCard )
+void Card::pickUp(bool faceUp)
 {
 
 	/* Arrays are passed by reference. Why are we
@@ -92,8 +96,8 @@ void Card::pickUp(Card cardSet [ ] , int thisCard )
 	 * to the spec.
 	 */
 
-	cardSet[thisCard].isHeld = true;
-	cardSet[thisCard].isVisible = true;
+	isHeld = true;
+	isVisible = faceUp;
 
 }
 
@@ -130,14 +134,59 @@ void Card::pickUp(Card cardSet [ ] , int thisCard )
  *
  */
 
-void Card::play(Card cardSet[], int thisCard, bool faceUp)
+void Card::play(bool faceUp)
 {
 
 	/* Same pass by reference issue here as in
 	 * pickUp.
 	 */
 
-	cardSet[thisCard].isHeld = false;
-	cardSet[thisCard].isVisible = faceUp;
+	isHeld = false;
+	isVisible = faceUp;
+
+}
+
+/**
+ *
+ * Displays a card in the deck depending on the debugging
+ * flag and the flags in the struct (\c isHeld , \c isVisible ).
+ * If debugging is true, all cards are shown. Otherwise,
+ * a card is only shown if it is both held by the array and
+ * marked as visible.
+ *
+ * \warning [See display] There are two mutually exclusive requirements
+ * in the spec regarding these two methods. The spec states that \c display
+ * shall "[pass] on" the \c debugging flag to \c displayCard, implying
+ * that actual display is performed from \c displayCard. In the requirements
+ * for display, if \c debugging is \c false , then the program shall only
+ * display the cards in cardSet whose \c isVisible parameters are set to
+ * \c true. HOWEVER, the requirements for \c displayCard state that BOTH
+ * \c isVisible AND \c isHeld must be true for a card to be displayed.
+ *
+ * \warning The sample file appears to operate on the first principle (only
+ * \c isVisible needs to be set to \c true in order for display to occur).
+ * However, it's still a conflict that has yet to be caught as far as I know.
+ *
+ * \param card a single Card struct.
+ * \param debugging a flag that specifies whether or not to
+ * spit out the entire array.
+ */
+
+void Card::display()
+{
+
+	if ( debugging == true)
+	{
+		cout << faceSymbol << suitSymbol << ",";
+	}
+	else
+	if ( isHeld == true && isVisible == true )
+	{
+		cout << faceSymbol << suitSymbol << ",";
+	}
+	else
+	{
+		return;
+	}
 
 }

@@ -56,10 +56,10 @@ const int CLUB = 3;
 
 /* These arrays would probably be better implemented as maps */
 
-const string valueSymbol[NUM_SUIT_CARDS] = {
+const string valueTable[NUM_SUIT_CARDS] = {
 		"A","2","3","4","5","6","7","8","9","10","J","Q","K"
 };
-const char suitSymbol[NUM_SUITS] = {
+const char suitTable[NUM_SUITS] = {
 		'S','H','D','C'
 };
 

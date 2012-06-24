@@ -64,7 +64,7 @@ using namespace std;
  *
  */
 
-void testCardSet(Card cardSet[], string arrayName, bool inSet)
+void testCardSet(Deck cardSet, string arrayName, bool inSet)
 {
 
 	/* It's times like these when I really wish I knew ncurses */
@@ -94,7 +94,7 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 	cout << "\n  +---------+";
 	cout << "\n";
 
-	refresh(cardSet,inSet); /* use default value of true for inSet */
+	cardSet.refresh(inSet); /* use default value of true for inSet */
 	testDisplay(cardSet);
 
 	cout << "\n  +------------+";
@@ -102,7 +102,7 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 	cout << "\n  +------------+";
 	cout << "\n";
 
-	reveal(cardSet);
+	cardSet.revealAll();
 	testDisplay(cardSet);
 
 	cout << "\n  +----------+";
@@ -110,7 +110,7 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 	cout << "\n  +----------+";
 	cout << "\n";
 
-	hide(cardSet);
+	cardSet.hideAll();
 	testDisplay(cardSet);
 
 	cout << "\n  +---------+";
@@ -128,7 +128,7 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 		displayCard(temp,true); //always true here for sake of showing cards picked
 		*/
 
-		displayCard(cardSet[random],true);
+		cardSet.displayCard(i);
 	}
 	cout << "\n";
 
@@ -139,7 +139,7 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 	cout << "\n  +------+";
 	cout << "\n\n";
 
-	reveal(cardSet);
+	cardSet.revealAll();
 
 	for (int i = 0 ; i < 10 ; i++)
 	{
@@ -150,7 +150,7 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 		displayCard(temp,true); //always true here for sake of showing cards picked
 		*/
 
-		displayCard(cardSet[random],true);
+		cardSet.displayCard(i);
 
 	}
 	cout << "\n";
@@ -162,8 +162,8 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 	cout << "\n  +-------+";
 	cout << "\n\n";
 
-	reveal(cardSet);
-	deal(cardSet,13);
+	cardSet.revealAll();
+	cardSet.deal(13,inSet);
 	testDisplay(cardSet);
 
 	cout << "\n  +--------+";
@@ -171,7 +171,7 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 	cout << "\n  +--------+";
 	cout << "\n\n";
 
-	deal(cardSet,DECK_SIZE);
+	cardSet.deal(DECK_SIZE,inSet);
 	testDisplay(cardSet);
 
 	cout << "\n  +-------+";
@@ -179,9 +179,9 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 	cout << "\n  +-------+";
 	cout << "\n\n";
 
-	refresh(cardSet,inSet);
-	reveal(cardSet);
-	shuffle(cardSet);
+	cardSet.refresh(inSet);
+	cardSet.revealAll();
+	cardSet.shuffle(1);
 	testDisplay(cardSet);
 
 	cout << "\n  +------+";
@@ -189,8 +189,8 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 	cout << "\n  +------+";
 	cout << "\n\n";
 
-	reveal(cardSet);
-	deal(cardSet,5);
+	cardSet.revealAll();
+	cardSet.deal(5,inSet);
 	testDisplay(cardSet);
 
 	cout << "\n  +--------+";
@@ -198,7 +198,7 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 	cout << "\n  +--------+";
 	cout << "\n\n";
 
-	deal(cardSet,DECK_SIZE);
+	cardSet.deal(DECK_SIZE,inSet);
 	testDisplay(cardSet);
 
 }
@@ -212,13 +212,15 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
  * player has a full "deck" of 52 card objects, but only certain cards are revealed.
  */
 
-void testDisplay(Card cardSet[])
+void testDisplay(Deck cardSet)
 {
 
 	cout << "\nDEBUG:\n";
-	display(cardSet,true);
+	cardSet.setDebugFlag(true);
+	cardSet.display(DECK_SIZE);
 
 	cout << "\nRELEASE:\n";
-	display(cardSet,false);
+	cardSet.setDebugFlag(false);
+	cardSet.display(DECK_SIZE);
 
 }

@@ -14,7 +14,7 @@
 using namespace std;
 
 /* Test Suite */
-void testCardSet(Card[], string, bool);
-void testDisplay(Card[]);
+void testCardSet(Deck, string, bool);
+void testDisplay(Deck);
 
 #endif /* CARDS3TESTS_H_ */

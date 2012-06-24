@@ -59,9 +59,9 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 
-	Card deck[DECK_SIZE];
-	Card hand[DECK_SIZE];
-	Card pot[DECK_SIZE];
+	Deck deck;
+	Deck hand;
+	Deck pot;
 
     setupRand();
 

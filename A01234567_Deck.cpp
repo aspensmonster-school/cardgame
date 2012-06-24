@@ -7,6 +7,12 @@
 
 #include "A01234567_Deck.h"
 
+Deck::Deck() {
+}
+
+Deck::~Deck() {
+}
+
 /**
 
   I really don't think \c refresh is a good name for what amounts to a constructor
@@ -32,7 +38,7 @@
 
 */
 
-void refresh(Card cardSet[], bool inSet)
+void Deck::refresh(bool inSet)
 {
 
 	//call initialize... separately? Why?
@@ -41,7 +47,7 @@ void refresh(Card cardSet[], bool inSet)
 	{
 		for ( int j = 0 ; j < NUM_SUIT_CARDS ; j++)
 		{
-			cardSet[j+(i*NUM_SUIT_CARDS)] = initialize(j+(i*NUM_SUIT_CARDS),i,j,inSet);
+			cardSet[j+(i*NUM_SUIT_CARDS)].initialize(j+(i*NUM_SUIT_CARDS),i,j,inSet);
 		}
 	}
 
@@ -82,65 +88,37 @@ void refresh(Card cardSet[], bool inSet)
 
 */
 
-void display(Card cardSet[], bool debugging)
+void Deck::display(int numCards)
 {
 
-	for ( int i = 0 ; i < DECK_SIZE ; i++)
+	if (numCards > DECK_SIZE)
 	{
-		displayCard(cardSet[i],debugging);
-
-		/* Print out 13 cards per line */
-		if( (i+1) % NUM_SUIT_CARDS == 0 )
-		{
-			cout << endl;
-		}
+		numCards = DECK_SIZE;
 	}
+	else
+	if (numCards < 0)
+	{
+		numCards = 0;
+	}
+
+	for(int i = 0 ; i < numCards ; i++)
+	{
+
+		displayCard(i);
+
+	}
+
 
 } // void display( )
 
-/**
- *
- * Displays a card in the deck depending on the debugging
- * flag and the flags in the struct (\c isHeld , \c isVisible ).
- * If debugging is true, all cards are shown. Otherwise,
- * a card is only shown if it is both held by the array and
- * marked as visible.
- *
- * \warning [See display] There are two mutually exclusive requirements
- * in the spec regarding these two methods. The spec states that \c display
- * shall "[pass] on" the \c debugging flag to \c displayCard, implying
- * that actual display is performed from \c displayCard. In the requirements
- * for display, if \c debugging is \c false , then the program shall only
- * display the cards in cardSet whose \c isVisible parameters are set to
- * \c true. HOWEVER, the requirements for \c displayCard state that BOTH
- * \c isVisible AND \c isHeld must be true for a card to be displayed.
- *
- * \warning The sample file appears to operate on the first principle (only
- * \c isVisible needs to be set to \c true in order for display to occur).
- * However, it's still a conflict that has yet to be caught as far as I know.
- *
- * \param card a single Card struct.
- * \param debugging a flag that specifies whether or not to
- * spit out the entire array.
- */
 
-void displayCard(Card card, bool debugging)
+
+void Deck::displayCard(int index)
 {
-
-	if ( debugging == true)
-	{
-		cout << card.faceSymbol << card.suitSymbol << ",";
-	}
-	else
-	if ( card.isHeld == true && card.isVisible == true )
-	{
-		cout << card.faceSymbol << card.suitSymbol << ",";
-	}
-	else
-	{
-		return;
-	}
-
+	bool temp = cardSet[index].getDebugFlag();
+	cardSet[index].setDebugFlag(debugging);
+	cardSet[index].display();
+	cardSet[index].setDebugFlag(temp);
 }
 
 /**
@@ -200,6 +178,26 @@ void Deck::shuffle(int numSwaps)
 
 } // void shuffle( )
 
+void Deck::revealAll()
+{
+
+	for ( int i = 0 ; i < DECK_SIZE ; i++)
+	{
+		revealCard(i);
+	}
+
+}
+
+void Deck::hideAll()
+{
+
+	for ( int i = 0 ; i < DECK_SIZE ; i++)
+	{
+		hideCard(i);
+	}
+
+}
+
 /**
  *
  * This function will "deal" the first <tt> numCards </tt>
@@ -217,24 +215,14 @@ void Deck::shuffle(int numSwaps)
  * \param numCards
  */
 
-void deal(Card cardSet[], int numCards)
+void Deck::deal(int numCards, bool faceUp)
 {
+
 	for ( int i = 0 ; i < numCards ; i++)
 	{
-		/*
-		Card temp = play(cardSet,i);
-		cout << temp.faceSymbol << temp.suitSymbol << ",";
-		*/
-
-		cout << cardSet[i].getFaceSymbol() << cardSet[i].getSuitSymbol() << ",";
-
-		/* Print out 13 cards per line */
-		if( (i+1) % NUM_SUIT_CARDS == 0 && numCards != 13)
-		{
-			cout << endl;
-		}
+		putCard(i,debugging);
 	}
-	cout << endl;
+
 }
 
 

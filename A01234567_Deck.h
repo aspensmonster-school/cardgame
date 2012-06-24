@@ -13,13 +13,15 @@
 
 using namespace std;
 
+/*Basically, the "Deck" object is behaving as a container. */
+
 class Deck
 
 {
 
 private:
 
-	Card cardSet[];
+	Card cardSet[DECK_SIZE];
 	bool debugging;
 
 public:
@@ -28,18 +30,21 @@ public:
 	~Deck();
 
 	bool getDebugFlag() const { return debugging; }
-	void setDebug(bool flag) {debugging = flag;}
+	void setDebugFlag(bool flag) { debugging = flag; }
 
-	void revealCard(int thisCard) { cardSet[thisCard].show; }
+	void revealCard(int thisCard) { cardSet[thisCard].show(); }
 	void revealAll();
-	void hideCard(int thisCard) { cardSet[thisCard].hide; }
+	void hideCard(int thisCard) { cardSet[thisCard].hide(); }
 	void hideAll();
 
 	void refresh(bool inSet = false);
 	void display(int);
 	void shuffle(int);
-	void displayCard(int);
-	void deal(Card[], int);
+	void displayCard(int numCards = 0);
+	void deal(int numCards = 0 , bool faceUp = false);
+
+	void takeCard(int card, bool up = false) { cardSet[card].pickUp(up); }
+	void putCard(int card, bool up = false) { cardSet[card].play(up); }
 
 };
 

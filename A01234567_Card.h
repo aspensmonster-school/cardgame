@@ -44,7 +44,7 @@ public:
 	void show() { isVisible = true; }
 	void hide() { isVisible = false; }
 	void display();
-	void setDebug(bool flag) {debugging = flag;}
+	void setDebugFlag(bool flag) {debugging = flag;}
 
 };
 
