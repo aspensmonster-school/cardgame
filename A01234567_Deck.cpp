@@ -5,6 +5,7 @@
  *      Author: preston
  */
 
+#include <iostream>
 #include "A01234567_Deck.h"
 
 Deck::Deck() {
@@ -106,6 +107,11 @@ void Deck::display(int numCards)
 
 		displayCard(i);
 
+		if( (i+1) % NUM_SUIT_CARDS == 0 )
+        {
+                cout << endl;
+        }
+
 	}
 
 
@@ -165,7 +171,7 @@ void Deck::shuffle(int numSwaps)
 	for ( int i = 0 ; i < numSwaps ; i++)
 	{
 
-		for ( int j = DECK_SIZE - 1 ; i > 0 ; i--)
+		for ( int j = DECK_SIZE - 1 ; j > 0 ; j--)
 		{
 			int k = rand() % j;
 			Card temp = cardSet[j];
