@@ -180,7 +180,7 @@ void Card::display()
 		cout << faceSymbol << suitSymbol << ",";
 	}
 	else
-	if ( isHeld == true && isVisible == true )
+	if ( /*isHeld == true && */ isVisible == true )
 	{
 		cout << faceSymbol << suitSymbol << ",";
 	}

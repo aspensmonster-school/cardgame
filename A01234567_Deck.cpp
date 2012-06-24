@@ -226,8 +226,17 @@ void Deck::deal(int numCards, bool faceUp)
 
 	for ( int i = 0 ; i < numCards ; i++)
 	{
+		cout << cardSet[i].getFaceSymbol() << cardSet[i].getSuitSymbol() << ",";
+
+		if( (i+1) % NUM_SUIT_CARDS == 0 && numCards != 13)
+		{
+			cout << endl;
+		}
+
 		putCard(i,debugging);
 	}
+
+	cout << endl;
 
 }
 
