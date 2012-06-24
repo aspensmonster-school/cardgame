@@ -127,8 +127,9 @@ void testCardSet(Deck cardSet, string arrayName, bool inSet)
 		Card temp = pickUp(cardSet, random);
 		displayCard(temp,true); //always true here for sake of showing cards picked
 		*/
-
+		cardSet.setDebugFlag(true);
 		cardSet.displayCard(i);
+		cardSet.setDebugFlag(false);
 	}
 	cout << "\n";
 
@@ -150,7 +151,9 @@ void testCardSet(Deck cardSet, string arrayName, bool inSet)
 		displayCard(temp,true); //always true here for sake of showing cards picked
 		*/
 
+		cardSet.setDebugFlag(true);
 		cardSet.displayCard(i);
+		cardSet.setDebugFlag(false);
 
 	}
 	cout << "\n";
