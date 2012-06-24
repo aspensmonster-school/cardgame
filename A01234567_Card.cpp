@@ -7,46 +7,46 @@
 
 #include "A01234567_Card.h"
 
+void Card::Card()
+{
+
+}
+
+void Card::Card(int thisIndex, int thisSuit, int thisValue, bool isHere)
+{
+	initialize(thisIndex,thisSuit,thisValue,isHere);
+}
+
 /**
- * This function is typically called from the \c refresh function.
- * It returns a fully initialized Card struct based on the parameters
- * passed.
  *
+ * This function serves as the functional constructor for the Card class.
+ * Card(int,int,int,bool) just calls this function and sets the parameters
+ * appropriately.
  *
- * \pre memory has been allocated for an array of Card structs,
- * but the structs themselves have yet to be initialized.
- * \post the Card struct is initialized and returned, typically
- * to the \c refresh function that assigns it to an index in an array
- * of Card structs.
+ * \pre memory has been allocated for an array of Card objects,
+ * and they have been default initialized, but not properly initialized.
+ * \post the Card object is fully initialized.
  *
  * \param thisIndex marks the cards original location in the array. This
  * initial location can also serve as a unique identifier, assuming that
- * all arrays of Card structs are initialized in the same manner (they are).
+ * all arrays of Card objects are initialized in the same manner (they are).
  * \param thisSuit specifies the suit of the Card to be returned...
  * \param thisValue ...and its value.
  * \param isHere a flag that specifies whether the deck being filled is the
  * shoe, a players hand, or the trash/pot.
  *
- * \return A fully initialized Card struct.
  */
 
-Card initialize(int thisIndex, int thisSuit, int thisValue, bool isHere)
+void Card::initialize(int thisIndex, int thisSuit, int thisValue, bool isHere)
 {
 
-	Card thisCard;
-
-	thisCard.suit = thisSuit;
-	thisCard.faceValue = thisValue;
-
-	thisCard.sSymbol = suitSymbol[thisSuit];
-	thisCard.vSymbol = valueSymbol[thisValue];
-
-	thisCard.isHeld = isHere;
-	thisCard.isVisible = true;
-
-	thisCard.initIndex = thisIndex;
-
-	return thisCard;
+	suitValue = thisSuit;
+	suitSymbol = suitSymbol[thisSuit];
+	faceValue = thisValue;
+	faceSymbol = valueSymbol[thisValue];
+	isHeld = isHere;
+	isVisible = true;
+	initIndex = thisIndex;
 
 }
 
@@ -68,8 +68,8 @@ Card initialize(int thisIndex, int thisSuit, int thisValue, bool isHere)
  * \pre <tt> cardSet[thisCard] </tt> is in an initialized state.
  * \post  <tt> cardSet[thisCard] </tt> is set to held and visible.
  *
- * \param[in] cardSet Array of Card structs. Array forms basis for a deck. Each
- * player has a full "deck" of 52 struct cards, but only certain cards are revealed.
+ * \param[in] cardSet Array of Card objects. Array forms basis for a deck. Each
+ * player has a full "deck" of 52 card objects, but only certain cards are revealed.
  * \param[in] thisCard specifies the index of the card to be picked up. When
  * initialized, each card is "in order" in the deck. If shuffled, thisCard must be
  * the index of the card with the desired initIndex (you have to search the array
@@ -79,7 +79,7 @@ Card initialize(int thisIndex, int thisSuit, int thisValue, bool isHere)
  *
  */
 
-Card pickUp(Card cardSet [ ] , int thisCard )
+void Card::pickUp(Card cardSet [ ] , int thisCard )
 {
 
 	/* Arrays are passed by reference. Why are we
@@ -94,7 +94,6 @@ Card pickUp(Card cardSet [ ] , int thisCard )
 
 	cardSet[thisCard].isHeld = true;
 	cardSet[thisCard].isVisible = true;
-	return cardSet[thisCard];
 
 }
 
@@ -119,8 +118,8 @@ Card pickUp(Card cardSet [ ] , int thisCard )
  * \post \c cardSet[thisCard].isHeld is set to false and \c cardSet[thisCard].isVisible
  * is determined by \c faceUp .
  *
- * \param[in] cardSet Array of Card structs. Array forms basis for a deck. Each
- * player has a full "deck" of 52 struct cards, but only certain cards are revealed.
+ * \param[in] cardSet Array of Card objects. Array forms basis for a deck. Each
+ * player has a full "deck" of 52 card objects, but only certain cards are revealed.
  * \param[in] thisCard specifies the index of the card to be picked up. When
  * initialized, each card is "in order" in the deck. If shuffled, thisCard must be
  * the index of the card with the desired initIndex (you have to search the array
@@ -129,11 +128,9 @@ Card pickUp(Card cardSet [ ] , int thisCard )
  * it would be "visible" if going to a pot and perhaps "not visible" if going to
  * a trash pile.
  *
- * \return Returns the altered card.
- *
  */
 
-Card play(Card cardSet[], int thisCard, bool faceUp)
+void Card::play(Card cardSet[], int thisCard, bool faceUp)
 {
 
 	/* Same pass by reference issue here as in
@@ -142,6 +139,5 @@ Card play(Card cardSet[], int thisCard, bool faceUp)
 
 	cardSet[thisCard].isHeld = false;
 	cardSet[thisCard].isVisible = faceUp;
-	return cardSet[thisCard];
 
 }

@@ -38,7 +38,9 @@
 #include <string>
 #include <cstdlib> /* You need this lib in order to use the EXIT_SUCCESS macro */
 
-#include "A01234567_cards3Functions.h"
+/* #include "A01234567_cards3Utils.h" */
+
+#include "A01234567_cards3Tests.h" /* Will include Deck.h and Card.h */
 
 using namespace std;
 
@@ -67,7 +69,6 @@ int main(int argc, char *argv[])
      * \warning None of these testing functions update the state of
      * other arrays when they should. See dox for the functions file.
      */
-
 
     testCardSet(deck, "Deck",true);
     testCardSet(pot, "Table",false);

@@ -20,12 +20,12 @@
 
   Date: 09/06/12
 
-  \pre The array of Card structs is filled with uninitialized structs
+  \pre The array of Card objects is filled with uninitialized objects
 
-  \post Each struct is initialized with appropriate values
+  \post Each object is initialized with appropriate values
 
-  \param[in] cardSet Array of Card structs. Array forms basis for a deck. Each
-  player has a full "deck" of 52 struct cards, but only certain cards are revealed.
+  \param[in] cardSet Array of Card objects. Array forms basis for a deck. Each
+  player has a full "deck" of 52 card objects, but only certain cards are revealed.
   \param[in] inSet A boolean value that basically states whether or not the given
   array of structs is the shoe (true if the array is the shoe). A player's hand,
   or the table's pot/trash, instead sets inSet to false.
@@ -49,7 +49,7 @@ void refresh(Card cardSet[], bool inSet)
 
 /**
 
-  This function takes an array of Card structs and then proceeds to
+  This function takes an array of Card objects and then proceeds to
   call another function to actually do the job...? Lolwut?
   I can understand wanting the freedom to pass either the whole deck
   or a card. So why not just take advantage of polymorphism here?
@@ -75,8 +75,8 @@ void refresh(Card cardSet[], bool inSet)
 
   Date: 09/06/12
 
-  \param[in] cardSet Array of Card structs. Array forms basis for a deck. Each
-  player has a full "deck" of 52 struct cards, but only certain cards are revealed.
+  \param[in] cardSet Array of Card objects. Array forms basis for a deck. Each
+  player has a full "deck" of 52 card objects, but only certain cards are revealed.
   \param[in] debugging A flag that, when set to true, will print out helpful debugging
   information.
 
@@ -129,12 +129,12 @@ void displayCard(Card card, bool debugging)
 
 	if ( debugging == true)
 	{
-		cout << card.vSymbol << card.sSymbol << ",";
+		cout << card.faceSymbol << card.suitSymbol << ",";
 	}
 	else
 	if ( card.isHeld == true && card.isVisible == true )
 	{
-		cout << card.vSymbol << card.sSymbol << ",";
+		cout << card.faceSymbol << card.suitSymbol << ",";
 	}
 	else
 	{
@@ -145,7 +145,7 @@ void displayCard(Card card, bool debugging)
 
 /**
 
-  Randomly swaps card values in the array of Card structs.
+  Randomly swaps card values in the array of Card objects.
   Uses the Knuth Shuffle algorithm to do so.
 
   \pre The deck is initialized and the cards are in any particular order.
@@ -174,22 +174,28 @@ void displayCard(Card card, bool debugging)
 
   http://en.wikipedia.org/wiki/Fisher-Yates_shuffle#The_modern_algorithm
 
-  \param[in] cardSet Array of Card structs. Array forms basis for a deck. Each
-  player has a full "deck" of 52 struct cards, but only certain cards are revealed.
+  \param[in] cardSet Array of Card objects. Array forms basis for a deck. Each
+  player has a full "deck" of 52 card objects, but only certain cards are revealed.
 
 */
 
-void shuffle(Card cardSet[])
+void Deck::shuffle(int numSwaps)
 {
 
-	/* Knuth Shuffle */
+	/* Knuth Shuffle, performed 'numSwaps' times */
 
-	for ( int i = DECK_SIZE - 1 ; i > 0 ; i--)
+	for ( int i = 0 ; i < numSwaps ; i++)
 	{
-		int j = rand() % i;
-		Card temp = cardSet[i];
-		cardSet[i] = cardSet[j];
-		cardSet[j] = temp;
+
+		for ( int j = DECK_SIZE - 1 ; i > 0 ; i--)
+		{
+			int k = rand() % j;
+			Card temp = cardSet[j];
+			cardSet[j] = cardSet[k];
+			cardSet[k] = temp;
+
+		}
+
 	}
 
 } // void shuffle( )
@@ -215,8 +221,12 @@ void deal(Card cardSet[], int numCards)
 {
 	for ( int i = 0 ; i < numCards ; i++)
 	{
+		/*
 		Card temp = play(cardSet,i);
-		cout << temp.vSymbol << temp.sSymbol << ",";
+		cout << temp.faceSymbol << temp.suitSymbol << ",";
+		*/
+
+		cout << cardSet[i].getFaceSymbol() << cardSet[i].getSuitSymbol() << ",";
 
 		/* Print out 13 cards per line */
 		if( (i+1) % NUM_SUIT_CARDS == 0 && numCards != 13)

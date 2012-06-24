@@ -5,44 +5,42 @@
  *      Author: preston
  */
 
-#ifndef DECKCLASS_H_
-#define DECKCLASS_H_
+#ifndef DECK_H_
+#define DECK_H_
 
-#include <string>
-#include "A01234567_Card.h"
+#include "A01234567_cards3Utils.h"
+#include "A01234567_Card.h" /* Have to include here since we're keeping a local array of Card objects in the deck */
 
 using namespace std;
 
-struct Card{
+class Deck
 
-	/* Sensible naming scheme
+{
 
-	int suit;
-	int value;
-	string valueSymbol;
-	char suitSymbol;
-	bool held;
-	bool visible;
-	int initIndex;
+private:
 
-	*/
+	Card cardSet[];
+	bool debugging;
 
-	/* Required naming scheme */
+public:
 
-	int suit;
-	int faceValue;
-	string vSymbol;
-	char sSymbol;
-	bool isHeld;
-	bool isVisible;
-	int initIndex;
+	Deck();
+	~Deck();
+
+	bool getDebugFlag() const { return debugging; }
+	void setDebug(bool flag) {debugging = flag;}
+
+	void revealCard(int thisCard) { cardSet[thisCard].show; }
+	void revealAll();
+	void hideCard(int thisCard) { cardSet[thisCard].hide; }
+	void hideAll();
+
+	void refresh(bool inSet = false);
+	void display(int);
+	void shuffle(int);
+	void displayCard(int);
+	void deal(Card[], int);
 
 };
 
-void refresh(Card[], bool inSet = true);
-void display(Card[], bool debugging = false);
-void shuffle(Card[]);
-void displayCard(Card, bool debugging = false);
-void deal(Card[], int);
-
-#endif /* DECKCLASS_H_ */
+#endif /* DECK_H_ */

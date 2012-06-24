@@ -29,17 +29,17 @@
 
 #include <iostream> /* cout */
 #include <cstdlib>
-#include "A01234567_cards3.h"
+#include "A01234567_cards3Tests.h"
 
 using namespace std;
 
 /**
  *
- * This function performs various tests on a given array of Card structs. Refreshing,
+ * This function performs various tests on a given array of Card objects. Refreshing,
  * revealing, hiding, shuffling, playing and dealing are all performed on the deck as
  * per the specification.
  *
- * \warning Please see A01234567_cards3Functions.cpp for documentation on conflicting
+ * \warning Please see A01234567_Deck.cpp for documentation on conflicting
  * requirements in the specification regarding the \c display and \c displayCard functions.
  * These will have direct effect on the output of this test suite.
  *
@@ -51,13 +51,13 @@ using namespace std;
  * outcome.
  *
  * \warning The numerous design problems documented in the warning flags in
- * A01234567_cards3Functions.cpp don't obviously manifest themselves here, which
+ * A01234567_Deck.cpp don't obviously manifest themselves here, which
  * throws into question the utility of the test suite in its current spec'd form
  * for anything other than bugs that will already obviously manifest at runtime.
  * Or maybe I'm just being a cynical, contrarian bastard.
  *
- * \param[in] cardSet Array of Card structs. Array forms basis for a deck. Each
- * player has a full "deck" of 52 struct cards, but only certain cards are revealed.
+ * \param[in] cardSet Array of Card objects. Array forms basis for a deck. Each
+ * player has a full "deck" of 52 card objects, but only certain cards are revealed.
  * \param[in] arrayName A string that identifies the nature of the cardSet array.
  * \param[in] inSet A string that specifies the array's Card's initial \c isHeld
  * parameter. This is passed onto refresh, which then passes it onto initialize.
@@ -122,8 +122,13 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 	for (int i = 0 ; i < 10 ; i++)
 	{
 		int random = rand() % DECK_SIZE; /* MIGHT BE SAME NUMBER MULTIPLE TIMES */
+
+		/*
 		Card temp = pickUp(cardSet, random);
-		displayCard(temp,true); /*always true here for sake of showing cards picked */
+		displayCard(temp,true); //always true here for sake of showing cards picked
+		*/
+
+		displayCard(cardSet[random],true);
 	}
 	cout << "\n";
 
@@ -139,8 +144,14 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 	for (int i = 0 ; i < 10 ; i++)
 	{
 		int random = rand() % DECK_SIZE; /* MIGHT BE SAME NUMBER MULTIPLE TIMES */
+
+		/*
 		Card temp = play(cardSet, random);
-		displayCard(temp,true); /*always true here for sake of showing cards picked */
+		displayCard(temp,true); //always true here for sake of showing cards picked
+		*/
+
+		displayCard(cardSet[random],true);
+
 	}
 	cout << "\n";
 
@@ -197,8 +208,8 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
  * This function is called from testCardSet, and then goes on to call the actual
  * \c display function. It will display both in debug mode and release mode.
  *
- * \param[in] cardSet Array of Card structs. Array forms basis for a deck. Each
- * player has a full "deck" of 52 struct cards, but only certain cards are revealed.
+ * \param[in] cardSet Array of Card objects. Array forms basis for a deck. Each
+ * player has a full "deck" of 52 card objects, but only certain cards are revealed.
  */
 
 void testDisplay(Card cardSet[])
@@ -209,43 +220,5 @@ void testDisplay(Card cardSet[])
 
 	cout << "\nRELEASE:\n";
 	display(cardSet,false);
-
-}
-
-/**
- *
- * Helpfer function. Sets \c cardSet[i].isVisible to \c true for all elements
- * of the \c cardSet array.
- *
- * \param cardSet Array of Card structs. Array forms basis for a deck. Each
- * player has a full "deck" of 52 struct cards, but only certain cards are revealed.
- */
-
-void reveal(Card cardSet[])
-{
-
-	for(int i = 0 ; i < DECK_SIZE ; i++)
-	{
-		cardSet[i].isVisible = true;
-	}
-
-}
-
-/**
- *
- * Helper function. Sets \c cardSet[i].isVisible to \c false for all elements
- * of the \c cardSet array.
- *
- * param cardSet Array of Card structs. Array forms basis for a deck. Each
- * player has a full "deck" of 52 struct cards, but only certain cards are revealed.
- */
-
-void hide(Card cardSet[])
-{
-
-	for(int i = 0 ; i < DECK_SIZE ; i++)
-	{
-		cardSet[i].isVisible = false;
-	}
 
 }

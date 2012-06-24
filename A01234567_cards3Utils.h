@@ -1,8 +1,8 @@
-#ifndef CARDS2
-#define CARDS2
+#ifndef CARDS3FUNCTIONS_H_
+#define CARDS3FUNCTIONS_H_
 
 /**\file A01234567_cards3.h
- * \brief Header that defines the functions found in A01234567_cards3Functions.cpp
+ * \brief Header that defines the functions found in A01234567_cards3Utils.cpp
 \verbatim
   First stage of Card project for CS2308-501 Summer 2012
 	- Simulates dealing a deck of cards to four players;
