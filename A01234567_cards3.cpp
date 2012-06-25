@@ -1,4 +1,4 @@
-/**\file A01234567_cards2.cpp
+/**\file A01234567_cards3.cpp
  * \brief Contains main.cpp and performs the program loop.
  * It seeds the random number generator, gets a fresh deck,
  * displays it, shuffles it, and displays it again.
@@ -11,7 +11,7 @@
 
   Modified by: Preston Maness
 
-  Date: 08/06/12 17:38
+  Date: 24/06/12 19:51
 
 */
 
@@ -38,7 +38,9 @@
 #include <string>
 #include <cstdlib> /* You need this lib in order to use the EXIT_SUCCESS macro */
 
-#include "A01234567_cards2.h"
+/* #include "A01234567_cards3Utils.h" */
+
+#include "A01234567_cards3Tests.h" /* Will include Deck.h and Card.h */
 
 using namespace std;
 
@@ -57,17 +59,23 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 
-	Card deck[DECK_SIZE];
-	Card hand[DECK_SIZE];
-	Card pot[DECK_SIZE];
+	Deck deck;
+	Deck hand;
+	Deck pot;
 
     setupRand();
 
     /**
+     *
      * \warning None of these testing functions update the state of
-     * other arrays when they should. See dox for the functions file.
+     * other Deck objects (really just an ad hoc container)
+     * when they should. See dox for the functions file.
+     *
+     * \warning output varies depending on the requirements of the
+     * display() member function in the Card object in file
+     * A01234567_Card.cpp .
+     *
      */
-
 
     testCardSet(deck, "Deck",true);
     testCardSet(pot, "Table",false);

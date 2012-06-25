@@ -1,10 +1,8 @@
-/** \file A01234567_cards2Tests.cpp
+/** \file A01234567_cards3Tests.cpp
  * \brief Contains functions for a testing suite. Currently does not use
  * preprocessor DEBUG macro, but might in the future.
  *
  * \author Preston Maness
- *
- * Created on: Jun 16, 2012
  *
  */
 
@@ -29,17 +27,17 @@
 
 #include <iostream> /* cout */
 #include <cstdlib>
-#include "A01234567_cards2.h"
+#include "A01234567_cards3Tests.h"
 
 using namespace std;
 
 /**
  *
- * This function performs various tests on a given array of Card structs. Refreshing,
+ * This function performs various tests on a given Deck container object. Refreshing,
  * revealing, hiding, shuffling, playing and dealing are all performed on the deck as
  * per the specification.
  *
- * \warning Please see A01234567_cards2Functions.cpp for documentation on conflicting
+ * \warning Please see A01234567_Deck.h (and other files) for documentation on conflicting
  * requirements in the specification regarding the \c display and \c displayCard functions.
  * These will have direct effect on the output of this test suite.
  *
@@ -51,20 +49,21 @@ using namespace std;
  * outcome.
  *
  * \warning The numerous design problems documented in the warning flags in
- * A01234567_cards2Functions.cpp don't obviously manifest themselves here, which
+ * A01234567_Deck.h and A01234567_Deck.cpp don't obviously manifest themselves here, which
  * throws into question the utility of the test suite in its current spec'd form
  * for anything other than bugs that will already obviously manifest at runtime.
  * Or maybe I'm just being a cynical, contrarian bastard.
  *
- * \param[in] cardSet Array of Card structs. Array forms basis for a deck. Each
- * player has a full "deck" of 52 struct cards, but only certain cards are revealed.
- * \param[in] arrayName A string that identifies the nature of the cardSet array.
- * \param[in] inSet A string that specifies the array's Card's initial \c isHeld
- * parameter. This is passed onto refresh, which then passes it onto initialize.
+ * \param[in] cardSet A Deck object. The Deck object holds an array of Card objects that
+ * forms basis for a deck. Each Deck object has a full "deck" of 52 Card objects, but only
+ * certain cards are revealed.
+ * \param[in] arrayName A string that identifies the nature of the Deck object.
+ * \param[in] inSet A bool that specifies the Deck's Card's initial \c isHeld
+ * parameter. This is passed onto Deck::refresh, which then passes it onto Card::initialize.
  *
  */
 
-void testCardSet(Card cardSet[], string arrayName, bool inSet)
+void testCardSet(Deck cardSet, string arrayName, bool inSet)
 {
 
 	/* It's times like these when I really wish I knew ncurses */
@@ -94,7 +93,7 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 	cout << "\n  +---------+";
 	cout << "\n";
 
-	refresh(cardSet,inSet); /* use default value of true for inSet */
+	cardSet.refresh(inSet); /* use default value of true for inSet */
 	testDisplay(cardSet);
 
 	cout << "\n  +------------+";
@@ -102,7 +101,7 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 	cout << "\n  +------------+";
 	cout << "\n";
 
-	reveal(cardSet);
+	cardSet.revealAll();
 	testDisplay(cardSet);
 
 	cout << "\n  +----------+";
@@ -110,7 +109,7 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 	cout << "\n  +----------+";
 	cout << "\n";
 
-	hide(cardSet);
+	cardSet.hideAll();
 	testDisplay(cardSet);
 
 	cout << "\n  +---------+";
@@ -122,8 +121,14 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 	for (int i = 0 ; i < 10 ; i++)
 	{
 		int random = rand() % DECK_SIZE; /* MIGHT BE SAME NUMBER MULTIPLE TIMES */
+
+		/*
 		Card temp = pickUp(cardSet, random);
-		displayCard(temp,true); /*always true here for sake of showing cards picked */
+		displayCard(temp,true); //always true here for sake of showing cards picked
+		*/
+		cardSet.setDebugFlag(true);
+		cardSet.displayCard(i);
+		cardSet.setDebugFlag(false);
 	}
 	cout << "\n";
 
@@ -134,13 +139,21 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 	cout << "\n  +------+";
 	cout << "\n\n";
 
-	reveal(cardSet);
+	cardSet.revealAll();
 
 	for (int i = 0 ; i < 10 ; i++)
 	{
 		int random = rand() % DECK_SIZE; /* MIGHT BE SAME NUMBER MULTIPLE TIMES */
+
+		/*
 		Card temp = play(cardSet, random);
-		displayCard(temp,true); /*always true here for sake of showing cards picked */
+		displayCard(temp,true); //always true here for sake of showing cards picked
+		*/
+
+		cardSet.setDebugFlag(true);
+		cardSet.displayCard(i);
+		cardSet.setDebugFlag(false);
+
 	}
 	cout << "\n";
 
@@ -151,8 +164,8 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 	cout << "\n  +-------+";
 	cout << "\n\n";
 
-	reveal(cardSet);
-	deal(cardSet,13);
+	cardSet.revealAll();
+	cardSet.deal(13,inSet);
 	testDisplay(cardSet);
 
 	cout << "\n  +--------+";
@@ -160,7 +173,7 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 	cout << "\n  +--------+";
 	cout << "\n\n";
 
-	deal(cardSet,DECK_SIZE);
+	cardSet.deal(DECK_SIZE,inSet);
 	testDisplay(cardSet);
 
 	cout << "\n  +-------+";
@@ -168,9 +181,9 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 	cout << "\n  +-------+";
 	cout << "\n\n";
 
-	refresh(cardSet,inSet);
-	reveal(cardSet);
-	shuffle(cardSet);
+	cardSet.refresh(inSet);
+	cardSet.revealAll();
+	cardSet.shuffle(1);
 	testDisplay(cardSet);
 
 	cout << "\n  +------+";
@@ -178,8 +191,8 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 	cout << "\n  +------+";
 	cout << "\n\n";
 
-	reveal(cardSet);
-	deal(cardSet,5);
+	cardSet.revealAll();
+	cardSet.deal(5,inSet);
 	testDisplay(cardSet);
 
 	cout << "\n  +--------+";
@@ -187,7 +200,7 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
 	cout << "\n  +--------+";
 	cout << "\n\n";
 
-	deal(cardSet,DECK_SIZE);
+	cardSet.deal(DECK_SIZE,inSet);
 	testDisplay(cardSet);
 
 }
@@ -197,55 +210,21 @@ void testCardSet(Card cardSet[], string arrayName, bool inSet)
  * This function is called from testCardSet, and then goes on to call the actual
  * \c display function. It will display both in debug mode and release mode.
  *
- * \param[in] cardSet Array of Card structs. Array forms basis for a deck. Each
- * player has a full "deck" of 52 struct cards, but only certain cards are revealed.
+ * \param[in] cardSet A Deck object. The Deck object holds an array of Card objects that
+ * forms basis for a deck. Each Deck object has a full "deck" of 52 Card objects, but only
+ * certain cards are revealed.
+ *
  */
 
-void testDisplay(Card cardSet[])
+void testDisplay(Deck cardSet)
 {
 
 	cout << "\nDEBUG:\n";
-	display(cardSet,true);
+	cardSet.setDebugFlag(true);
+	cardSet.display(DECK_SIZE);
 
 	cout << "\nRELEASE:\n";
-	display(cardSet,false);
-
-}
-
-/**
- *
- * Helpfer function. Sets \c cardSet[i].isVisible to \c true for all elements
- * of the \c cardSet array.
- *
- * \param cardSet Array of Card structs. Array forms basis for a deck. Each
- * player has a full "deck" of 52 struct cards, but only certain cards are revealed.
- */
-
-void reveal(Card cardSet[])
-{
-
-	for(int i = 0 ; i < DECK_SIZE ; i++)
-	{
-		cardSet[i].isVisible = true;
-	}
-
-}
-
-/**
- *
- * Helper function. Sets \c cardSet[i].isVisible to \c false for all elements
- * of the \c cardSet array.
- *
- * param cardSet Array of Card structs. Array forms basis for a deck. Each
- * player has a full "deck" of 52 struct cards, but only certain cards are revealed.
- */
-
-void hide(Card cardSet[])
-{
-
-	for(int i = 0 ; i < DECK_SIZE ; i++)
-	{
-		cardSet[i].isVisible = false;
-	}
+	cardSet.setDebugFlag(false);
+	cardSet.display(DECK_SIZE);
 
 }
