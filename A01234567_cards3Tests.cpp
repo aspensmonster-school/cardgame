@@ -4,8 +4,6 @@
  *
  * \author Preston Maness
  *
- * Created on: Jun 16, 2012
- *
  */
 
 /*
@@ -35,11 +33,11 @@ using namespace std;
 
 /**
  *
- * This function performs various tests on a given array of Card objects. Refreshing,
+ * This function performs various tests on a given Deck container object. Refreshing,
  * revealing, hiding, shuffling, playing and dealing are all performed on the deck as
  * per the specification.
  *
- * \warning Please see A01234567_Deck.cpp for documentation on conflicting
+ * \warning Please see A01234567_Deck.h (and other files) for documentation on conflicting
  * requirements in the specification regarding the \c display and \c displayCard functions.
  * These will have direct effect on the output of this test suite.
  *
@@ -51,16 +49,17 @@ using namespace std;
  * outcome.
  *
  * \warning The numerous design problems documented in the warning flags in
- * A01234567_Deck.cpp don't obviously manifest themselves here, which
+ * A01234567_Deck.h and A01234567_Deck.cpp don't obviously manifest themselves here, which
  * throws into question the utility of the test suite in its current spec'd form
  * for anything other than bugs that will already obviously manifest at runtime.
  * Or maybe I'm just being a cynical, contrarian bastard.
  *
- * \param[in] cardSet Array of Card objects. Array forms basis for a deck. Each
- * player has a full "deck" of 52 card objects, but only certain cards are revealed.
- * \param[in] arrayName A string that identifies the nature of the cardSet array.
- * \param[in] inSet A string that specifies the array's Card's initial \c isHeld
- * parameter. This is passed onto refresh, which then passes it onto initialize.
+ * \param[in] cardSet A Deck object. The Deck object holds an array of Card objects that
+ * forms basis for a deck. Each Deck object has a full "deck" of 52 Card objects, but only
+ * certain cards are revealed.
+ * \param[in] arrayName A string that identifies the nature of the Deck object.
+ * \param[in] inSet A bool that specifies the Deck's Card's initial \c isHeld
+ * parameter. This is passed onto Deck::refresh, which then passes it onto Card::initialize.
  *
  */
 
@@ -211,8 +210,10 @@ void testCardSet(Deck cardSet, string arrayName, bool inSet)
  * This function is called from testCardSet, and then goes on to call the actual
  * \c display function. It will display both in debug mode and release mode.
  *
- * \param[in] cardSet Array of Card objects. Array forms basis for a deck. Each
- * player has a full "deck" of 52 card objects, but only certain cards are revealed.
+ * \param[in] cardSet A Deck object. The Deck object holds an array of Card objects that
+ * forms basis for a deck. Each Deck object has a full "deck" of 52 Card objects, but only
+ * certain cards are revealed.
+ *
  */
 
 void testDisplay(Deck cardSet)

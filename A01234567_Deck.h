@@ -1,9 +1,27 @@
-/*
- * DeckClass.h
+/**\file A01234567_Card.cpp
+ * \brief Describes a Deck object, which really just acts as an ad hoc container.
+ * \author Preston Maness
  *
- *  Created on: Jun 23, 2012
- *      Author: preston
  */
+
+/*
+    Copyright 2012 Preston Maness.
+
+    This file is part of CardGame.
+
+    CardGame is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    CardGame is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with CardGame.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #ifndef DECK_H_
 #define DECK_H_
@@ -13,7 +31,7 @@
 
 using namespace std;
 
-/*Basically, the "Deck" object is behaving as a container. */
+/* Basically, the "Deck" object is behaving as a container. */
 
 class Deck
 
@@ -43,8 +61,8 @@ public:
 	void displayCard(int numCards = 0);
 	void deal(int numCards = 0 , bool faceUp = false);
 
-	void takeCard(int card, bool up = false) { cardSet[card].pickUp(up); }
-	void putCard(int card, bool up = false) { cardSet[card].play(up); }
+	void takeCard(int card, bool up = false);
+	void putCard(int card, bool up = false);
 
 };
 

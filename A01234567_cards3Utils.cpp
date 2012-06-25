@@ -1,9 +1,7 @@
 /** \file A01234567_cards3Utils.cpp
-  \brief Contains various functions used by the program to do tasks.
-
-  Original Author: Carl Gregory
-
-  Date: 05/06/12 13:24
+  \brief Contains left-over functions from the refactor to classes and holds
+  all constants.
+  \author Preston Maness
 */
 
 /*

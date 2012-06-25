@@ -11,7 +11,7 @@
 
   Modified by: Preston Maness
 
-  Date: 08/06/12 17:38
+  Date: 24/06/12 19:51
 
 */
 
@@ -66,8 +66,15 @@ int main(int argc, char *argv[])
     setupRand();
 
     /**
+     *
      * \warning None of these testing functions update the state of
-     * other arrays when they should. See dox for the functions file.
+     * other Deck objects (really just an ad hoc container)
+     * when they should. See dox for the functions file.
+     *
+     * \warning output varies depending on the requirements of the
+     * display() member function in the Card object in file
+     * A01234567_Card.cpp .
+     *
      */
 
     testCardSet(deck, "Deck",true);

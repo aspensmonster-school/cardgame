@@ -1,9 +1,27 @@
-/*
- * A01234567_Card.cpp
+/**\file A01234567_Card.cpp
+ * \brief Contains the methods that describe a Card object.
+ * \author Preston Maness
  *
- *  Created on: Jun 23, 2012
- *      Author: preston
  */
+
+/*
+    Copyright 2012 Preston Maness.
+
+    This file is part of CardGame.
+
+    CardGame is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    CardGame is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with CardGame.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #include "A01234567_Card.h"
 #include <iostream>
@@ -12,6 +30,20 @@ Card::Card()
 {
 
 }
+
+/**
+ *
+ * This is the construct for the card object. It calls initialize,
+ * which does the actual constructing for now. Right now, the
+ * constructor is not being used directly. Instead, the Deck object
+ * is calling initialize for each Card object in cardSet.
+ *
+ * \param[in] thisIndex specifies the initial index of the card being
+ * inserted.
+ * \param[in] thisSuit Specifies the suit, 0-3.
+ * \param[in] thisValue Specifies the value, A-K.
+ * \param[in] isHere Determines the value of \c isHeld .
+ */
 
 Card::Card(int thisIndex, int thisSuit, int thisValue, bool isHere)
 {
@@ -26,6 +58,9 @@ Card::~Card() {
  * This function serves as the functional constructor for the Card class.
  * Card(int,int,int,bool) just calls this function and sets the parameters
  * appropriately.
+ *
+ * \warning The spec requires isVisible to be true for all Card objects.
+ * This is not an accurate depiction of different types of collections of Cards.
  *
  * \pre memory has been allocated for an array of Card objects,
  * and they have been default initialized, but not properly initialized.
@@ -57,29 +92,17 @@ void Card::initialize(int thisIndex, int thisSuit, int thisValue, bool isHere)
 /**
  *
  * This function carries out the act of picking up a card,
- * either from the shoe or the pot/trash. Presumably, a player
- * will select a card from either of those decks; we pass the
- * player's hand to this function, which will then set that
- * particular card to isHeld and isVisible.
+ * either from the deck/shoe or the pot/trash. Presumably, a player
+ * will select a card from either of those decks.
  *
- * \warning Does not update state of other arrays or reset
- * the changes made to the passed array.
+ * \pre \c isHeld is false. It wouldn't make sense to "pickUp" a
+ * card you already have.
+ * \post \c isHeld is true, since you've picked it up. \c isVisible
+ * is determined by \c faceUp .
  *
- * \warning If the cardSet array has been shuffled, <tt>int thisCard</tt>
- * will be meaningless. You'd have to search the shuffled cardSet array for the
- * relevant initIndex value to THEN pass to this function.
- *
- * \pre <tt> cardSet[thisCard] </tt> is in an initialized state.
- * \post  <tt> cardSet[thisCard] </tt> is set to held and visible.
- *
- * \param[in] cardSet Array of Card objects. Array forms basis for a deck. Each
- * player has a full "deck" of 52 card objects, but only certain cards are revealed.
- * \param[in] thisCard specifies the index of the card to be picked up. When
- * initialized, each card is "in order" in the deck. If shuffled, thisCard must be
- * the index of the card with the desired initIndex (you have to search the array
- * to get that)
- *
- * \return The card located at cardSet[thisCard].
+ * \param[in] faceUp specifies whether the used-up card is visible or not. Presumably
+ * it would be "visible" if going to a pot and perhaps "not visible" if going to
+ * a trash pile.
  *
  */
 
@@ -104,30 +127,14 @@ void Card::pickUp(bool faceUp)
 /**
  *
  * This function attempts to mimic the concept of "playing"
- * a card onto the table.
+ * a card onto the table. If a card is played it is no longer
+ * "held" so \c isHeld is set to false.
  *
- * \warning Does not update state of other arrays.
- * Sets isVisible incorrectly. If you "play" a card,
- * it is no longer in your hand. isHeld is obviously
- * false, but isVisible should also be false for your hand,
- * and either true or false for the "table/pot" array that
- * you should also be updating (but aren't).
- *
- * \warning If the cardSet array has been shuffled, <tt> int thisCard </tt>
- * will be meaningless. You'd have to search the shuffled cardSet array for the
- * relevant initIndex value to THEN pass to this function.
- *
- * \pre \c cardSet[thisCard].isHeld is true, as it is being held by a player or
- * some other deck array.
- * \post \c cardSet[thisCard].isHeld is set to false and \c cardSet[thisCard].isVisible
+ * \pre \c isHeld is true, as it is being held by another player or
+ * some other Deck object.
+ * \post \c isHeld is set to false and \c isVisible
  * is determined by \c faceUp .
  *
- * \param[in] cardSet Array of Card objects. Array forms basis for a deck. Each
- * player has a full "deck" of 52 card objects, but only certain cards are revealed.
- * \param[in] thisCard specifies the index of the card to be picked up. When
- * initialized, each card is "in order" in the deck. If shuffled, thisCard must be
- * the index of the card with the desired initIndex (you have to search the array
- * to get that)
  * \param[in] faceUp specifies whether the used-up card is visible or not. Presumably
  * it would be "visible" if going to a pot and perhaps "not visible" if going to
  * a trash pile.
@@ -148,28 +155,28 @@ void Card::play(bool faceUp)
 
 /**
  *
- * Displays a card in the deck depending on the debugging
- * flag and the flags in the struct (\c isHeld , \c isVisible ).
- * If debugging is true, all cards are shown. Otherwise,
- * a card is only shown if it is both held by the array and
- * marked as visible.
+ * This is the function that performs the display of any given card.
+ * A typical call-chain is:
  *
- * \warning [See display] There are two mutually exclusive requirements
- * in the spec regarding these two methods. The spec states that \c display
- * shall "[pass] on" the \c debugging flag to \c displayCard, implying
- * that actual display is performed from \c displayCard. In the requirements
- * for display, if \c debugging is \c false , then the program shall only
- * display the cards in cardSet whose \c isVisible parameters are set to
- * \c true. HOWEVER, the requirements for \c displayCard state that BOTH
- * \c isVisible AND \c isHeld must be true for a card to be displayed.
+ * deckObject.display(int) -> deckObject.displayCard(int) -> cardOjbect.display()
  *
- * \warning The sample file appears to operate on the first principle (only
- * \c isVisible needs to be set to \c true in order for display to occur).
- * However, it's still a conflict that has yet to be caught as far as I know.
+ * The indentical names for different objects can lead to confusion
+ * if you're not careful with context.
  *
- * \param card a single Card struct.
- * \param debugging a flag that specifies whether or not to
- * spit out the entire array.
+ * \warning Previous versions of the spec dictated both that isHeld AND isVisible
+ * needed to be true, and also that only isVisible needed to be true, in order for
+ * Card::display() to cout the relevant symbols. For this assignment, I am leaving
+ * it as requiring both. I'm assuming that, at some point, we'll either flesh out
+ * the Deck object to be a proper container, or else use an STL container and at that
+ * point we can worry about updating state.
+ *
+ * \warning The current \c sampleOutput.txt on TRACS presents the exact same output
+ * behaviour for each Deck object called. This behaviour indicates that only
+ * isVisible need be true (since we "refresh" and "reveal" prior to most actions in the
+ * test suite). However, requiring both to be true is closer to, though not exactly, the
+ * expected state-dependent output. Indeed it makes no sense for all cards everywhere
+ * to be visible, much less for a card to be visible but not held.
+ *
  */
 
 void Card::display()
@@ -180,7 +187,7 @@ void Card::display()
 		cout << faceSymbol << suitSymbol << ",";
 	}
 	else
-	if ( /*isHeld == true && */ isVisible == true )
+	if ( isHeld == true && isVisible == true ) /* Depending on the version of spec, this can be different. */
 	{
 		cout << faceSymbol << suitSymbol << ",";
 	}

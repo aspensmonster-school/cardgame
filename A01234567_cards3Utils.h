@@ -2,24 +2,11 @@
 #define CARDS3FUNCTIONS_H_
 
 /**\file A01234567_cards3.h
- * \brief Header that defines the functions found in A01234567_cards3Utils.cpp
-\verbatim
-  First stage of Card project for CS2308-501 Summer 2012
-	- Simulates dealing a deck of cards to four players;
-	- Uses four integer parallel arrays of "suits":
-		   represented by integers and must be displayed via switch statement
-	- Uses random numbers
-		   (Gaddis ed. 7, pp. 129-130, example program 3-25)
-\endverbatim
-
-  Original Author: Carl Gregory
-
-  Date: 21/05/12 15:24
-
-  Modified by: Preston Maness
-
-  Date: 08/06/12 17:38
-
+ * \brief Header that defines the functions found in A01234567_cards3Utils.cpp. Mostly
+ * left overs from the refactoring. Basically just holds constants.
+ *
+ * \author Preston Maness
+ *
 */
 
 /*
