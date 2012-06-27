@@ -396,7 +396,27 @@ void Deck::selectionSort()
 void Deck::bubbleSort()
 {
 
+	int element = 0;
+	int start = 0;
+	int numSwaps = 0;
+	Card swap;
 
+	do
+	{
+
+		numSwaps = 0;
+		for(element = 0; element < DECK_SIZE - 1 ; ++element)
+		{
+			if( cardSet[element].getInitIndex() > cardSet[element+1].getInitIndex())
+			{
+				swap = cardSet[element];
+				cardSet[element] = cardSet[element+1];
+				cardSet[element+1] = swap;
+				++numSwaps;
+			}
+		}
+
+	} while(numSwaps > 0);
 
 }
 
