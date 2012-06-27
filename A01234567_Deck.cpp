@@ -308,12 +308,14 @@ Card Deck::linearSearch(int index) const
 	{
 		if(cardSet[i].getInitIndex() == index && cardSet[i].getIsHeld() == true)
 		{
+
 			Card temp = cardSet[i];
 			return temp;
 		}
 	}
 
-	Card notHeld(-1,-1,-1,false);
+	Card notHeld;
+	notHeld.initialize(-1,0,0,false);
 	return notHeld;
 
 }
@@ -346,7 +348,8 @@ Card Deck::binarySearch(int index) const
 		}
 	}
 
-	Card notHeld(-1,-1,-1,false);
+	Card notHeld;
+	notHeld.initialize(-1,0,0,false);
 	return notHeld;
 
 }
