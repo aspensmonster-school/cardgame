@@ -300,3 +300,168 @@ void Deck::putCard(int card, bool up)
 
 	cardSet[card].play(up);
 }
+
+/**
+ *
+ * \brief Uses a linear search to find a card in the deck via each card's
+ * initIndex. So long as the card with initIndex is present AND \c isHeld = true,
+ * this function returns a copy of that card. Returns a dummy card otherwise.
+ *
+ * \param index The initIndex we are looking for.
+ * \return Will either return a copy of the card in the Deck container,
+ * or a dummy card with initIndex set to -1. The testing function scans for this -1
+ * to know whether or not a search was successful.
+ */
+
+Card Deck::linearSearch(int index) const
+{
+
+	for ( int i = 0 ; i < DECK_SIZE ; i++)
+	{
+		if(cardSet[i].getInitIndex() == index && cardSet[i].getIsHeld() == true)
+		{
+
+			Card temp = cardSet[i];
+			return temp;
+		}
+	}
+
+	Card notHeld;
+	notHeld.initialize(-1,0,0,false);
+	return notHeld;
+
+}
+
+/**
+ *
+ * \brief Uses a binary search to find a card in the deck via each card's
+ * initIndex. So long as the card with initIndex is present AND \c isHeld = true,
+ * this function returns a copy of that card. Returns a dummy card otherwise.
+ *
+ * \pre \c cardSet must be sorted for this search to be effective.
+ *
+ * \param index The initIndex we are looking for.
+ * \return Will either return a copy of the card in the Deck container,
+ * or a dummy card with initIndex set to -1. The testing function scans for this -1
+ * to know whether or not a search was successful.
+ */
+
+Card Deck::binarySearch(int index) const
+{
+
+	int firstIndex = 0;
+	int lastIndex = DECK_SIZE -1;
+	int middleIndex;
+	bool found = false;
+	int position = 0;
+
+	while ( !found && (firstIndex <= lastIndex) )
+	{
+		middleIndex = (firstIndex + lastIndex) /2 ;
+		if ( cardSet[middleIndex].getInitIndex() == index && cardSet[middleIndex].getIsHeld() == true)
+		{
+			found = true;
+			Card temp = cardSet[middleIndex];
+			return temp;
+		}
+		else if (cardSet[middleIndex].getInitIndex() > index)
+		{
+			lastIndex = middleIndex - 1;
+		}
+		else
+		{
+			firstIndex = middleIndex + 1;
+		}
+	}
+
+	Card notHeld;
+	notHeld.initialize(-1,0,0,false);
+	return notHeld;
+
+}
+
+/**
+ *
+ * Sorts the \c cardSet array via the selection sort algorithm.
+ *
+ * \post cardSet is sorted, lowest initIndex to highest initIndex.
+ *
+ */
+
+void Deck::selectionSort()
+{
+
+    int minion;
+    int minIndex;
+    int minValue;
+    Card swap;
+	int start = 0;
+
+
+	while (start < DECK_SIZE)
+	{
+		minIndex = start;
+		minValue = cardSet[minIndex].getInitIndex();
+
+
+		/* Here, we search from minion to DECK_SIZE for the smallest
+		 * value and once we get it, we'll swap it to the front of the
+		 * array.
+		 */
+
+		for( minion = start; minion < DECK_SIZE ; ++minion)
+		{
+			if(cardSet[minion].getInitIndex() < minValue)
+			{
+				minIndex = minion;
+				minValue = cardSet[minion].getInitIndex();
+			}
+		}
+
+		/* swappy swap swap */
+
+		swap = cardSet[minIndex];
+		cardSet[minIndex] = cardSet[start];
+		cardSet[start] = swap;
+
+		++start;
+
+	}
+
+}
+
+/**
+ *
+ * Sorts the \c cardSet array via the bubble sort algorithm.
+ *
+ * \post cardSet is sorted, lowest initIndex to highest initIndex.
+ *
+ */
+
+void Deck::bubbleSort()
+{
+
+	int element = 0;
+	int start = 0;
+	int numSwaps = 0;
+	Card swap;
+
+	do
+	{
+
+		numSwaps = 0;
+		for(element = 0; element < DECK_SIZE - 1 ; ++element)
+		{
+			if( cardSet[element].getInitIndex() > cardSet[element+1].getInitIndex())
+			{
+				swap = cardSet[element];
+				cardSet[element] = cardSet[element+1];
+				cardSet[element+1] = swap;
+				++numSwaps;
+			}
+		}
+
+	} while(numSwaps > 0);
+
+}
+

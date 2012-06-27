@@ -26,7 +26,7 @@
 #ifndef DECK_H_
 #define DECK_H_
 
-#include "A01234567_cards3Utils.h"
+#include "A01234567_cards4Utils.h"
 #include "A01234567_Card.h" /* Have to include here since we're keeping a local array of Card objects in the deck */
 
 using namespace std;
@@ -63,6 +63,12 @@ public:
 
 	void takeCard(int card, bool up = false);
 	void putCard(int card, bool up = false);
+
+	Card linearSearch(int) const;
+	Card binarySearch(int) const;
+
+	void selectionSort();
+	void bubbleSort();
 
 };
 

@@ -26,7 +26,7 @@
 #ifndef CARD_H_
 #define CARD_H_
 
-#include "A01234567_cards3Utils.h"
+#include "A01234567_cards4Utils.h"
 
 class Card
 
@@ -54,6 +54,8 @@ public:
 	int getFaceValue() const { return faceValue; }
 	string getFaceSymbol() const { return faceSymbol; }
 	bool getDebugFlag() const { return debugging; }
+	int getInitIndex() const { return initIndex; }
+	bool getIsHeld() const { return isHeld; }
 
 	/* Some of these functions act as setters */
 	void initialize(int, int, int, bool isHere = true);
