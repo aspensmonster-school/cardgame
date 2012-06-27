@@ -300,3 +300,16 @@ void Deck::putCard(int card, bool up)
 
 	cardSet[card].play(up);
 }
+
+Card Deck::linearSearch(int int1) const {
+}
+
+Card Deck::binarySearch(int int1) const {
+}
+
+void Deck::selectionSort() {
+}
+
+void Deck::bubbleSort() {
+}
+
