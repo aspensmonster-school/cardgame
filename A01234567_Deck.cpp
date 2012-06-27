@@ -301,6 +301,18 @@ void Deck::putCard(int card, bool up)
 	cardSet[card].play(up);
 }
 
+/**
+ *
+ * \brief Uses a linear search to find a card in the deck via each card's
+ * initIndex. So long as the card with initIndex is present AND \c isHeld = true,
+ * this function returns a copy of that card. Returns a dummy card otherwise.
+ *
+ * \param index The initIndex we are looking for.
+ * \return temp/notHeld Will either return a copy of the card in the Deck container,
+ * or a dummy card with initIndex set to -1. The testing function scans for this -1
+ * to know whether or not a search was successful.
+ */
+
 Card Deck::linearSearch(int index) const
 {
 
@@ -319,6 +331,20 @@ Card Deck::linearSearch(int index) const
 	return notHeld;
 
 }
+
+/**
+ *
+ * \brief Uses a binary search to find a card in the deck via each card's
+ * initIndex. So long as the card with initIndex is present AND \c isHeld = true,
+ * this function returns a copy of that card. Returns a dummy card otherwise.
+ *
+ * \pre \c cardSet must be sorted for this search to be effective.
+ *
+ * \param index The initIndex we are looking for.
+ * \return temp/notHeld Will either return a copy of the card in the Deck container,
+ * or a dummy card with initIndex set to -1. The testing function scans for this -1
+ * to know whether or not a search was successful.
+ */
 
 Card Deck::binarySearch(int index) const
 {
@@ -353,6 +379,14 @@ Card Deck::binarySearch(int index) const
 	return notHeld;
 
 }
+
+/**
+ *
+ * Sorts the \c cardSet array via the selection sort algorithm.
+ *
+ * \post cardSet is sorted, lowest initIndex to highest initIndex.
+ *
+ */
 
 void Deck::selectionSort()
 {
@@ -395,6 +429,14 @@ void Deck::selectionSort()
 	}
 
 }
+
+/**
+ *
+ * Sorts the \c cardSet array via the bubble sort algorithm.
+ *
+ * \post cardSet is sorted, lowest initIndex to highest initIndex.
+ *
+ */
 
 void Deck::bubbleSort()
 {

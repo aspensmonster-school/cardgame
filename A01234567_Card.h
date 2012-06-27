@@ -55,7 +55,7 @@ public:
 	string getFaceSymbol() const { return faceSymbol; }
 	bool getDebugFlag() const { return debugging; }
 	int getInitIndex() const { return initIndex; }
-	bool getIsHeld() const { return isHeld;}
+	bool getIsHeld() const { return isHeld; }
 
 	/* Some of these functions act as setters */
 	void initialize(int, int, int, bool isHere = true);
