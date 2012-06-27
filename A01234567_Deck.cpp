@@ -313,7 +313,7 @@ Card Deck::linearSearch(int index) const
 		}
 	}
 
-	Card notHeld = new Card(-1,-1,-1,false);
+	Card notHeld(-1,-1,-1,false);
 	return notHeld;
 
 }
@@ -346,7 +346,7 @@ Card Deck::binarySearch(int index) const
 		}
 	}
 
-	Card notHeld = new Card(-1,-1,-1,false);
+	Card notHeld(-1,-1,-1,false);
 	return notHeld;
 
 }
