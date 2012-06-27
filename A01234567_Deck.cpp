@@ -308,7 +308,7 @@ void Deck::putCard(int card, bool up)
  * this function returns a copy of that card. Returns a dummy card otherwise.
  *
  * \param index The initIndex we are looking for.
- * \return temp/notHeld Will either return a copy of the card in the Deck container,
+ * \return Will either return a copy of the card in the Deck container,
  * or a dummy card with initIndex set to -1. The testing function scans for this -1
  * to know whether or not a search was successful.
  */
@@ -341,7 +341,7 @@ Card Deck::linearSearch(int index) const
  * \pre \c cardSet must be sorted for this search to be effective.
  *
  * \param index The initIndex we are looking for.
- * \return temp/notHeld Will either return a copy of the card in the Deck container,
+ * \return Will either return a copy of the card in the Deck container,
  * or a dummy card with initIndex set to -1. The testing function scans for this -1
  * to know whether or not a search was successful.
  */
