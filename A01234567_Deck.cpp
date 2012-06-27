@@ -301,15 +301,102 @@ void Deck::putCard(int card, bool up)
 	cardSet[card].play(up);
 }
 
-Card Deck::linearSearch(int int1) const {
+Card Deck::linearSearch(int index) const
+{
+
+	for ( int i = 0 ; i < DECK_SIZE ; i++)
+	{
+		if(cardSet[i].getInitIndex() == index && cardSet[i].getIsHeld() == true)
+		{
+			Card temp = cardSet[i];
+			return temp;
+		}
+	}
+
+	Card notHeld = new Card(-1,-1,-1,false);
+	return notHeld;
+
 }
 
-Card Deck::binarySearch(int int1) const {
+Card Deck::binarySearch(int index) const
+{
+
+	int firstIndex = 0;
+	int lastIndex = DECK_SIZE -1;
+	int middleIndex;
+	bool found = false;
+	int position = 0;
+
+	while ( !found && (firstIndex <= lastIndex) )
+	{
+		middleIndex = (firstIndex + lastIndex) /2 ;
+		if ( cardSet[middleIndex].getInitIndex() == index && cardSet[middleIndex].getIsHeld() == true)
+		{
+			found = true;
+			Card temp = cardSet[middleIndex];
+			return temp;
+		}
+		else if (cardSet[middleIndex].getInitIndex() > index)
+		{
+			lastIndex = middleIndex - 1;
+		}
+		else
+		{
+			firstIndex = middleIndex + 1;
+		}
+	}
+
+	Card notHeld = new Card(-1,-1,-1,false);
+	return notHeld;
+
 }
 
-void Deck::selectionSort() {
+void Deck::selectionSort()
+{
+
+    int minion;
+    int minIndex;
+    int minValue;
+    Card swap;
+	int start = 0;
+
+
+	while (start < DECK_SIZE)
+	{
+		minIndex = start;
+		minValue = cardSet[minIndex].getInitIndex();
+
+
+		/* Here, we search from minion to DECK_SIZE for the smallest
+		 * value and once we get it, we'll swap it to the front of the
+		 * array.
+		 */
+
+		for( minion = start; minion < DECK_SIZE ; ++minion)
+		{
+			if(cardSet[minion].getInitIndex() < minValue)
+			{
+				minIndex = minion;
+				minValue = cardSet[minion].getInitIndex();
+			}
+		}
+
+		/* swappy swap swap */
+
+		swap = cardSet[minIndex];
+		cardSet[minIndex] = cardSet[start];
+		cardSet[start] = swap;
+
+		++start;
+
+	}
+
 }
 
-void Deck::bubbleSort() {
+void Deck::bubbleSort()
+{
+
+
+
 }
 
