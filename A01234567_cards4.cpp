@@ -85,4 +85,7 @@ int main(int argc, char *argv[])
 	cin.get();
 
 	return EXIT_SUCCESS;
+
+	/* dummy commit; probably won't finish hw6 in time. Oh well. */
+
 }
