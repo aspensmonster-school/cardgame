@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
 
     string cmd;
 
-    cmd = cin.get();
+    getline(cin,cmd);
 
     cout << "you entered: " << cmd << endl;
 

@@ -27,6 +27,8 @@ public:
 	AcesUp();
 	virtual ~AcesUp();
 
+	void gameLoop();
+
 	void parseCommand(string);
 	void deal();
 	void remove();
