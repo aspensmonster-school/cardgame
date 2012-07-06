@@ -83,6 +83,7 @@ int main(int argc, char *argv[])
     testCardSet(hand, "Hand",false);
 
     AcesUp game;
+    game.display();
 
     cout << "Press ENTER to Continue." << endl;
 	cin.get();

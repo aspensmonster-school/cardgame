@@ -49,6 +49,35 @@ AcesUp::AcesUp()
 
 	}
 
+	/* temporary for testing ; simulating dealing function here for now */
+
+	/* add back of deck to stack one */
+	stax[1].push_back(stax[0].back());
+
+	cout << stax[1].size();
+
+	/* Remove back card of deck */
+	stax[0].pop_back();
+
+
+	/* add back of deck to stack one */
+	stax[2].push_back(stax[0].back());
+
+	/* Remove back card of deck */
+	stax[0].pop_back();
+
+	/* add back of deck to stack one */
+	stax[3].push_back(stax[0].back());
+
+	/* Remove back card of deck */
+	stax[0].pop_back();
+
+	/* add back of deck to stack one */
+	stax[4].push_back(stax[0].back());
+
+	/* Remove back card of deck */
+	stax[0].pop_back();
+
 }
 
 AcesUp::~AcesUp()
@@ -57,4 +86,43 @@ AcesUp::~AcesUp()
 
 
 }
+
+void AcesUp::display()
+{
+
+	bool finished = false;
+	int count = 0; /* Tracks number of stacks completely displayed */
+	int layer = 0; /* Tracks which "layer" of cards is being displayed */
+
+	system("clear");
+
+	while( !finished )
+	{
+
+
+		for (int i = 1 ; i < 5 ;i++)
+		{
+			if( stax[i].size() > layer )
+			{
+				cout << stax[i][layer].getFaceSymbol() << stax[i][layer].getSuitSymbol() << "\t";
+			}
+			else
+			{
+				cout << "\t";
+				count++;
+			}
+		}
+
+		layer++;
+
+		if(count == 4) /* we have iterated through all cards in each play stack. Stop display loop. */
+		{
+			finished = true;
+		}
+
+		cout << endl;
+	}
+
+}
+
 
