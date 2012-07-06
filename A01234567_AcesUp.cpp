@@ -33,7 +33,8 @@ AcesUp::AcesUp()
 	}
 
 	/*
-	 * Shuffle the deck using Knuth shuffle
+	 * Shuffle the deck using Knuth shuffle. Shuffle 3 times.
+	 * Every day I'm shufflin...
 	 */
 
 	for ( int i = 0 ; i < 3 ; i++)
