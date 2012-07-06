@@ -10,6 +10,7 @@
 
 #include "A01234567_Card.h"
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -24,8 +25,14 @@ private:
 public:
 
 	AcesUp();
-
 	virtual ~AcesUp();
+
+	void parseCommand(string);
+	void deal();
+	void remove();
+	void move();
+	void display();
+	void stateTracker();
 
 };
 
