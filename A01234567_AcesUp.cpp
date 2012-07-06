@@ -159,7 +159,7 @@ AcesUp::~AcesUp()
 
 }
 
-/* The rendered basically processes output line by line. It analyzes the current state of the
+/* The renderer basically processes output line by line. It analyzes the current state of the
  * stax variable and outputs the state given by that analysis (which cards in which stacks, etc).
  * Since we render based on the state of the stax variable, the rendering is independent of any particular
  * user command. */
