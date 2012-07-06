@@ -41,6 +41,7 @@
 /* #include "A01234567_cards4Utils.h" */
 
 #include "A01234567_cards4Tests.h" /* Will include Deck.h and Card.h */
+#include "A01234567_AcesUp.h"
 
 using namespace std;
 
@@ -80,6 +81,8 @@ int main(int argc, char *argv[])
     testCardSet(deck, "Deck",true);
     testCardSet(pot, "Table",false);
     testCardSet(hand, "Hand",false);
+
+    AcesUp game;
 
     cout << "Press ENTER to Continue." << endl;
 	cin.get();
