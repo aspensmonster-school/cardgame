@@ -49,16 +49,13 @@ AcesUp::AcesUp()
 
 	}
 
-	/* temporary for testing ; simulating dealing function here for now */
+	/* temporary for testing ; simulating game functions here for now to make sure display works correctly*/
 
 	/* add back of deck to stack one */
 	stax[1].push_back(stax[0].back());
 
-	cout << stax[1].size();
-
 	/* Remove back card of deck */
 	stax[0].pop_back();
-
 
 	/* add back of deck to stack one */
 	stax[2].push_back(stax[0].back());
@@ -78,6 +75,80 @@ AcesUp::AcesUp()
 	/* Remove back card of deck */
 	stax[0].pop_back();
 
+	/* add back of deck to stack one */
+	stax[1].push_back(stax[0].back());
+
+	/* Remove back card of deck */
+	stax[0].pop_back();
+
+	/* add back of deck to stack one */
+	stax[2].push_back(stax[0].back());
+
+	/* Remove back card of deck */
+	stax[0].pop_back();
+
+	/* add back of deck to stack one */
+	stax[3].push_back(stax[0].back());
+
+	/* Remove back card of deck */
+	stax[0].pop_back();
+
+	/* add back of deck to stack one */
+	stax[4].push_back(stax[0].back());
+
+	/* Remove back card of deck */
+	stax[0].pop_back();
+
+	/* Move stuff to trash */
+
+	stax[5].push_back(stax[0].back());
+	stax[0].pop_back();
+
+	stax[5].push_back(stax[0].back());
+	stax[0].pop_back();
+
+	stax[5].push_back(stax[0].back());
+	stax[0].pop_back();
+
+	stax[5].push_back(stax[0].back());
+	stax[0].pop_back();
+
+	stax[5].push_back(stax[0].back());
+	stax[0].pop_back();
+
+	stax[5].push_back(stax[0].back());
+	stax[0].pop_back();
+
+	stax[5].push_back(stax[0].back());
+	stax[0].pop_back();
+
+	stax[5].push_back(stax[0].back());
+	stax[0].pop_back();
+
+	stax[5].push_back(stax[0].back());
+	stax[0].pop_back();
+
+	stax[5].push_back(stax[0].back());
+	stax[0].pop_back();
+
+	stax[5].push_back(stax[0].back());
+	stax[0].pop_back();
+
+	stax[5].push_back(stax[0].back());
+	stax[0].pop_back();
+
+	stax[5].push_back(stax[0].back());
+	stax[0].pop_back();
+
+	stax[5].push_back(stax[0].back());
+	stax[0].pop_back();
+
+	stax[5].push_back(stax[0].back());
+	stax[0].pop_back();
+
+	stax[5].push_back(stax[0].back());
+	stax[0].pop_back();
+
 }
 
 AcesUp::~AcesUp()
@@ -87,18 +158,28 @@ AcesUp::~AcesUp()
 
 }
 
-void AcesUp::display()
+/* The rendered basically processes output line by line. It analyzes the current state of the
+ * stax variable and outputs the state given by that analysis (which cards in which stacks, etc).
+ * Since we render based on the state of the stax variable, the rendering is independent of any particular
+ * user command. */
+
+void AcesUp::render()
 {
 
 	bool finished = false;
-	int count = 0; /* Tracks number of stacks completely displayed */
 	int layer = 0; /* Tracks which "layer" of cards is being displayed */
+	int trash = stax[5].size();
 
 	system("clear");
+
+	cout << "1: " << "\t" << "2: " << "\t" << "3: " << "\t" << "4: " << "\t" << "Trash: " << endl << endl;
 
 	while( !finished )
 	{
 
+		int count = 0; /* Tracks number of stacks completely displayed */
+
+		/* Display card stacks */
 
 		for (int i = 1 ; i < 5 ;i++)
 		{
@@ -113,9 +194,23 @@ void AcesUp::display()
 			}
 		}
 
+		/* Display garbage off to the right */
+
+		int i = trash - 1; /* since trash is based off of the vector::size() function,
+		 	 	 	 	 	  we want to ensure we call the right index */
+
+		int j = trash -12; /* We also only want to display 12 cards on any given row of
+						      screen output */
+
+		for( ; i > j && trash !=0 ; i--)
+		{
+			cout << stax[5][i].getFaceSymbol() << stax[5][i].getSuitSymbol() << ",";
+			trash--;
+		}
+
 		layer++;
 
-		if(count == 4) /* we have iterated through all cards in each play stack. Stop display loop. */
+		if(count == 4 && trash == 0) /* we have iterated through all cards in each play stack. Stop display loop. */
 		{
 			finished = true;
 		}

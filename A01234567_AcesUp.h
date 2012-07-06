@@ -31,7 +31,7 @@ public:
 	void deal();
 	void remove();
 	void move();
-	void display();
+	void render();
 	void stateTracker();
 
 };

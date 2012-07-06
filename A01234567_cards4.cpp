@@ -77,16 +77,21 @@ int main(int argc, char *argv[])
      * A01234567_Card.cpp .
      *
      */
-
+/*
     testCardSet(deck, "Deck",true);
     testCardSet(pot, "Table",false);
     testCardSet(hand, "Hand",false);
-
+*/
     AcesUp game;
-    game.display();
+    game.render();
 
-    cout << "Press ENTER to Continue." << endl;
-	cin.get();
+    cout << "Command: ";
+
+    string cmd;
+
+    cmd = cin.get();
+
+    cout << "you entered: " << cmd << endl;
 
 	return EXIT_SUCCESS;
 
