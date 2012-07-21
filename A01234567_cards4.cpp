@@ -85,15 +85,7 @@ int main(int argc, char *argv[])
     AcesUp game;
 
     game.intro();
-    game.render();
-
-    cout << "Command: ";
-
-    string cmd;
-    getline(cin,cmd);
-    game.parseCommand(cmd);
-
-    cout << "you entered: " << cmd << endl;
+    game.gameLoop();
 
 	return EXIT_SUCCESS;
 

@@ -32,8 +32,8 @@ public:
 	void intro();
 	void parseCommand(string);
 	void deal();
-	void remove();
-	void move();
+	void remove(int);
+	void move(int,int);
 	void render();
 	void stateTracker();
 

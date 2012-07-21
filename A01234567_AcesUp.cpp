@@ -160,6 +160,21 @@ AcesUp::~AcesUp()
 
 }
 
+void AcesUp::gameLoop()
+{
+
+    render();
+
+    cout << "Command: ";
+
+    string cmd;
+    getline(cin,cmd);
+    parseCommand(cmd);
+
+    cout << "you entered: " << cmd << endl;
+
+}
+
 void AcesUp::intro()
 {
 
@@ -167,7 +182,7 @@ void AcesUp::intro()
 
 	cout << "===============================================================================" << endl;
 	cout << endl;
-	cout << "Welcome to this CLI version of the Solitaire-based card-game known \n"
+	cout << "Welcome to this CLI version of the Solitaire-based card game known \n"
 			"as Aces Up. It is assumed that the player already understands the rules.\n";
 	cout << endl;
 	cout << "===============================================================================" << endl;
@@ -184,8 +199,66 @@ void AcesUp::intro()
 	cin.get();
 }
 
+/* Only ensures command is well-formed. Does not check state to see if command is possible. That is
+ * handled by the individual methods for each command.
+ */
+
 void AcesUp::parseCommand(string input)
 {
+
+	switch(input[0])
+	{
+		case 'q':
+			cout << endl << "QUITTING NOW!" << endl;
+			exit(0); /* I could probably code in a more graceful way to handle quitting. */
+			break;
+
+		case 'm':
+
+			int from;
+			int to;
+
+			if(input[1] < 5 && input[1] > 0 && input[2] < 5 && input[2] > 0)
+			{
+				from = (int) input[1];
+				to = (int) input[2];
+				move(from,to);
+			}
+			else
+			{
+				cout << "Command malformed. Try again." << endl;
+			}
+
+			break;
+
+		case 'r':
+
+			int column;
+
+			if(input[1] < 5 && input[1] > 0)
+			{
+				column = (int) input[1];
+				remove(column);
+			}
+			else
+			{
+				cout << "Command malformed. Try again." << endl;
+			}
+
+			break;
+
+		case 'd':
+
+			deal();
+
+			break;
+
+		default:
+
+			cout << "Command malformed. Try again." << endl;
+			break;
+
+	}
 
 }
 
