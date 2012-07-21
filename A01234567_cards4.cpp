@@ -83,13 +83,15 @@ int main(int argc, char *argv[])
     testCardSet(hand, "Hand",false);
 */
     AcesUp game;
+
+    game.intro();
     game.render();
 
     cout << "Command: ";
 
     string cmd;
-
     getline(cin,cmd);
+    game.parseCommand(cmd);
 
     cout << "you entered: " << cmd << endl;
 

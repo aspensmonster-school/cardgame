@@ -7,6 +7,7 @@
 
 #include "A01234567_AcesUp.h"
 #include <iostream>
+#include <iomanip>
 
 AcesUp::AcesUp()
 {
@@ -159,6 +160,35 @@ AcesUp::~AcesUp()
 
 }
 
+void AcesUp::intro()
+{
+
+	system("clear");
+
+	cout << "===============================================================================" << endl;
+	cout << endl;
+	cout << "Welcome to this CLI version of the Solitaire-based card-game known \n"
+			"as Aces Up. It is assumed that the player already understands the rules.\n";
+	cout << endl;
+	cout << "===============================================================================" << endl;
+	cout << endl;
+	cout <<	"There are a few commands, listed below:\n\n" << left
+			<< setw(8) << "Quit: " << setw(15) << " 'q' " << setw(10) << " immediately exit to shell \n"
+			<< setw(8) << "Move: " << setw(15) << " 'm(from)(to)' " << setw(10) << " e.g. \'m12\' moves top card on stack 1 onto empty stack 2.\n"
+			<< setw(8) << "Remove: " << setw(15) << " 'r(from)' " << setw(10) << " e.g. \'r3\' removes the top card from stack 3. \n"
+			<< setw(8) << "Deal: " << setw(15) << " 'd' " << setw(10) << " will deal new layer of cards onto stacks."
+
+		<< endl << endl;
+
+	cout << "Press enter to continue: " ;
+	cin.get();
+}
+
+void AcesUp::parseCommand(string input)
+{
+
+}
+
 /* The renderer basically processes output line by line. It analyzes the current state of the
  * stax variable and outputs the state given by that analysis (which cards in which stacks, etc).
  * Since we render based on the state of the stax variable, the rendering is independent of any particular
@@ -171,7 +201,8 @@ void AcesUp::render()
 	int layer = 0; /* Tracks which "layer" of cards is being displayed */
 	int trash = stax[5].size();
 
-	system("clear");
+	system("clear"); /* I know using "system" calls is incredibly bad practice from a security standpoint,
+						but I'll come back and reimplement the functionality later */
 
 	cout << "1: " << "\t" << "2: " << "\t" << "3: " << "\t" << "4: " << "\t" << "Trash: " << endl << endl;
 

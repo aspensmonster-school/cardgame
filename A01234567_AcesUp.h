@@ -29,6 +29,7 @@ public:
 
 	void gameLoop();
 
+	void intro();
 	void parseCommand(string);
 	void deal();
 	void remove();
