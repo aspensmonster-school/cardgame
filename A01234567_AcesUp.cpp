@@ -52,7 +52,7 @@ AcesUp::AcesUp()
 
 	}
 
-	/* temporary for testing ; simulating game functions here for now to make sure display works correctly*/
+	/* temporary for testing ; simulating game functions here for now to make sure render() works correctly*/
 
 	/* add back of deck to stack one */
 	stax[1].push_back(stax[0].back());
@@ -290,6 +290,14 @@ void AcesUp::render()
 
 	system("clear"); /* I know using "system" calls is incredibly bad practice from a security standpoint,
 						but I'll come back and reimplement the functionality later */
+					 /*
+					  *
+						    			{o,o}
+										|)__)
+										-”-”-
+										O RLY?
+					  *
+					  */
 
 	cout << "1: " << "\t" << "2: " << "\t" << "3: " << "\t" << "4: " << "\t" << "Trash: " << endl << endl;
 
