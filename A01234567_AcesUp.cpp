@@ -164,15 +164,20 @@ AcesUp::~AcesUp()
 void AcesUp::gameLoop()
 {
 
-    render();
+	while(true)
 
+	{
+
+	render();
     cout << "Command: ";
     string cmd;
     getline(cin,cmd,'\n');
-    cout << cmd[0] << " " << cmd[1] << " " << cmd[2] << endl;
+    //cout << cmd[0] << " " << cmd[1] << " " << cmd[2] << endl;
     parseCommand(cmd);
 
-    cout << "you entered: " << cmd << endl;
+    //cout << "you entered: " << cmd << endl;
+
+	}
 
 }
 
@@ -207,65 +212,45 @@ void AcesUp::intro()
 void AcesUp::parseCommand(string input)
 {
 
-	cout << "First char is " << input[0] << endl;
-	char qt = 'q';
-	char mv = 'm';
-	char rm = 'r';
-	char dl = 'd';
-
-	cout << (input[0] == mv) << endl;
-
-		if(input[0] == qt)
+		if(input[0] == 'q')
 		{
 			cout << endl << "QUITTING NOW!" << endl;
 			exit(0); /* I could probably code in a more graceful way to handle quitting. */
 		}
 		else
-		if(input[0] == mv)
+		if(input[0] == 'm')
 		{
-			//char f = input[1];
-			//char t = input[2];
 
-			/* For whatever reason, the const char* from is grabbing two chars. Ugh. */
+			int from = strtol((input.substr(1,1)).c_str(),NULL,10);
+			int to = strtol((input.substr(2,1)).c_str(),NULL,10);
 
-			/* I'm a fucking moron. */
-
-			const char* from = &input[1];
-			const char* to = &input[2];
-
-			cout << "num1: " << input[1] << endl;
-			cout << "num2: " << input[2] << endl;
-
-			cout << "atoi(from): " << atoi(from) << endl;
-
-			if((atoi(from) < 5) && (atoi(from) > 0) && (atoi(to) < 5) && (atoi(to) > 0))
+			if((from < 5) && (from > 0) && (to < 5) && (to > 0))
 			{
-				move( atoi(from) , atoi(to) );
+				move(from,to);
 			}
 			else
 			{
-				cout << "Command malformed. Try again." << endl;
+				cout << "Move command malformed. Try again." << endl;
 			}
 
 		}
 		else
-		if(input[0] == rm)
+		if(input[0] == 'r')
 		{
-			int column;
+			int column = strtol((input.substr(1,1)).c_str(),NULL,10);
 
-			if(input[1] < 5 && input[1] > 0)
+			if(column < 5 && column > 0)
 			{
-				column = (int) input[1];
 				remove(column);
 			}
 			else
 			{
-				cout << "Command malformed. Try again." << endl;
+				cout << "Remove command malformed. Try again." << endl;
 			}
 
 		}
 		else
-		if(input[0] == dl)
+		if(input[0] == 'd')
 		{
 			deal();
 		}
