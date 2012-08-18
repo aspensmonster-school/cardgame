@@ -256,14 +256,102 @@ void AcesUp::parseCommand(string input)
 		}
 		else
 		{
-			cout << "Command malformed. Try again." << endl;
+			cout << "Unrecognized command. Try again." << endl;
 		}
 
 }
 
 void AcesUp::deal()
 {
-	cout << "deal stub" << endl;
+
+	/* You can only deal if the top card in each stack is of a different suit.
+	 * Empty spaces are also allowed. So, make sure to check that the stack isn't empty
+	 * prior to checking the suit of the top card.
+	 */
+
+	/* Let's make sure we don't try to access Cards of empty stacks, and
+	 * if they're not empty grab the top card's face value (an int).
+	 */
+
+	int vals[] = {-1,-1,-1,-1};
+
+	if(stax[1].size() > 0)
+	{
+		vals[0] = (stax[1].back()).getSuitValue();
+	}
+
+	if(stax[2].size() > 0)
+	{
+		vals[1] = (stax[2].back()).getSuitValue();
+	}
+
+	if(stax[3].size() > 0)
+	{
+		vals[2] = (stax[3].back()).getSuitValue();
+	}
+
+	if(stax[4].size() > 0)
+	{
+		vals[3] = (stax[4].back()).getSuitValue();
+	}
+
+	/* Now let's make sure there are no matching suit values */
+
+	bool flag = true;
+
+	for ( int i = 0 ; i < 3 ; i++)
+	{
+
+		/* If it's an empty space, no sense comparing it */
+		if( vals[i] == -1)
+		{
+			continue;
+		}
+
+		/* Check for matches */
+		for ( int j = i+1 ; j < 4 ; j++)
+		{
+			if (vals[i] == vals[j])
+			{
+				flag = false;
+				break;
+			}
+		}
+
+		/* If we find that two stacks match, no sense to keep going */
+		if(flag == false)
+		{
+			break;
+		}
+
+	}
+
+	if (flag)
+
+	{
+
+	stax[1].push_back(stax[0].back());
+	stax[0].pop_back();
+	stax[2].push_back(stax[0].back());
+	stax[0].pop_back();
+	stax[3].push_back(stax[0].back());
+	stax[0].pop_back();
+	stax[4].push_back(stax[0].back());
+	stax[0].pop_back();
+
+	}
+
+	/* The current method of handling failed commands like this is hacky.
+	 * I should make the action of GETTING a command atomic, and not
+	 * directly tied into the gameLoop() above.
+	 */
+
+	else
+	{
+		cout << "Cannot deal yet. At least two top cards have same suit." << endl;
+		cout << "Press enter to continue: " ;
+		cin.get();
+	}
 }
 
 void AcesUp::remove(int column)
@@ -292,7 +380,7 @@ void AcesUp::render()
 						but I'll come back and reimplement the functionality later */
 					 /*
 					  *
-						    			{o,o}
+										{o,o}
 										|)__)
 										-”-”-
 										O RLY?
