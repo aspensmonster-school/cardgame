@@ -187,7 +187,14 @@ void AcesUp::intro()
 	system("clear");
 
 	cout << "===============================================================================" << endl;
-	cout << endl;
+	cout << "		  ___                  _   _       " << endl;
+	cout << "		 / _ \\                | | | |      " << endl;
+	cout << "		/ /_\\ \\ ___ ___  ___  | | | |_ __  " << endl;
+	cout << "		|  _  |/ __/ _ \\/ __| | | | | '_ \\ " << endl;
+	cout << "		| | | | (_|  __/\\__ \\ | |_| | |_) |" << endl;
+	cout << "		\\_| |_/\\___\\___||___/  \\___/| .__/ " << endl;
+	cout << "		                            | |    " << endl;
+	cout << "		                            |_|    " << endl << endl;
 	cout << "Welcome to this CLI version of the Solitaire-based card game known \n"
 			"as Aces Up. It is assumed that the player already understands the rules.\n";
 	cout << endl;
@@ -273,26 +280,26 @@ void AcesUp::deal()
 	 * if they're not empty grab the top card's face value (an int).
 	 */
 
-	int vals[] = {-1,-1,-1,-1};
+	int suitvals[] = {-1,-1,-1,-1};
 
 	if(stax[1].size() > 0)
 	{
-		vals[0] = (stax[1].back()).getSuitValue();
+		suitvals[0] = (stax[1].back()).getSuitValue();
 	}
 
 	if(stax[2].size() > 0)
 	{
-		vals[1] = (stax[2].back()).getSuitValue();
+		suitvals[1] = (stax[2].back()).getSuitValue();
 	}
 
 	if(stax[3].size() > 0)
 	{
-		vals[2] = (stax[3].back()).getSuitValue();
+		suitvals[2] = (stax[3].back()).getSuitValue();
 	}
 
 	if(stax[4].size() > 0)
 	{
-		vals[3] = (stax[4].back()).getSuitValue();
+		suitvals[3] = (stax[4].back()).getSuitValue();
 	}
 
 	/* Now let's make sure there are no matching suit values */
@@ -303,7 +310,7 @@ void AcesUp::deal()
 	{
 
 		/* If it's an empty space, no sense comparing it */
-		if( vals[i] == -1)
+		if( suitvals[i] == -1)
 		{
 			continue;
 		}
@@ -311,7 +318,7 @@ void AcesUp::deal()
 		/* Check for matches */
 		for ( int j = i+1 ; j < 4 ; j++)
 		{
-			if (vals[i] == vals[j])
+			if (suitvals[i] == suitvals[j])
 			{
 				flag = false;
 				break;
@@ -356,7 +363,91 @@ void AcesUp::deal()
 
 void AcesUp::remove(int column)
 {
-	cout << "remove stub" << endl;
+
+	int suitvals[] = {-1,-1,-1,-1};
+
+	if(stax[1].size() > 0)
+	{
+		suitvals[0] = (stax[1].back()).getSuitValue();
+	}
+
+	if(stax[2].size() > 0)
+	{
+		suitvals[1] = (stax[2].back()).getSuitValue();
+	}
+
+	if(stax[3].size() > 0)
+	{
+		suitvals[2] = (stax[3].back()).getSuitValue();
+	}
+
+	if(stax[4].size() > 0)
+	{
+		suitvals[3] = (stax[4].back()).getSuitValue();
+	}
+
+	int facevals[] = {-1,-1,-1,-1};
+
+	/* Find the matching suit columns and update the facevals
+	 * array to show their integer face value
+	 */
+
+	for ( int i = 0 ; i < 3 ; i++)
+	{
+
+		/* If it's an empty space, no sense comparing it */
+		if( suitvals[i] == -1)
+		{
+			continue;
+		}
+
+		/* Check for matches */
+		for ( int j = i+1 ; j < 4 ; j++)
+		{
+			if (suitvals[i] == suitvals[j])
+			{
+				facevals[i] = stax[i+1].back().getFaceValue();
+				facevals[j] = stax[j+1].back().getFaceValue();
+			}
+		}
+
+	}
+
+	/* So long as the column requested doesn't have the highest face value
+	 * then we can remove the requested column. Find the highest value in
+	 * facevals
+	 */
+
+	int highest = 0;
+
+	for ( int i = 1 ; i < 4 ; i++)
+	{
+		if(facevals[i] > facevals[highest])
+		{
+			highest = i;
+		}
+	}
+
+	bool flag = true;
+
+	if((highest+1) == column)
+	{
+		flag = false;
+	}
+
+	if(flag)
+	{
+		stax[5].push_back(stax[column].back());
+		stax[column].pop_back();
+	}
+
+	else
+	{
+		cout << "You cannot remove the highest-valued card of the suit. " << endl;
+		cout << "Please press enter: ";
+		cin.get();
+	}
+
 }
 
 void AcesUp::move(int from , int to)
