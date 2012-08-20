@@ -403,10 +403,15 @@ void AcesUp::remove(int column)
 			continue;
 		}
 
-		/* Check for matches */
+		/* Check for matches OF THE SUIT OF THE COLUMN REQUESTED */
+		/* I.e., if we're trying to remove a two of spades, we don't want
+		 * subsequent checks further down to pass just because columns
+		 * two and three were both diamonds.
+		 */
 		for ( int j = i+1 ; j < 4 ; j++)
 		{
-			if (suitvals[i] == suitvals[j])
+			int columnsuitval = stax[column].back().getSuitValue();
+			if (suitvals[i] == suitvals[j] && suitvals[i] == columnsuitval  && suitvals[j] == columnsuitval)
 			{
 				facevals[i] = stax[i+1].back().getFaceValue();
 				facevals[j] = stax[j+1].back().getFaceValue();
