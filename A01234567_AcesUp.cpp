@@ -55,55 +55,56 @@ AcesUp::AcesUp()
 	/* temporary for testing ; simulating game functions here for now to make sure render() works correctly*/
 
 	/* add back of deck to stack one */
-	stax[1].push_back(stax[0].back());
+	//stax[1].push_back(stax[0].back());
 
 	/* Remove back card of deck */
-	stax[0].pop_back();
+	//stax[0].pop_back();
 
 	/* add back of deck to stack one */
-	stax[2].push_back(stax[0].back());
+	//stax[2].push_back(stax[0].back());
 
 	/* Remove back card of deck */
-	stax[0].pop_back();
+	//stax[0].pop_back();
 
 	/* add back of deck to stack one */
-	stax[3].push_back(stax[0].back());
+	//stax[3].push_back(stax[0].back());
 
 	/* Remove back card of deck */
-	stax[0].pop_back();
+	//stax[0].pop_back();
 
 	/* add back of deck to stack one */
-	stax[4].push_back(stax[0].back());
+	//stax[4].push_back(stax[0].back());
 
 	/* Remove back card of deck */
-	stax[0].pop_back();
+	//stax[0].pop_back();
 
 	/* add back of deck to stack one */
-	stax[1].push_back(stax[0].back());
+	//stax[1].push_back(stax[0].back());
 
 	/* Remove back card of deck */
-	stax[0].pop_back();
+	//stax[0].pop_back();
 
 	/* add back of deck to stack one */
-	stax[2].push_back(stax[0].back());
+	//stax[2].push_back(stax[0].back());
 
 	/* Remove back card of deck */
-	stax[0].pop_back();
+	//stax[0].pop_back();
 
 	/* add back of deck to stack one */
-	stax[3].push_back(stax[0].back());
+	//stax[3].push_back(stax[0].back());
 
 	/* Remove back card of deck */
-	stax[0].pop_back();
+	//stax[0].pop_back();
 
 	/* add back of deck to stack one */
-	stax[4].push_back(stax[0].back());
+	//stax[4].push_back(stax[0].back());
 
 	/* Remove back card of deck */
-	stax[0].pop_back();
+	//stax[0].pop_back();
 
 	/* Move stuff to trash */
 
+	/*
 	stax[5].push_back(stax[0].back());
 	stax[0].pop_back();
 
@@ -151,6 +152,7 @@ AcesUp::AcesUp()
 
 	stax[5].push_back(stax[0].back());
 	stax[0].pop_back();
+	*/
 
 }
 
@@ -462,12 +464,18 @@ void AcesUp::remove(int column)
 
 	/* If it's not solo and isn't the highest val, remove it! */
 
+	if(suitvals[column-1] == -1)
+	{
+		cout << "What makes you think you can remove an empty space?" << endl;
+		cout << "Please press enter: ";
+		cin.get();
+	}
+	else
 	if(flag && !solo)
 	{
 		stax[5].push_back(stax[column].back());
 		stax[column].pop_back();
 	}
-
 	else
 	{
 		cout << "You cannot remove the highest-valued card of the suit. " << endl;
