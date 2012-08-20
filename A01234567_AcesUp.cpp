@@ -176,7 +176,6 @@ void AcesUp::gameLoop()
     getline(cin,cmd,'\n');
     //cout << cmd[0] << " " << cmd[1] << " " << cmd[2] << endl;
     parseCommand(cmd);
-
     //cout << "you entered: " << cmd << endl;
 
 	}
@@ -335,6 +334,13 @@ void AcesUp::deal()
 
 	}
 
+	if(stax[0].empty())
+	{
+		cout << "Deck's empty, MOTHERFUCKER. GAME OVER! " << endl;
+		cout << "Please press enter, BITCH: ";
+		cin.get();
+	}
+	else
 	if (flag)
 
 	{
