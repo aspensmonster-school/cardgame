@@ -416,6 +416,11 @@ void AcesUp::remove(int column)
 	/* So long as the column requested doesn't have the highest face value
 	 * then we can remove the requested column. Find the highest value in
 	 * facevals
+	 *
+	 * Mon Aug 20 2012 0229 yeah... I derped. As the code is currently
+	 * written, it lets the user remove the highest value if it's the only
+	 * suit of its kind on the top layer! Oops. Fixing now.
+	 *
 	 */
 
 	int highest = 0;
@@ -435,7 +440,29 @@ void AcesUp::remove(int column)
 		flag = false;
 	}
 
-	if(flag)
+	/* Now check to make sure highest is not the ONLY index with a nonnegative
+	 * value in facevals */
+
+	int count = 0;
+
+	for(int i = 0 ; i < 4 ; i++)
+	{
+		if (facevals[i] < 0)
+		{
+			count++;
+		}
+	}
+
+	bool solo = false;
+
+	if (count == 4)
+	{
+		solo = true;
+	}
+
+	/* If it's not solo and isn't the highest val, remove it! */
+
+	if(flag && !solo)
 	{
 		stax[5].push_back(stax[column].back());
 		stax[column].pop_back();
