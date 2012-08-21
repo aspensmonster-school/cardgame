@@ -232,7 +232,17 @@ void AcesUp::parseCommand(string input)
 			int from = strtol((input.substr(1,1)).c_str(),NULL,10);
 			int to = strtol((input.substr(2,1)).c_str(),NULL,10);
 
-			if((from < 5) && (from > 0) && (to < 5) && (to > 0))
+			/* To avoid confusion in the event of input like 'm123', force strict
+			 * matching of m## and nothing else */
+
+			bool strict = false;
+
+			if(input.length() >= 4)
+			{
+				strict = true;
+			}
+
+			if((from < 5) && (from > 0) && (to < 5) && (to > 0) && !strict)
 			{
 				move(from,to);
 			}
@@ -247,7 +257,17 @@ void AcesUp::parseCommand(string input)
 		{
 			int column = strtol((input.substr(1,1)).c_str(),NULL,10);
 
-			if(column < 5 && column > 0)
+			/* To avoid confusion in the event of input like 'm123', force strict
+			 * matching of m## and nothing else */
+
+			bool strict = false;
+
+			if(input.length() >= 4)
+			{
+				strict = true;
+			}
+
+			if(column < 5 && column > 0 && !strict)
 			{
 				remove(column);
 			}
