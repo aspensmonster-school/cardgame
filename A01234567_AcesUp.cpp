@@ -518,6 +518,21 @@ void AcesUp::remove(int column)
 
 void AcesUp::move(int from , int to)
 {
+
+	/* So long as the to column is empty and from column isn't, you can move.  */
+
+	if(stax[to].empty() && !stax[from].empty())
+	{
+		stax[to].push_back(stax[from].back());
+		stax[from].pop_back();
+	}
+	else
+	{
+		cout << "You can't do that. " << endl;
+		cout << "Please press enter: " ;
+		cin.get();
+	}
+
 	cout << "move stub" << endl;
 }
 
