@@ -52,108 +52,6 @@ AcesUp::AcesUp()
 
 	}
 
-	/* temporary for testing ; simulating game functions here for now to make sure render() works correctly*/
-
-	/* add back of deck to stack one */
-	//stax[1].push_back(stax[0].back());
-
-	/* Remove back card of deck */
-	//stax[0].pop_back();
-
-	/* add back of deck to stack one */
-	//stax[2].push_back(stax[0].back());
-
-	/* Remove back card of deck */
-	//stax[0].pop_back();
-
-	/* add back of deck to stack one */
-	//stax[3].push_back(stax[0].back());
-
-	/* Remove back card of deck */
-	//stax[0].pop_back();
-
-	/* add back of deck to stack one */
-	//stax[4].push_back(stax[0].back());
-
-	/* Remove back card of deck */
-	//stax[0].pop_back();
-
-	/* add back of deck to stack one */
-	//stax[1].push_back(stax[0].back());
-
-	/* Remove back card of deck */
-	//stax[0].pop_back();
-
-	/* add back of deck to stack one */
-	//stax[2].push_back(stax[0].back());
-
-	/* Remove back card of deck */
-	//stax[0].pop_back();
-
-	/* add back of deck to stack one */
-	//stax[3].push_back(stax[0].back());
-
-	/* Remove back card of deck */
-	//stax[0].pop_back();
-
-	/* add back of deck to stack one */
-	//stax[4].push_back(stax[0].back());
-
-	/* Remove back card of deck */
-	//stax[0].pop_back();
-
-	/* Move stuff to trash */
-
-	/*
-	stax[5].push_back(stax[0].back());
-	stax[0].pop_back();
-
-	stax[5].push_back(stax[0].back());
-	stax[0].pop_back();
-
-	stax[5].push_back(stax[0].back());
-	stax[0].pop_back();
-
-	stax[5].push_back(stax[0].back());
-	stax[0].pop_back();
-
-	stax[5].push_back(stax[0].back());
-	stax[0].pop_back();
-
-	stax[5].push_back(stax[0].back());
-	stax[0].pop_back();
-
-	stax[5].push_back(stax[0].back());
-	stax[0].pop_back();
-
-	stax[5].push_back(stax[0].back());
-	stax[0].pop_back();
-
-	stax[5].push_back(stax[0].back());
-	stax[0].pop_back();
-
-	stax[5].push_back(stax[0].back());
-	stax[0].pop_back();
-
-	stax[5].push_back(stax[0].back());
-	stax[0].pop_back();
-
-	stax[5].push_back(stax[0].back());
-	stax[0].pop_back();
-
-	stax[5].push_back(stax[0].back());
-	stax[0].pop_back();
-
-	stax[5].push_back(stax[0].back());
-	stax[0].pop_back();
-
-	stax[5].push_back(stax[0].back());
-	stax[0].pop_back();
-
-	stax[5].push_back(stax[0].back());
-	stax[0].pop_back();
-	*/
-
 }
 
 AcesUp::~AcesUp()
@@ -171,16 +69,18 @@ void AcesUp::gameLoop()
 	{
 
 	render();
+
     cout << "Command: ";
     string cmd;
     getline(cin,cmd,'\n');
-    //cout << cmd[0] << " " << cmd[1] << " " << cmd[2] << endl;
+
     parseCommand(cmd);
-    //cout << "you entered: " << cmd << endl;
 
 	}
 
 }
+
+/* Spits out the ascii art intro and command guide */
 
 void AcesUp::intro()
 {
@@ -220,11 +120,14 @@ void AcesUp::intro()
 void AcesUp::parseCommand(string input)
 {
 
+		/* Quit */
 		if(input[0] == 'q')
 		{
 			cout << endl << "QUITTING NOW!" << endl;
 			exit(0); /* I could probably code in a more graceful way to handle quitting. */
 		}
+
+		/* Move */
 		else
 		if(input[0] == 'm')
 		{
@@ -234,9 +137,7 @@ void AcesUp::parseCommand(string input)
 
 			/* To avoid confusion in the event of input like 'm123', force strict
 			 * matching of m## and nothing else */
-
 			bool strict = false;
-
 			if(input.length() >= 4)
 			{
 				strict = true;
@@ -252,17 +153,18 @@ void AcesUp::parseCommand(string input)
 			}
 
 		}
+
+		/* Remove */
 		else
 		if(input[0] == 'r')
 		{
 			int column = strtol((input.substr(1,1)).c_str(),NULL,10);
 
-			/* To avoid confusion in the event of input like 'm123', force strict
-			 * matching of m## and nothing else */
-
+			/* To avoid confusion in the event of input like 'r12', force strict
+			 * matching of r# and nothing else
+			 */
 			bool strict = false;
-
-			if(input.length() >= 4)
+			if(input.length() >= 3)
 			{
 				strict = true;
 			}
@@ -277,6 +179,8 @@ void AcesUp::parseCommand(string input)
 			}
 
 		}
+
+		/* Deal */
 		else
 		if(input[0] == 'd')
 		{
@@ -292,41 +196,48 @@ void AcesUp::parseCommand(string input)
 void AcesUp::deal()
 {
 
-	/* You can only deal if the top card in each stack is of a different suit.
-	 * Empty spaces are also allowed. So, make sure to check that the stack isn't empty
+	/* You can only deal if the top card in each column is of a different suit.
+	 * Empty spaces are also allowed. So, make sure to check that the column isn't empty
 	 * prior to checking the suit of the top card.
 	 */
 
-	/* Let's make sure we don't try to access Cards of empty stacks, and
-	 * if they're not empty grab the top card's face value (an int).
+	/* -1 - indicates an empty column.
+	 * S - 0
+	 * H - 1
+	 * D - 2
+	 * C - 3
 	 */
 
 	int suitvals[] = {-1,-1,-1,-1};
 
-	if(stax[1].size() > 0)
+	if(!stax[1].empty())
 	{
 		suitvals[0] = (stax[1].back()).getSuitValue();
 	}
 
-	if(stax[2].size() > 0)
+	if(!stax[2].empty())
 	{
 		suitvals[1] = (stax[2].back()).getSuitValue();
 	}
 
-	if(stax[3].size() > 0)
+	if(!stax[3].empty())
 	{
 		suitvals[2] = (stax[3].back()).getSuitValue();
 	}
 
-	if(stax[4].size() > 0)
+	if(!stax[4].empty())
 	{
 		suitvals[3] = (stax[4].back()).getSuitValue();
 	}
 
-	/* Now let's make sure there are no matching suit values */
+	/* Now, suitvals[] has been fully filled with integer suit values.
+	 * let's make sure there are no matching suit values so that we can deal.
+	 * the boolean value flag defaults to true, and permits the dealing action.
+	 */
 
 	bool flag = true;
 
+	/* Begin scan for matching suits */
 	for ( int i = 0 ; i < 3 ; i++)
 	{
 
@@ -346,7 +257,9 @@ void AcesUp::deal()
 			}
 		}
 
-		/* If we find that two stacks match, no sense to keep going */
+		/* If we find that two columns' top cards have matching suits
+		 * then there is no sense in checking further.
+		 */
 		if(flag == false)
 		{
 			break;
@@ -354,12 +267,15 @@ void AcesUp::deal()
 
 	}
 
+	/* In the event that the deck is empty, inform the player. */
 	if(stax[0].empty())
 	{
-		cout << "Deck's empty, MOTHERFUCKER. GAME OVER! " << endl;
-		cout << "Please press enter, BITCH: ";
+		cout << "Deck is empty. " << endl;
+		cout << "Please press enter, and then use 'q' to quit: ";
 		cin.get();
 	}
+
+	/* All checks passed. Deal cards onto the columns. */
 	else
 	if (flag)
 
@@ -381,6 +297,7 @@ void AcesUp::deal()
 	 * directly tied into the gameLoop() above.
 	 */
 
+	/* One or more checks failed. No change in state. */
 	else
 	{
 		cout << "Cannot deal yet. At least two top cards have same suit." << endl;
@@ -392,33 +309,48 @@ void AcesUp::deal()
 void AcesUp::remove(int column)
 {
 
+	/* You can only remove a card if at least two top cards are of the same suit,
+	 * AND you aren't removing the highest-valued card (ace is high).
+	 * Once again, we start by checking for empty spaces.
+	 */
+
+	/* -1 - indicates an empty column.
+	 * S - 0
+	 * H - 1
+	 * D - 2
+	 * C - 3
+	 */
+
 	int suitvals[] = {-1,-1,-1,-1};
 
-	if(stax[1].size() > 0)
+	if(!stax[1].empty())
 	{
 		suitvals[0] = (stax[1].back()).getSuitValue();
 	}
 
-	if(stax[2].size() > 0)
+	if(!stax[2].empty())
 	{
 		suitvals[1] = (stax[2].back()).getSuitValue();
 	}
 
-	if(stax[3].size() > 0)
+	if(!stax[3].empty())
 	{
 		suitvals[2] = (stax[3].back()).getSuitValue();
 	}
 
-	if(stax[4].size() > 0)
+	if(!stax[4].empty())
 	{
 		suitvals[3] = (stax[4].back()).getSuitValue();
 	}
 
-	int facevals[] = {-1,-1,-1,-1};
-
-	/* Find the matching suit columns and update the facevals
-	 * array to show their integer face value
+	/* Now, suitvals[] has been fully filled with integer suit values.
+	 * Our next action is to find the matching suits, and figure out
+	 * their face values. We use columnsuitval to make sure we only find
+	 * matches of the suit of the requested column.
 	 */
+
+	int facevals[] = {-1,-1,-1,-1};
+	int columnsuitval = stax[column].back().getSuitValue();
 
 	for ( int i = 0 ; i < 3 ; i++)
 	{
@@ -436,7 +368,6 @@ void AcesUp::remove(int column)
 		 */
 		for ( int j = i+1 ; j < 4 ; j++)
 		{
-			int columnsuitval = stax[column].back().getSuitValue();
 			if (suitvals[i] == suitvals[j] && suitvals[i] == columnsuitval  && suitvals[j] == columnsuitval)
 			{
 				facevals[i] = stax[i+1].back().getFaceValue();
@@ -446,37 +377,22 @@ void AcesUp::remove(int column)
 
 	}
 
-	/* So long as the column requested doesn't have the highest face value
-	 * then we can remove the requested column. Find the highest value in
-	 * facevals
-	 *
-	 * Mon Aug 20 2012 0229 yeah... I derped. As the code is currently
-	 * written, it lets the user remove the highest value if it's the only
-	 * suit of its kind on the top layer! Oops. Fixing now.
-	 *
+	/*
+	 * As of now, facevals[] has been fully initialized
+	 * with the face values of any matching-suit top cards.
+	 * Recall from above that elements of facevals[]
+	 * only changed from -1 to their faceval if they were matching suits,
+	 * AND that suit was the same as the suit from the column requested.
+	 * Consequently, facevals[] should be filled with "-1" entries
+	 * UNLESS there are matches.
 	 */
 
-	int highest = 0;
-
-	for ( int i = 1 ; i < 4 ; i++)
-	{
-		if(facevals[i] > facevals[highest])
-		{
-			highest = i;
-		}
-	}
-
-	bool flag = true;
-
-	if((highest+1) == column)
-	{
-		flag = false;
-	}
-
-	/* Now check to make sure highest is not the ONLY index with a nonnegative
-	 * value in facevals */
-
+	/* Check if there were any matches. If not, then the card is the
+	 * only suit of its type in the top layer (or it's an empty space).
+	 * Don't remove it.
+	 */
 	int count = 0;
+	bool solo = false;
 
 	for(int i = 0 ; i < 4 ; i++)
 	{
@@ -485,28 +401,69 @@ void AcesUp::remove(int column)
 			count++;
 		}
 	}
-
-	bool solo = false;
-
 	if (count == 4)
 	{
 		solo = true;
 	}
 
-	/* If it's not solo and isn't the highest val, remove it! */
+	/*
+	 * We need to know which array element is the highest, so that
+	 * we don't remove it (doing so is against the rules of the game).
+	 * The boolean 'flag' defaults to false. It is only set to true if
+	 * the column isn't the only suit of its kind on the top layer, AND
+	 * upon further inspection it isn't the HIGHEST valued card of its
+	 * suit on the top layer.
+	 */
 
+	bool flag = false;
+
+	/* If we already know it's the only card of its suit, no sense further
+	 * comparing anything.
+	 */
+	if(!solo)
+	{
+		int highest = 0;
+
+		for ( int i = 1 ; i < 4 ; i++)
+		{
+			if(facevals[i] > facevals[highest])
+			{
+				highest = i;
+			}
+		}
+
+		if((highest+1) != column)
+		{
+			flag = true;
+		}
+	}
+
+	/* At this point we can finally determine whether or not to remove the card. */
+
+	/* If it's not solo AND isn't the highest val, remove it! */
+	if(flag && !solo)
+	{
+		stax[5].push_back(stax[column].back());
+		stax[column].pop_back();
+	}
+
+	/* Let's distinguish at this point between removing an empty space,
+	 * and trying to remove the only card (or highest card) of the requested
+	 * suit. We check the suitvals[] array to determine if column is an empty
+	 * space.
+	 */
+	else
 	if(suitvals[column-1] == -1)
 	{
 		cout << "What makes you think you can remove an empty space?" << endl;
 		cout << "Please press enter: ";
 		cin.get();
 	}
-	else
-	if(flag && !solo)
-	{
-		stax[5].push_back(stax[column].back());
-		stax[column].pop_back();
-	}
+
+	/* Finally, if the requested column ISN'T an empty space, then it must either
+	 * be the only flag of it's suit in the top layer OR the highest valued
+	 * face of its suit in the top layer. Output this to user and wait for input.
+	 */
 	else
 	{
 		cout << "You cannot remove the highest-valued card of the suit. " << endl;
@@ -528,12 +485,11 @@ void AcesUp::move(int from , int to)
 	}
 	else
 	{
-		cout << "You can't do that. " << endl;
+		cout << "Invalid move command. " << endl;
 		cout << "Please press enter: " ;
 		cin.get();
 	}
 
-	cout << "move stub" << endl;
 }
 
 /* The renderer basically processes output line by line. It analyzes the current state of the
@@ -564,7 +520,11 @@ void AcesUp::render()
 	while( !finished )
 	{
 
-		int count = 0; /* Tracks number of stacks completely displayed */
+		/* Tracks number of stacks completely displayed. Resets after each interation.
+		 * The idea is that once EVERY column has been FULLY displayed (count == 4)
+		 * we can then stop rendering lines (so long as trash is completely displayed
+		 * too). */
+		int count = 0;
 
 		/* Display card stacks */
 
@@ -581,6 +541,8 @@ void AcesUp::render()
 			}
 		}
 
+		layer++;
+
 		/* Display garbage off to the right */
 
 		int i = trash - 1; /* since trash is based off of the vector::size() function,
@@ -589,15 +551,14 @@ void AcesUp::render()
 		int j = trash -12; /* We also only want to display 12 cards on any given row of
 						      screen output */
 
-		for( ; i > j && trash !=0 ; i--)
+		for( ; i > j && trash != 0 ; i--)
 		{
 			cout << stax[5][i].getFaceSymbol() << stax[5][i].getSuitSymbol() << ",";
 			trash--;
 		}
 
-		layer++;
-
-		if(count == 4 && trash == 0) /* we have iterated through all cards in each play stack. Stop display loop. */
+		/* we have iterated through all cards in each play stack and the trahs. Stop display loop. */
+		if(count == 4 && trash == 0)
 		{
 			finished = true;
 		}
