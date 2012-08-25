@@ -38,9 +38,6 @@
 #include <string>
 #include <cstdlib> /* You need this lib in order to use the EXIT_SUCCESS macro */
 
-/* #include "A01234567_cards4Utils.h" */
-
-#include "A01234567_cards4Tests.h" /* Will include Deck.h and Card.h */
 #include "A01234567_AcesUp.h"
 
 using namespace std;
@@ -60,35 +57,9 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 
-	Deck deck;
-	Deck hand;
-	Deck pot;
-
-    setupRand();
-
-    /**
-     *
-     * \warning None of these testing functions update the state of
-     * other Deck objects (really just an ad hoc container)
-     * when they should. See dox for the functions file.
-     *
-     * \warning output varies depending on the requirements of the
-     * display() member function in the Card object in file
-     * A01234567_Card.cpp .
-     *
-     */
-/*
-    testCardSet(deck, "Deck",true);
-    testCardSet(pot, "Table",false);
-    testCardSet(hand, "Hand",false);
-*/
     AcesUp game;
-
     game.intro();
     game.gameLoop();
-
 	return EXIT_SUCCESS;
-
-	/* dummy commit; probably won't finish hw6 in time. Oh well. */
 
 }
