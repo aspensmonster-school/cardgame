@@ -165,7 +165,7 @@ void testCardSet(Deck cardSet, string arrayName, bool inSet)
 	cout << "\n\n";
 
 	cardSet.revealAll();
-	cardSet.deal(13,inSet);
+	cardSet.dealCards(13,inSet);
 	testDisplay(cardSet);
 
 	cout << "\n  +--------+";
@@ -173,7 +173,7 @@ void testCardSet(Deck cardSet, string arrayName, bool inSet)
 	cout << "\n  +--------+";
 	cout << "\n\n";
 
-	cardSet.deal(DECK_SIZE,inSet);
+	cardSet.dealCards(DECK_SIZE,inSet);
 	testDisplay(cardSet);
 
 	cout << "\n  +-------+";
@@ -192,7 +192,7 @@ void testCardSet(Deck cardSet, string arrayName, bool inSet)
 	cout << "\n\n";
 
 	cardSet.revealAll();
-	cardSet.deal(5,inSet);
+	cardSet.dealCards(5,inSet);
 	testDisplay(cardSet);
 
 	cout << "\n  +--------+";
@@ -200,7 +200,7 @@ void testCardSet(Deck cardSet, string arrayName, bool inSet)
 	cout << "\n  +--------+";
 	cout << "\n\n";
 
-	cardSet.deal(DECK_SIZE,inSet);
+	cardSet.dealCards(DECK_SIZE,inSet);
 	testDisplay(cardSet);
 
 	cout << "\n  +-------+";

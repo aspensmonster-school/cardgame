@@ -59,7 +59,7 @@ public:
 	void display(int);
 	void shuffle(int);
 	void displayCard(int numCards = 0);
-	void deal(int numCards = 0 , bool faceUp = false);
+	void dealCards(int numCards = 0 , bool faceUp = false);
 
 	void takeCard(int card, bool up = false);
 	void putCard(int card, bool up = false);

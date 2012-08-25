@@ -1,7 +1,7 @@
 #ifndef CARDS3FUNCTIONS_H_
 #define CARDS3FUNCTIONS_H_
 
-/**\file A01234567_cards4.h
+/**\file A01234567_cards4Utils.h
  * \brief Header that defines the functions found in A01234567_cards4Utils.cpp. Mostly
  * left overs from the refactoring. Basically just holds constants.
  *

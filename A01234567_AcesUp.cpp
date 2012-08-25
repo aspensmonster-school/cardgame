@@ -1,3 +1,9 @@
+/**\file A01234567_AcesUp.cpp
+ * \brief Contains the methods that describe the Aces Up game.
+ * \author Preston Maness
+ *
+ */
+
 /*
  * A01234567_AcesUp.cpp
  *

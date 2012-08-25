@@ -233,7 +233,7 @@ void Deck::hideAll()
  *
  */
 
-void Deck::deal(int numCards, bool faceUp)
+void Deck::dealCards(int numCards, bool faceUp)
 {
 
 	for ( int i = 0 ; i < numCards ; i++)
