@@ -1,7 +1,7 @@
 #ifndef CARDS3FUNCTIONS_H_
 #define CARDS3FUNCTIONS_H_
 
-/**\file A01234567_cards4.h
+/**\file A01234567_cards4Utils.h
  * \brief Header that defines the functions found in A01234567_cards4Utils.cpp. Mostly
  * left overs from the refactoring. Basically just holds constants.
  *
@@ -44,7 +44,7 @@ const int CLUB = 3;
 /* These arrays would probably be better implemented as maps */
 
 const string valueTable[NUM_SUIT_CARDS] = {
-		"A","2","3","4","5","6","7","8","9","10","J","Q","K"
+		"2","3","4","5","6","7","8","9","10","J","Q","K","A"
 };
 const char suitTable[NUM_SUITS] = {
 		'S','H','D','C'
