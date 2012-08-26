@@ -16,6 +16,22 @@
 #include <iomanip>
 #include <cstdlib>
 
+/**
+ *
+ * \pre stax is an unitialized vector of vectors. The vector representing the deck
+ * is thus empty.
+ * \post stax is resized to 6 vectors, and the first vector is filled with Card
+ * objects that have been shuffled.
+ *
+ * The constructor resizes \c stax to contain 6 vectors, which
+ * will function as the game's deck, four columns, and trash pile.
+ * \c stax itself essentially serves as the state machine, storing
+ * the state of the game with each iteration of \c gameLoop().
+ * the first vector is filled with 52 \c Card objects, and then
+ * randomized using the Knuth shuffle.
+ *
+ */
+
 AcesUp::AcesUp()
 {
 
@@ -67,6 +83,23 @@ AcesUp::~AcesUp()
 
 }
 
+/**
+ *
+ * \warning This is currently incomplete. It functions, but I am
+ * currently looking into refactoring the parseCommand() -> commandFxn()
+ * workflow to return booleans rather than be voids that solely
+ * operate on \c stax. This will permit indication of whether or not
+ * command was successful. This in turn can permit advanced logging of
+ * game to disk and statistical analysis.
+ *
+ * The main loop of the game. this loop is only exited
+ * upon a value of "q" for the string \c cmd, at which
+ * parseCommand interprets this as a quit command and
+ * exits the program.
+ *
+ *
+ */
+
 void AcesUp::gameLoop()
 {
 
@@ -86,7 +119,16 @@ void AcesUp::gameLoop()
 
 }
 
-/* Spits out the ascii art intro and command guide */
+/**
+ *
+ * Spits out ascii art intro and gives a guide for the commands
+ * that control the game. Specifically, the commands are:
+ * 'q' : quit
+ * 'd' : deal
+ * 'rA' : remove column A
+ * 'mAB' : move column A to B
+ *
+ */
 
 void AcesUp::intro()
 {
@@ -109,8 +151,8 @@ void AcesUp::intro()
 	cout << endl;
 	cout <<	"There are a few commands, listed below:\n\n" << left
 			<< setw(8) << "Quit: " << setw(15) << " 'q' " << setw(10) << " immediately exit to shell \n"
-			<< setw(8) << "Move: " << setw(15) << " 'm(from)(to)' " << setw(10) << " e.g. \'m12\' moves top card on stack 1 onto empty stack 2.\n"
-			<< setw(8) << "Remove: " << setw(15) << " 'r(from)' " << setw(10) << " e.g. \'r3\' removes the top card from stack 3. \n"
+			<< setw(8) << "Move: " << setw(15) << " 'm(from)(to)' " << setw(10) << " e.g. \'m12\' moves topcard on stack 1 onto empty stack 2.\n"
+			<< setw(8) << "Remove: " << setw(15) << " 'r(from)' " << setw(10) << " e.g. \'r3\' removes the topcard from stack 3. \n"
 			<< setw(8) << "Deal: " << setw(15) << " 'd' " << setw(10) << " will deal new layer of cards onto stacks."
 
 		<< endl << endl;
@@ -119,8 +161,18 @@ void AcesUp::intro()
 	cin.get();
 }
 
-/* Only ensures command is well-formed. Does not check state to see if command is possible. That is
- * handled by the individual methods for each command.
+/**
+ *
+ * \pre the string \c input isn't parsed.
+ * \post after parsing, either a game command is executed, which may
+ * or may not succeed, or a message is sent to the user stating that
+ * input is malformed.
+ *
+ * The parseCommand function only ensures that a command is well-formed. It
+ * does not check state to see if the command is possible. That is handled by the
+ * individual methods for each command.
+ *
+ * \param[in] input the string that is parsed from the \c gameLoop() function.
  */
 
 void AcesUp::parseCommand(string input)
@@ -175,7 +227,7 @@ void AcesUp::parseCommand(string input)
 				strict = true;
 			}
 
-			if(column < 5 && column > 0 && !strict)
+			if((column < 5) && (column > 0) && !strict)
 			{
 				remove(column);
 			}
@@ -199,12 +251,35 @@ void AcesUp::parseCommand(string input)
 
 }
 
+/**
+ *
+ * \warning I'm investigating any possible ways to shorten the command logic.
+ * Particularly by removing \c suitvals[] and checking \c stax
+ * directly when necessary.
+ *
+ * \pre user input was parsed and determined to be a deal command.
+ * \c stax is not yet updated.
+ * \post if a deal command is possible, stax is updated. Otherwise,
+ * user is informed that the deal command isn't possible and prompts
+ * for user to press enter to continue loop.
+ *
+ * The deal command must check for certain conditions:
+ *
+ * 1.) Each topcard's suit is unique. Done with temporary suitvals[]
+ * integer array that grabs each card object's integer suit value. A
+ * linear search is then done to detect matches. Spaces are permitted
+ * and do not count as "matches" against themselves or others.
+ *
+ * 2.) Deck is not empty. If so, alert player to quit game.
+ *
+ */
+
 void AcesUp::deal()
 {
 
-	/* You can only deal if the top card in each column is of a different suit.
+	/* You can only deal if the topcard in each column is of a different suit.
 	 * Empty spaces are also allowed. So, make sure to check that the column isn't empty
-	 * prior to checking the suit of the top card.
+	 * prior to checking the suit of the topcard.
 	 */
 
 	/* -1 - indicates an empty column.
@@ -263,7 +338,7 @@ void AcesUp::deal()
 			}
 		}
 
-		/* If we find that two columns' top cards have matching suits
+		/* If we find that two columns' topcards have matching suits
 		 * then there is no sense in checking further.
 		 */
 		if(flag == false)
@@ -306,16 +381,58 @@ void AcesUp::deal()
 	/* One or more checks failed. No change in state. */
 	else
 	{
-		cout << "Cannot deal yet. At least two top cards have same suit." << endl;
+		cout << "Cannot deal yet. At least two topcards have same suit." << endl;
 		cout << "Press enter to continue: " ;
 		cin.get();
 	}
 }
 
+/**
+ *
+ * \warning I'm investigating any possible ways to shorten the command logic.
+ * Particularly by removing \c suitvals[] and \c facevals[] and checking \c stax
+ * directly when necessary.
+ *
+ * \pre user input was parsed and determined to be a remove command.
+ * \post If it is possible to remove the topcard of \c column, then \c stax is
+ * updated appropriately. Otherwise, user is informed that the remove isn't
+ * possible.
+ *
+ * From a logical standpoint, the remove command is the most intensive. Many cases
+ * must be checked for:
+ *
+ * 1.) Ensure there is at least one other column (besides \c column) whose topcard is of
+ * the same suit as \c column's topcard. A scan of the suits is performed as in
+ * the deal function with a temporary suitvals[] integer array. Further,
+ * \c columnsuitval is used to mark the suit of the column the user requests to
+ * remove.
+ *
+ * 2.) Ensure that the column the user requests to remove is not the highest valued
+ * topcard of that suit. This is done with a temporary facevals[] integer array. A
+ * linear search is conducted that checks for matching suits from suitvals[]
+ * that are also of the suit of the requested column's topcard, \c columnsuitval. If
+ * a match is found, then that element of facevals[] gets the card object's face value.
+ * Otherwise, it remains as -1.
+ *
+ * 3.) Once suitvals[] and facevals[] are initialized, check to see if there are no
+ * matches at all. This can be done by examining the content of facevals[]. Should all
+ * elements be negative one, then no matches were found.
+ *
+ * 4.) Once suitvals[] and facevals[] are initialized, ensure that \c column is not
+ * the highest valued topcard of its suit. Perform a linear search on the fully initialized
+ * facevals[] and if the index with the highest value (plus one) is also that of \c column,
+ * then do not remove \c column.
+ *
+ * 5.) Ensure that user does not attempt to remove an empty space. Can use the suitvals[]
+ * array for this case (if the element is -1, then it is an empty space).
+ *
+ * \param[in] column specifies the column of the topcard the user wishes to remove.
+ */
+
 void AcesUp::remove(int column)
 {
 
-	/* You can only remove a card if at least two top cards are of the same suit,
+	/* You can only remove a card if at least two topcards are of the same suit,
 	 * AND you aren't removing the highest-valued card (ace is high).
 	 * Once again, we start by checking for empty spaces.
 	 */
@@ -385,7 +502,7 @@ void AcesUp::remove(int column)
 
 	/*
 	 * As of now, facevals[] has been fully initialized
-	 * with the face values of any matching-suit top cards.
+	 * with the face values of any matching-suit topcards.
 	 * Recall from above that elements of facevals[]
 	 * only changed from -1 to their faceval if they were matching suits,
 	 * AND that suit was the same as the suit from the column requested.
@@ -479,6 +596,19 @@ void AcesUp::remove(int column)
 
 }
 
+/**
+ *
+ * \pre user input was parsed and determined to be a move command.
+ * \post Assuming from isn't empty and to is, \c stax is updated with the
+ * move command. Otherwise, user is informed that the move command is invalid.
+ *
+ * The only requirements for a move command are that the \c to column is
+ * empty and the \c from column isn't.
+ *
+ * \param[in] from column whose topcard the user wishes to move.
+ * \param[in] to column that user wants \c from 's topcard moved to.
+ */
+
 void AcesUp::move(int from , int to)
 {
 
@@ -503,6 +633,44 @@ void AcesUp::move(int from , int to)
  * Since we render based on the state of the stax variable, the rendering is independent of any particular
  * user command. */
 
+/**
+ *
+ * \pre The screen is filled with the state of \c stax prior to the gameLoop()'s
+ * parseCommand().
+ * \post The screen is updated to reflect changes in state of \c stax due to
+ * parseCommand() and resulting command function logic. There may not be any visible
+ * change in rendering if, for example, the user provides a malformed command or
+ * an illegal command request.
+ *
+ * This renderer basically processes output line by line. It analyzes the state of
+ * \stax after parseCommand() and company have done their thing, and output's that
+ * state to the screen. Since rendering is based on \c stax, it is independent
+ * of any particular command.
+ *
+ * \c layer tracks the layer of cards being displayed. The size of each column
+ * is checked against this. For example, if we are on layer 3 (fourth card),
+ * and only one column has four cards, then the other columns will fail the
+ * stax[i].size() > layer check, and simply output a tab rather than try to
+ * access stax[i][layer].
+ *
+ * \c count tracks how many columns are completely displayed in each \c layer
+ * iteration. The idea is that so long as there is still at least one column
+ * to render, \c count does not reach 4. Once \c layer reaches a value where
+ * stax[i].size() > layer fails for all columns, then \c count == 4 and we
+ * are "done" rendering columns.
+ *
+ * \c trash is the size of the trash. Incidentally, it also serves as the
+ * index for the trash vector. This renderer will output at most twelve
+ * elements from stax[5] per \c layer iteration, decrementing \c trash with
+ * every output. The renderer is finished outputing the trash pile once
+ * \c trash reaches 0.
+ *
+ * Consequently, when \c count == 4 and \c trash == 0, we are finished
+ * rendering both the columns and the trash pile, and can return to
+ * gameLoop().
+ *
+ */
+
 void AcesUp::render()
 {
 
@@ -526,7 +694,7 @@ void AcesUp::render()
 	while( !finished )
 	{
 
-		/* Tracks number of stacks completely displayed. Resets after each interation.
+		/* Tracks number of stacks completely displayed. Resets after each iteration.
 		 * The idea is that once EVERY column has been FULLY displayed (count == 4)
 		 * we can then stop rendering lines (so long as trash is completely displayed
 		 * too). */
@@ -563,7 +731,7 @@ void AcesUp::render()
 			trash--;
 		}
 
-		/* we have iterated through all cards in each play stack and the trahs. Stop display loop. */
+		/* we have iterated through all cards in each play stack and the trash. Stop display loop. */
 		if(count == 4 && trash == 0)
 		{
 			finished = true;
