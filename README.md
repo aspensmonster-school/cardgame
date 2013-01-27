@@ -1,18 +1,19 @@
-cardgame
-========
+# cardgame
+
 
 License: GNU GPL version 3. See COPYING file or http://www.gnu.org/licenses/gpl-3.0.html
 
 Documentation: 
-	HW2: http://cs2.aspensmonster.com
+
+* HW2: [http://cs2.aspensmonster.com](http://cs2.aspensmonster.com)
 	
-	HW3: http://cs3.aspensmonster.com
+* HW3: [http://cs3.aspensmonster.com](http://cs3.aspensmonster.com)
 	
-	HW4: http://cs4.aspensmonster.com
+* HW4: [http://cs4.aspensmonster.com](http://cs4.aspensmonster.com)
 	
-	HW5: http://cs5.aspensmonster.com
+* HW5: [http://cs5.aspensmonster.com](http://cs5.aspensmonster.com)
 	
-	HW6: http://cs6.aspensmonster.com
+* HW6: [http://cs6.aspensmonster.com](http://cs6.aspensmonster.com)
 
 This is for a Computer Science 2 class at Texas State University.
 I'm incorporating git and doxygen in an attempt to at least start
