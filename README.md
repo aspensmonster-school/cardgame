@@ -1,6 +1,11 @@
 # cardgame
 
-
+Quickstart:
+`
+$ git clone https://github.com/aggroskater/cardgame.git
+$ make -f A01234567_makefile
+$ ./A01234567_cardgame
+`
 License: GNU GPL version 3. See COPYING file or http://www.gnu.org/licenses/gpl-3.0.html
 
 Documentation: 
