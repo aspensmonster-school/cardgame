@@ -3,6 +3,7 @@
 Quickstart:
 
     $ git clone https://github.com/aggroskater/cardgame.git
+    $ cd cardgame
     $ make -f A01234567_makefile
     $ ./A01234567_cardgame
 
