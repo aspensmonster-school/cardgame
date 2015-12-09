@@ -675,7 +675,7 @@ void AcesUp::render()
 {
 
 	bool finished = false;
-	int layer = 0; /* Tracks which "layer" of cards is being displayed */
+	unsigned long layer = 0; /* Tracks which "layer" of cards is being displayed */
 	int trash = stax[5].size();
 
 	system("clear"); /* I know using "system" calls is incredibly bad practice from a security standpoint,
